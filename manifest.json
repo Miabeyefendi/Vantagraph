@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Vantagraph",
+    "description": "A collection of 5 deep-dark gradient themes with pixel-perfect typography. Includes CineNox, Anthrafall, Prussian Eerie, Chroma V-Spec, and Aura Nibel.",
+    "preview": "assets/preview.png",
+    "readme": "README.md",
+    "usercss": "user.css",
+    "schemes": "color.ini",
+    "authors": [
+      {
+        "name": "Miabeyefendi",
+        "url": "https://github.com/Miabeyefendi"
+      }
+    ],
+    "tags": ["dark", "gradient", "cinematic", "midnight-purple", "typography", "letterboxd", "ori"]
+  }
+]
