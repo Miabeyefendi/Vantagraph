@@ -49,6 +49,7 @@ Make sure you have [Spicetify CLI](https://spicetify.app/docs/getting-started/in
 ```powershell
 git clone https://github.com/Miabeyefendi/vantagraph.git
 Copy-Item -Path ".\vantagraph\*" -Destination "$env:appdata\spicetify\Themes\Vantagraph" -Recurse
+```
 
 ### Linux / macOS (Bash)
 ```bash

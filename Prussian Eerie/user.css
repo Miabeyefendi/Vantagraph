@@ -1,0 +1,143 @@
+/* ============================================================
+ * Vantagraph — Prussian Eerie Theme (Eerie Black → Prussian Blue)
+ * https://github.com/Miabeyefendi/Vantagraph
+ *
+ * Standalone theme file: includes full typography system
+ * plus Prussian Eerie-specific oceanic gradient.
+ *
+ * A soft transition from #1B1B1B to #003153 — noble and
+ * calming, like deep ocean water.
+ * ============================================================ */
+
+/* ===== FONT IMPORTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&display=swap');
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@latest/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ===== GLOBAL TYPOGRAPHY ===== */
+body, html,
+.Root__top-container,
+.main-type-mestoBold,
+.main-type-mesto,
+.main-type-minuet,
+.main-type-ballad,
+.main-type-viola,
+.main-type-canon,
+.main-type-cello,
+.main-type-bass {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'cv01', 'cv02', 'cv03', 'cv04', 'ss01', 'ss03';
+}
+
+/* Headings / Display — Track names, album titles, section headers */
+.main-type-ballad,
+.main-trackInfo-name,
+.encore-text-title-large,
+.encore-text-title-medium,
+.encore-text-title-small,
+h1, h2, h3,
+.main-entityHeader-title,
+.main-shelf-title,
+.x-categoryCard-title {
+    font-family: 'Manrope', 'Inter', sans-serif !important;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* Monospace — Track durations, playback times, counters */
+.playback-bar__progress-time-elapsed,
+.playback-bar__progress-time,
+[data-testid="playback-duration"],
+.encore-internal-colorExtractor-playbackDuration,
+.main-trackList-rowDuration,
+.main-trackList-duration,
+.x-tracklist-duration,
+span[class*="duration"],
+span[class*="time"] {
+    font-family: 'JetBrains Mono', 'Cascadia Mono', 'Fira Code', monospace !important;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    font-size: 0.85em;
+}
+
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--spice-misc);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--spice-subtext);
+}
+
+
+/* ===== CARDS ===== */
+.main-card-card,
+.main-shelf-shelf .encore-internal-colorExtractor-newDesign {
+    background: var(--spice-card) !important;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+.main-card-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px var(--spice-shadow);
+}
+
+
+/* ===== BUTTONS ===== */
+.main-playButton-PlayButton,
+.encore-buttonPrimary-background {
+    transition: transform 0.15s ease, box-shadow 0.3s ease;
+}
+.main-playButton-PlayButton:hover,
+.encore-buttonPrimary-background:hover {
+    transform: scale(1.05);
+}
+
+
+/* ===== NOW PLAYING BAR ===== */
+.Root__now-playing-bar {
+    background: rgba(var(--spice-rgb-player), 0.85) !important;
+    backdrop-filter: blur(16px);
+}
+
+
+/* ===== POPUPS / MODALS ===== */
+.GenericModal__overlay,
+[data-overlayscrollbars-viewport] {
+    background: var(--spice-card) !important;
+    border-radius: 12px;
+}
+
+
+/* ===== PRUSSIAN EERIE — OCEANIC DARK GRADIENT ===== */
+.Root__top-container {
+    background: linear-gradient(to bottom right, #1B1B1B 0%, #0E1E2C 40%, #003153 100%) !important;
+}
+
+/* Deep ocean sidebar with glass blur */
+.Root__nav-bar {
+    background: rgba(18, 30, 38, 0.88) !important;
+    backdrop-filter: blur(22px) saturate(160%);
+}
+
+/* Ice blue glow on play button */
+.main-playButton-PlayButton {
+    box-shadow: 0 0 25px rgba(163, 213, 255, 0.25);
+}
