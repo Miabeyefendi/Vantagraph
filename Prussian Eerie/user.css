@@ -9,6 +9,13 @@
  * calming, like deep ocean water.
  * ============================================================ */
 
+/* ===== CSS VARIABLE OVERRIDES (MANDATORY) ===== */
+:root {
+  --spice-main-elevated: var(--spice-main);
+  --spice-highlight: var(--spice-main-secondary);
+  --spice-highlight-elevated: var(--spice-main-secondary);
+}
+
 /* ===== FONT IMPORTS ===== */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&display=swap');
 
@@ -58,18 +65,54 @@ h1, h2, h3,
 .playback-bar__progress-time-elapsed,
 .playback-bar__progress-time,
 [data-testid="playback-duration"],
-.encore-internal-colorExtractor-playbackDuration,
 .main-trackList-rowDuration,
 .main-trackList-duration,
-.x-tracklist-duration,
-span[class*="duration"],
-span[class*="time"] {
+.x-tracklist-duration {
     font-family: 'JetBrains Mono', 'Cascadia Mono', 'Fira Code', monospace !important;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0;
     font-size: 0.85em;
 }
 
+
+/* ===== TOPBAR ===== */
+.main-topBar-historyButtons .main-topBar-button {
+  background-color: unset;
+}
+
+.main-topBar-background {
+  background-image: linear-gradient(var(--spice-main) 5%, 75%, transparent);
+  background-color: unset !important;
+}
+
+.main-topBar-overlay {
+  background-color: var(--spice-main);
+}
+
+/* ===== NAVBAR ===== */
+.main-rootlist-rootlistDividerGradient {
+  display: none;
+}
+
+.main-rootlist-rootlistDivider {
+  background-color: var(--spice-sidebar);
+}
+
+.Root__nav-bar {
+  background-image: linear-gradient(to bottom left, var(--spice-sidebar) 0%, var(--spice-player) 100%) !important;
+}
+
+/* Active nav items */
+.main-navBar-navBarLinkActive,
+.main-navBar-navBarLinkActive:focus,
+.main-navBar-navBarLinkActive:hover,
+.main-collectionLinkButton-selected,
+.main-collectionLinkButton-selected svg,
+.main-yourLibraryX-navLinkActive {
+  color: var(--spice-nav-active-text) !important;
+  background-color: var(--spice-nav-active) !important;
+  border-radius: 8px;
+}
 
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
@@ -88,15 +131,14 @@ span[class*="time"] {
 
 
 /* ===== CARDS ===== */
-.main-card-card,
-.main-shelf-shelf .encore-internal-colorExtractor-newDesign {
+.main-card-card {
     background: var(--spice-card) !important;
     border-radius: 8px;
     transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 .main-card-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--spice-shadow);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -113,28 +155,27 @@ span[class*="time"] {
 
 /* ===== NOW PLAYING BAR ===== */
 .Root__now-playing-bar {
-    background: rgba(var(--spice-rgb-player), 0.85) !important;
-    backdrop-filter: blur(16px);
+    background-color: var(--spice-player) !important;
 }
 
 
-/* ===== POPUPS / MODALS ===== */
-.GenericModal__overlay,
-[data-overlayscrollbars-viewport] {
-    background: var(--spice-card) !important;
-    border-radius: 12px;
+/* ===== CONTEXT MENUS ===== */
+.main-contextMenu-menu {
+    background-color: var(--spice-card) !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+/* ===== LIBRARY TABS ===== */
+.main-yourLibraryX-navLink {
+    border-radius: 8px;
+    margin: 6px 0;
+    padding: 0 10px;
+}
 
 /* ===== PRUSSIAN EERIE — OCEANIC DARK GRADIENT ===== */
 .Root__top-container {
     background: linear-gradient(to bottom right, #1B1B1B 0%, #0E1E2C 40%, #003153 100%) !important;
-}
-
-/* Deep ocean sidebar with glass blur */
-.Root__nav-bar {
-    background: rgba(18, 30, 38, 0.88) !important;
-    backdrop-filter: blur(22px) saturate(160%);
 }
 
 /* Ice blue glow on play button */
