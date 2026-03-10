@@ -1,25 +1,39 @@
 /* ============================================================
  * Vantagraph for Spicetify
- * A collection of deep-dark gradient themes
+ * 5 deep-dark gradient themes with pixel-perfect typography
  * https://github.com/Miabeyefendi/Vantagraph
  * ============================================================ */
 
-/* ===== CSS VARIABLE OVERRIDES (MANDATORY) ===== */
+/* ===== DESIGN SYSTEM VARIABLES ===== */
 :root {
-  --spice-main-elevated: var(--spice-main);
-  --spice-highlight: var(--spice-main-secondary);
-  --spice-highlight-elevated: var(--spice-main-secondary);
+    --vg-corner-radius: 10px;
+    --vg-corner-radius-sm: 6px;
+    --vg-corner-radius-xs: 4px;
+    --vg-spacing-unit: 8px;
+    --vg-transition-fast: 0.15s ease;
+    --vg-transition-normal: 0.25s ease;
+    --vg-transition-slow: 0.35s ease;
+    --vg-blur-amount: 12px;
+    --vg-opacity-hover: 0.08;
+    --vg-opacity-active: 0.12;
+    --vg-opacity-disabled: 0.38;
+    --vg-scrollbar-width: 6px;
+
+    /* Elevated surface overrides — also defined in color.ini but fallback here */
+    --spice-main-elevated: var(--spice-main-secondary);
+    --spice-highlight: var(--spice-main-secondary);
+    --spice-highlight-elevated: var(--spice-card);
 }
 
 /* ===== FONT IMPORTS ===== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
 
 @font-face {
-  font-family: 'JetBrains Mono';
-  src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@latest/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'JetBrains Mono';
+    src: url('https://cdn.jsdelivr.net/gh/JetBrains/JetBrainsMono@2.304/fonts/webfonts/JetBrainsMono-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
 }
 
 /* ===== GLOBAL TYPOGRAPHY ===== */
@@ -32,14 +46,19 @@ body, html,
 .main-type-viola,
 .main-type-canon,
 .main-type-cello,
-.main-type-bass {
+.main-type-bass,
+.encore-text-body-medium,
+.encore-text-body-small,
+.encore-text-body-large {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     font-feature-settings: 'cv01', 'cv02', 'cv03', 'cv04', 'ss01', 'ss03';
+    letter-spacing: 0.01em;
 }
 
+/* Headings / Display — track names, album titles, section headers */
 .main-type-ballad,
 .main-trackInfo-name,
 .encore-text-title-large,
@@ -48,49 +67,228 @@ body, html,
 h1, h2, h3,
 .main-entityHeader-title,
 .main-shelf-title,
-.x-categoryCard-title {
+.x-categoryCard-title,
+[data-testid="entityTitle"] {
     font-family: 'Manrope', 'Inter', sans-serif !important;
     font-weight: 700;
     letter-spacing: -0.02em;
 }
 
+/* Monospace — track durations, playback times, counters */
 .playback-bar__progress-time-elapsed,
 .playback-bar__progress-time,
 [data-testid="playback-duration"],
+[data-testid="playback-position"],
 .main-trackList-rowDuration,
 .main-trackList-duration,
-.x-tracklist-duration {
+.x-tracklist-duration,
+.encore-text-marginal {
     font-family: 'JetBrains Mono', 'Cascadia Mono', 'Fira Code', monospace !important;
     font-variant-numeric: tabular-nums;
     letter-spacing: 0;
     font-size: 0.85em;
 }
 
-/* ===== TOPBAR ===== */
+/* ===== SCROLLBAR ===== */
+/* OS-Scrollbar (Spicetify's custom scrollbar component) */
+.os-scrollbar-handle {
+    border-radius: 50px !important;
+    background: rgba(var(--spice-rgb-selected-row), 0.5) !important;
+    transition: background var(--vg-transition-fast) !important;
+}
+
+.os-scrollbar-handle:hover {
+    background: rgba(var(--spice-rgb-subtext), 0.7) !important;
+}
+
+.os-theme-spotify > .os-scrollbar-vertical {
+    width: var(--vg-scrollbar-width) !important;
+}
+
+.os-scrollbar-horizontal {
+    display: none !important;
+}
+
+/* WebKit scrollbar fallback */
+::-webkit-scrollbar {
+    width: var(--vg-scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(var(--spice-rgb-selected-row), 0.5);
+    border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(var(--spice-rgb-subtext), 0.7);
+}
+
+/* ===== CARD SYSTEM — PLAY BUTTON BUG FIX ===== */
+.main-card-card {
+    border-radius: var(--vg-corner-radius);
+    transition: background-color var(--vg-transition-normal),
+                transform var(--vg-transition-normal),
+                box-shadow var(--vg-transition-normal);
+    overflow: hidden;
+}
+
+.main-card-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* FIX: Remove background from play button CONTAINER to prevent green glow leak */
+.main-card-PlayButtonContainer {
+    background-color: transparent !important;
+}
+
+/* Style the actual play button inside the container */
+.main-card-PlayButtonContainer button,
+.main-card-PlayButtonContainer .ButtonInner-medium-iconOnly,
+.view-homeShortcutsGrid-PlayButtonContainer button,
+.view-homeShortcutsGrid-PlayButtonContainer .ButtonInner-small-iconOnly,
+.view-homeShortcutsGrid-PlayButtonContainer .ButtonInner-medium-iconOnly {
+    background-color: var(--spice-button) !important;
+    color: var(--spice-main) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    transition: transform var(--vg-transition-fast),
+                opacity var(--vg-transition-fast),
+                box-shadow var(--vg-transition-fast) !important;
+}
+
+.main-card-PlayButtonContainer button:hover,
+.view-homeShortcutsGrid-PlayButtonContainer button:hover {
+    transform: scale(1.08) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Home shortcut cards (Good Morning section) */
+.view-homeShortcutsGrid-shortcut {
+    background-color: rgba(var(--spice-rgb-card), 0.6) !important;
+    border-radius: var(--vg-corner-radius);
+    backdrop-filter: blur(var(--vg-blur-amount));
+    -webkit-backdrop-filter: blur(var(--vg-blur-amount));
+    transition: background-color var(--vg-transition-normal);
+    overflow: hidden;
+}
+
+.view-homeShortcutsGrid-shortcut:hover {
+    background-color: rgba(var(--spice-rgb-card), 0.8) !important;
+}
+
+/* ===== PROGRESS BAR — RELOCATED TO TOP OF PLAYER BAR ===== */
+.playback-bar {
+    position: absolute;
+    left: 0;
+    top: -4px;
+}
+
+.main-nowPlayingBar-nowPlayingBar {
+    position: relative;
+    padding-inline-end: 16px !important;
+}
+
+.progress-bar {
+    --progress-bar-height: 3px;
+    --progress-bar-radius: 0;
+    --fg-color: var(--spice-button);
+    --bg-color: rgba(var(--spice-rgb-text), 0.15);
+}
+
+/* Hide elapsed time display (shown in progress tooltip instead) */
+.main-playbackBarRemainingTime-container,
+.playback-bar__progress-time-elapsed {
+    display: none;
+}
+
+/* ===== PLAYER BAR WITH GRADIENT ===== */
+.main-nowPlayingBar-container {
+    background-color: unset;
+    background: linear-gradient(135deg, var(--spice-player) 0%, rgba(var(--spice-rgb-sidebar), 0.4) 100%) !important;
+    border-top: 1px solid rgba(var(--spice-rgb-text), 0.06);
+    backdrop-filter: blur(var(--vg-blur-amount));
+    -webkit-backdrop-filter: blur(var(--vg-blur-amount));
+    padding: 8px;
+}
+
+.Root__now-playing-bar {
+    background-color: var(--spice-player) !important;
+}
+
+/* Rearrange player bar: controls center, track info left, volume right */
+.main-nowPlayingBar-left {
+    order: 1;
+    flex: 1;
+    width: auto;
+    min-width: 0 !important;
+}
+
+.main-nowPlayingBar-center {
+    order: 0;
+    flex: 1;
+    width: auto;
+    min-width: unset !important;
+}
+
+.main-nowPlayingBar-right {
+    order: 2;
+    flex: 1;
+    width: auto;
+    min-width: unset !important;
+}
+
+/* ===== TOPBAR & HEADER ===== */
 .main-topBar-historyButtons .main-topBar-button {
-  background-color: unset;
+    background-color: unset;
 }
 
 .main-topBar-background {
-  background-image: linear-gradient(var(--spice-main) 5%, 75%, transparent);
-  background-color: unset !important;
+    background-color: var(--spice-main) !important;
+    background-image: none !important;
+    border-radius: var(--vg-corner-radius);
 }
 
 .main-topBar-overlay {
-  background-color: var(--spice-main);
+    background-color: var(--spice-main) !important;
 }
 
-/* ===== NAVBAR ===== */
-.main-rootlist-rootlistDividerGradient {
-  display: none;
+.main-entityHeader-backgroundColor,
+.main-actionBarBackground-background,
+.main-home-homeHeader {
+    background-color: var(--spice-main) !important;
+    background-image: none !important;
+}
+
+/* ===== MAIN CONTAINER GRADIENT ===== */
+.Root__top-container {
+    background: linear-gradient(160deg, var(--spice-main) 0%, var(--spice-sidebar) 50%, var(--spice-shadow) 100%) !important;
+}
+
+/* ===== NAVIGATION SIDEBAR ===== */
+.Root__nav-bar {
+    background: linear-gradient(180deg, var(--spice-sidebar) 0%, var(--spice-player) 100%) !important;
+}
+
+/* Remove sidebar dividers for clean look */
+.main-rootlist-rootlistDividerGradient,
+.main-rootlist-rootlistDividerContainer {
+    display: none;
 }
 
 .main-rootlist-rootlistDivider {
-  background-color: var(--spice-sidebar);
+    background-color: rgba(var(--spice-rgb-text), 0.06);
 }
 
-.Root__nav-bar {
-  background-image: linear-gradient(to bottom left, var(--spice-sidebar) 0%, var(--spice-player) 100%) !important;
+/* Active nav highlight using container */
+.main-navBar-mainNav li:has(> .active),
+.main-navBar-mainNav li:has(> a.active) {
+    background-color: rgba(var(--spice-rgb-button), 0.15);
+    border-radius: var(--vg-corner-radius-sm);
 }
 
 /* Active nav items */
@@ -100,79 +298,154 @@ h1, h2, h3,
 .main-collectionLinkButton-selected,
 .main-collectionLinkButton-selected svg,
 .main-yourLibraryX-navLinkActive {
-  color: var(--spice-nav-active-text) !important;
-  background-color: var(--spice-nav-active) !important;
-  border-radius: 8px;
+    color: var(--spice-nav-active-text) !important;
+    background-color: rgba(var(--spice-rgb-nav-active), 0.2) !important;
+    border-radius: var(--vg-corner-radius-sm);
 }
 
-/* ===== MAIN CONTAINER GRADIENT ===== */
-.Root__top-container {
-  background: linear-gradient(160deg, var(--spice-main) 0%, var(--spice-sidebar) 50%, var(--spice-shadow) 100%) !important;
+/* Library container */
+.main-yourLibraryX-libraryContainer {
+    background: none !important;
 }
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar {
-    width: 8px;
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-::-webkit-scrollbar-thumb {
-    background: var(--spice-misc);
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--spice-subtext);
+.main-yourLibraryX-navLink {
+    border-radius: var(--vg-corner-radius-sm);
+    margin: 4px 0;
+    padding: 0 8px;
+    transition: background-color var(--vg-transition-fast);
 }
 
-/* ===== CARDS ===== */
-.main-card-card {
-    background: var(--spice-card) !important;
-    border-radius: 8px;
-    transition: transform 0.2s ease, box-shadow 0.3s ease;
-}
-.main-card-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+/* ===== DIVIDER & SEPARATOR REMOVAL ===== */
+.main-trackList-trackListHeaderRow {
+    border-bottom: none;
 }
 
-/* ===== BUTTONS ===== */
-.main-playButton-PlayButton,
-.encore-buttonPrimary-background {
-    transition: transform 0.15s ease, box-shadow 0.3s ease;
-}
-.main-playButton-PlayButton:hover,
-.encore-buttonPrimary-background:hover {
-    transform: scale(1.05);
+.main-rootlist-rootlistDivider,
+.main-contextMenu-dividerBefore::before {
+    display: none;
 }
 
-/* ===== NOW PLAYING BAR ===== */
-.Root__now-playing-bar {
-    background-color: var(--spice-player) !important;
+/* ===== HOVER & FOCUS STATES ===== */
+.main-trackList-trackListRow:hover {
+    background-color: rgba(var(--spice-rgb-text), var(--vg-opacity-hover));
+    border-radius: var(--vg-corner-radius-xs);
+    transition: background-color var(--vg-transition-fast);
 }
 
-/* ===== CONTEXT MENUS ===== */
+.main-trackList-active,
+.main-trackList-trackListRow:focus-within {
+    background-color: rgba(var(--spice-rgb-text), var(--vg-opacity-active)) !important;
+    border-radius: var(--vg-corner-radius-xs);
+}
+
+/* ===== BACKDROP-FILTER BLUR ON POPUPS / CONTEXT MENUS / TOOLTIPS ===== */
 .main-contextMenu-menu {
-    background-color: var(--spice-card) !important;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background-color: rgba(var(--spice-rgb-card), 0.85) !important;
+    border-radius: var(--vg-corner-radius);
+    border: 1px solid rgba(var(--spice-rgb-text), 0.08);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+[data-tippy-root] .tippy-content {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background-color: rgba(var(--spice-rgb-card), 0.9) !important;
+    border-radius: var(--vg-corner-radius-sm);
+    border: 1px solid rgba(var(--spice-rgb-text), 0.08);
+}
+
+/* Modals */
+.GenericModal,
+.main-popupModal-content,
+.ReactModalPortal .ReactModal__Content {
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background-color: rgba(var(--spice-rgb-card), 0.92) !important;
+    border-radius: var(--vg-corner-radius);
+    border: 1px solid rgba(var(--spice-rgb-text), 0.08);
+}
+
+/* ===== ARTIST FULL-BLEED HEADER ===== */
+.main-entityHeader-container.main-entityHeader-withBackgroundImage,
+.main-entityHeader-background {
+    min-height: 100vh;
+}
+
+/* ===== PLAYER CONTROLS CONSISTENT SIZING ===== */
+.main-playPauseButton-button {
+    background-color: transparent !important;
+}
+
+.main-playPauseButton-button svg {
+    width: 28px !important;
+    height: 28px !important;
+    color: var(--spice-button);
+}
+
+.player-controls__left svg,
+.player-controls__right svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ===== TAB CHIPS / FILTER PILLS ===== */
+.main-home-filterChipsSection button {
+    border-radius: 20px;
+    transition: background-color var(--vg-transition-fast),
+                color var(--vg-transition-fast);
 }
 
 /* ===== SEARCH INPUT ===== */
 .x-searchInput-searchInputSearchIcon svg,
 .x-searchInput-searchInputClearButton svg {
-  color: var(--spice-text);
+    color: var(--spice-text);
 }
 
 /* ===== PROFILE WIDGET ===== */
 .main-userWidget-box {
-  color: var(--spice-subtext);
-  background-color: transparent !important;
+    color: var(--spice-subtext);
+    background-color: transparent !important;
 }
 
-/* ===== LIBRARY TABS ===== */
-.main-yourLibraryX-navLink {
-    border-radius: 8px;
-    margin: 6px 0;
-    padding: 0 10px;
+/* ===== PROGRESS TOOLTIP (created by theme.js) ===== */
+.playback-bar .vg-prog-tooltip {
+    position: absolute;
+    min-width: 100px;
+    width: unset;
+    height: 24px;
+    top: -32px;
+    padding: 0 8px;
+    border-radius: var(--vg-corner-radius-sm);
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.75rem;
+    line-height: 24px;
+    color: var(--spice-main);
+    background-color: var(--spice-button);
+    opacity: 0;
+    transition: opacity var(--vg-transition-fast), left 0.2s linear;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+.playback-bar:hover .vg-prog-tooltip {
+    opacity: 1;
+}
+
+/* ===== SCROLL FADE (set by theme.js via data attributes) ===== */
+[fade="bottom"] {
+    -webkit-mask-image: linear-gradient(to bottom, #000 85%, transparent);
+    mask-image: linear-gradient(to bottom, #000 85%, transparent);
+}
+
+[fade="top"] {
+    -webkit-mask-image: linear-gradient(to top, #000 85%, transparent);
+    mask-image: linear-gradient(to top, #000 85%, transparent);
+}
+
+[fade="full"] {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 90%, transparent);
 }
