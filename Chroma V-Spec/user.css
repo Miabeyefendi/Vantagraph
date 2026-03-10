@@ -167,6 +167,18 @@ h1, h2, h3,
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
+/* ===== SEARCH INPUT ===== */
+.x-searchInput-searchInputSearchIcon svg,
+.x-searchInput-searchInputClearButton svg {
+  color: var(--spice-text);
+}
+
+/* ===== PROFILE WIDGET ===== */
+.main-userWidget-box {
+  color: var(--spice-subtext);
+  background-color: transparent !important;
+}
+
 /* ===== LIBRARY TABS ===== */
 .main-yourLibraryX-navLink {
     border-radius: 8px;
