@@ -4,6 +4,9 @@
  * https://github.com/Miabeyefendi/Vantagraph
  * ============================================================ */
 
+/* ===== FONT IMPORTS — must be first per CSS spec ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
+
 /* ===== DESIGN SYSTEM VARIABLES ===== */
 :root {
     --vg-corner-radius: 10px;
@@ -24,9 +27,6 @@
     --spice-highlight: var(--spice-main-secondary);
     --spice-highlight-elevated: var(--spice-card);
 }
-
-/* ===== FONT IMPORTS ===== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&display=swap');
 
 @font-face {
     font-family: 'JetBrains Mono';
@@ -127,8 +127,9 @@ h1, h2, h3,
     background: rgba(var(--spice-rgb-subtext), 0.7);
 }
 
-/* ===== CARD SYSTEM — PLAY BUTTON BUG FIX ===== */
+/* ===== CARD SYSTEM — DEPTH + PLAY BUTTON HOVER REVEAL ===== */
 .main-card-card {
+    background-color: rgba(var(--spice-rgb-card), 0.6) !important;
     border-radius: var(--vg-corner-radius);
     transition: background-color var(--vg-transition-normal),
                 transform var(--vg-transition-normal),
@@ -137,39 +138,44 @@ h1, h2, h3,
 }
 
 .main-card-card:hover {
+    background-color: rgba(var(--spice-rgb-card), 0.9) !important;
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
-/* FIX: Remove background from play button CONTAINER to prevent green glow leak */
+/* Play button container — hidden by default, revealed on card hover */
 .main-card-PlayButtonContainer {
+    opacity: 0;
     background-color: transparent !important;
+    transition: opacity var(--vg-transition-normal), transform var(--vg-transition-normal);
+    filter: drop-shadow(0 0 8px rgba(0, 0, 0, 0.4));
 }
 
-/* Style the actual play button inside the container */
+.main-card-card:hover .main-card-PlayButtonContainer,
+.main-card-card:focus-within .main-card-PlayButtonContainer {
+    opacity: 1;
+    transform: translateY(-4px);
+}
+
+/* Style the actual play button */
 .main-card-PlayButtonContainer button,
-.main-card-PlayButtonContainer .ButtonInner-medium-iconOnly,
-.view-homeShortcutsGrid-PlayButtonContainer button,
-.view-homeShortcutsGrid-PlayButtonContainer .ButtonInner-small-iconOnly,
-.view-homeShortcutsGrid-PlayButtonContainer .ButtonInner-medium-iconOnly {
+.main-card-PlayButtonContainer .ButtonInner-medium-iconOnly {
     background-color: var(--spice-button) !important;
     color: var(--spice-main) !important;
     border-radius: 50% !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     transition: transform var(--vg-transition-fast),
-                opacity var(--vg-transition-fast),
                 box-shadow var(--vg-transition-fast) !important;
 }
 
-.main-card-PlayButtonContainer button:hover,
-.view-homeShortcutsGrid-PlayButtonContainer button:hover {
+.main-card-PlayButtonContainer button:hover {
     transform: scale(1.08) !important;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* Home shortcut cards (Good Morning section) */
 .view-homeShortcutsGrid-shortcut {
-    background-color: rgba(var(--spice-rgb-card), 0.6) !important;
+    background-color: rgba(var(--spice-rgb-card), 0.5) !important;
     border-radius: var(--vg-corner-radius);
     backdrop-filter: blur(var(--vg-blur-amount));
     -webkit-backdrop-filter: blur(var(--vg-blur-amount));
@@ -179,6 +185,66 @@ h1, h2, h3,
 
 .view-homeShortcutsGrid-shortcut:hover {
     background-color: rgba(var(--spice-rgb-card), 0.8) !important;
+}
+
+/* Home shortcut play buttons — hidden by default, revealed on hover */
+.view-homeShortcutsGrid-PlayButtonContainer {
+    opacity: 0;
+    transition: opacity var(--vg-transition-normal);
+}
+
+.view-homeShortcutsGrid-shortcut:hover .view-homeShortcutsGrid-PlayButtonContainer {
+    opacity: 1;
+}
+
+.view-homeShortcutsGrid-PlayButtonContainer button,
+.view-homeShortcutsGrid-PlayButtonContainer .ButtonInner-small-iconOnly,
+.view-homeShortcutsGrid-PlayButtonContainer .ButtonInner-medium-iconOnly {
+    background-color: var(--spice-button) !important;
+    color: var(--spice-main) !important;
+    border-radius: 50% !important;
+}
+
+/* ===== NOW-PLAYING WIDGET — WIDER TRACK INFO (6K Labs Amuse style) ===== */
+.main-nowPlayingWidget-nowPlaying {
+    min-width: 220px;
+    max-width: 350px;
+    flex: 1 1 30%;
+}
+
+/* Track name — bold and slightly larger */
+.main-trackInfo-name {
+    font-size: 0.9375rem !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.01em;
+}
+
+/* Artist name — uses subtext color */
+.main-trackInfo-artists a,
+.main-trackInfo-artists span {
+    color: var(--spice-subtext) !important;
+    font-size: 0.8125rem;
+}
+
+/* Cover art — slightly larger for prominence */
+.main-coverSlotCollapsed-container {
+    width: 56px !important;
+    height: 56px !important;
+}
+
+.main-coverSlotCollapsed-container .cover-art {
+    width: 56px !important;
+    height: 56px !important;
+}
+
+/* ===== TOP-RIGHT BUTTON AREA COLOR FIX ===== */
+.main-topBar-container .main-userWidget-box,
+.main-topBar-container button {
+    color: var(--spice-text);
+}
+
+.main-topBar-container .ExtraControls {
+    color: var(--spice-subtext);
 }
 
 /* ===== PROGRESS BAR — RELOCATED TO TOP OF PLAYER BAR ===== */
@@ -391,6 +457,21 @@ h1, h2, h3,
 }
 
 /* ===== TAB CHIPS / FILTER PILLS ===== */
+.x-filterChip-filterChip {
+    border-radius: 20px;
+    transition: background-color var(--vg-transition-fast),
+                color var(--vg-transition-fast);
+}
+
+.x-filterChip-filterChip:not(.x-filterChip-selected) {
+    background-color: rgba(var(--spice-rgb-text), 0.08);
+}
+
+.x-filterChip-selected {
+    background-color: var(--spice-button) !important;
+    color: var(--spice-main) !important;
+}
+
 .main-home-filterChipsSection button {
     border-radius: 20px;
     transition: background-color var(--vg-transition-fast),
@@ -407,6 +488,19 @@ h1, h2, h3,
 .main-userWidget-box {
     color: var(--spice-subtext);
     background-color: transparent !important;
+}
+
+/* ===== ARTIST PAGE — SUBTEXT READABILITY ===== */
+/* Monthly listeners, artist bio, and other metadata text */
+.main-entityHeader-detailsText,
+.main-entityHeader-subtitle,
+.main-entityHeader-metaData span,
+.artists-discography-header__filters-count,
+[data-testid="monthly-listeners-label"],
+.main-type-mesto,
+.encore-text-body-small,
+.main-artistAboutSection-biographyBody {
+    color: var(--spice-subtext) !important;
 }
 
 /* ===== PROGRESS TOOLTIP (created by theme.js) ===== */
