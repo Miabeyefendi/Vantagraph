@@ -49,3 +49,44 @@ Make sure you have [Spicetify CLI](https://spicetify.app/docs/getting-started/in
 ```powershell
 git clone https://github.com/YOUR_USERNAME/vantagraph.git
 Copy-Item -Path ".\vantagraph\*" -Destination "$env:appdata\spicetify\Themes\Vantagraph" -Recurse
+
+### Linux / macOS (Bash)
+```bash
+git clone https://github.com/YOUR_USERNAME/vantagraph.git
+cp -r vantagraph ~/.config/spicetify/Themes/Vantagraph
+```
+
+---
+
+## ⚙️ Usage
+
+Once the theme folder is placed in your Spicetify Themes directory, run the following commands to apply it:
+
+```bash
+# Set Vantagraph as the main theme
+spicetify config current_theme Vantagraph
+
+# Choose your color scheme (Options: CineNox, Anthrafall, Prussian-Eerie, Chroma-V-Spec, Aura-Nibel)
+spicetify config color_scheme CineNox
+
+# Apply changes to Spotify
+spicetify apply
+```
+
+To change the scheme later, simply run:
+```bash
+spicetify config color_scheme Chroma-V-Spec
+spicetify apply
+```
+
+---
+
+## 🖋️ Fonts Requirement
+
+To fully experience the "Tabular Figures" and perfect spacing, this theme imports fonts directly via Google Fonts in the `user.css`. You **do not** need to install them locally on your OS. 
+
+*If you prefer local fonts, ensure you have **Inter**, **Manrope**, and **JetBrains Mono** installed on your system.*
+
+## 🤝 Credits & Inspiration
+- Inspired by the clean codebase of [Lucid](https://github.com/sanoojes/spicetify-lucid).
+- Color palettes inspired by Letterboxd, Nissan Skyline aesthetics, and Ori and the Will of the Wisps.
