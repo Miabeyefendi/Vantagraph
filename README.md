@@ -47,12 +47,12 @@ Make sure you have [Spicetify CLI](https://spicetify.app/docs/getting-started/in
 
 ### Windows (PowerShell)
 ```powershell
-git clone https://github.com/YOUR_USERNAME/vantagraph.git
+git clone https://github.com/Miabeyefendi/vantagraph.git
 Copy-Item -Path ".\vantagraph\*" -Destination "$env:appdata\spicetify\Themes\Vantagraph" -Recurse
 
 ### Linux / macOS (Bash)
 ```bash
-git clone https://github.com/YOUR_USERNAME/vantagraph.git
+git clone https://github.com/Miabeyefendi/vantagraph.git
 cp -r vantagraph ~/.config/spicetify/Themes/Vantagraph
 ```
 
