@@ -1,0 +1,275 @@
+# ==============================================================================
+# Miabeyefendi - Universal .gitignore Template
+# https://github.com/Miabeyefendi
+# Comments are kept in English on purpose: this is the universal convention for
+# shared dotfiles. Trim sections you do not use; ignoring a few extra patterns
+# is harmless, but never delete the "Environment & Secrets" block.
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Operating system cruft
+# ------------------------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+*.stackdump
+
+# macOS
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.DocumentRevisions-V100
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+Icon
+
+# Linux
+*~
+.directory
+.Trash-*
+.nfs*
+
+# ------------------------------------------------------------------------------
+# Compiled binaries / shared libraries (top level, language-agnostic)
+# ------------------------------------------------------------------------------
+*.exe
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# ------------------------------------------------------------------------------
+# Environment & secrets (CRITICAL - never commit real credentials)
+# ------------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+!.env.sample
+*.local
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+id_rsa
+id_dsa
+secrets.json
+credentials.json
+client_secret*.json
+service-account*.json
+*.tfvars
+!*.tfvars.example
+
+# ------------------------------------------------------------------------------
+# Python
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+# Virtual environments
+env/
+venv/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+# Testing / coverage / type checking
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+htmlcov/
+.cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+# Notebooks
+.ipynb_checkpoints/
+
+# ------------------------------------------------------------------------------
+# Node / JavaScript / TypeScript / Web / Browser extensions
+# ------------------------------------------------------------------------------
+node_modules/
+jspm_packages/
+.npm/
+.yarn/
+.pnp.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+lerna-debug.log*
+# Build output
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.astro/
+.vite/
+.turbo/
+.parcel-cache/
+.cache/
+storybook-static/
+# Browser extension packaged output
+extension/dist/
+web-ext-artifacts/
+*.xpi
+*.crx
+*.pem
+# Framework / tooling caches
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.vercel/
+.netlify/
+
+# ------------------------------------------------------------------------------
+# C# / .NET
+# ------------------------------------------------------------------------------
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+*.cache
+*.nupkg
+*.snupkg
+.vs/
+project.lock.json
+artifacts/
+
+# ------------------------------------------------------------------------------
+# C / C++
+# ------------------------------------------------------------------------------
+*.o
+*.ko
+*.obj
+*.elf
+*.lib
+*.a
+*.la
+*.lo
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+*.gch
+*.pch
+*.d
+
+# ------------------------------------------------------------------------------
+# Rust
+# ------------------------------------------------------------------------------
+/target/
+**/*.rs.bk
+*.pdb
+
+# ------------------------------------------------------------------------------
+# Go
+# ------------------------------------------------------------------------------
+*.test
+*.prof
+/vendor/
+bin/
+
+# ------------------------------------------------------------------------------
+# Java / Kotlin / JVM
+# ------------------------------------------------------------------------------
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+.gradle/
+.kotlin/
+
+# ------------------------------------------------------------------------------
+# Editors & IDEs
+# ------------------------------------------------------------------------------
+# VS Code (keep shared settings, ignore the rest)
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+.history/
+# JetBrains (IntelliJ, PyCharm, Rider, WebStorm, etc.)
+.idea/
+*.iml
+*.ipr
+*.iws
+# Vim / Emacs / misc
+*.swp
+*.swo
+*~
+\#*\#
+.\#*
+
+# ------------------------------------------------------------------------------
+# Containers / infra / tooling
+# ------------------------------------------------------------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+docker-compose.override.yml
+
+# ------------------------------------------------------------------------------
+# Logs, temp files, archives, databases
+# ------------------------------------------------------------------------------
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+*.orig
+*.sqlite
+*.sqlite3
+*.db

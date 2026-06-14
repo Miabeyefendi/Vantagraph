@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Vantagraph",
+    "description": "Modern, modular Spicetify theme: 11 hand-tuned palettes (5 dark + 6 light), in-app settings panel, custom icon set, PiP lyric karaoke, taskbar player, scroll-wheel volume, and per-track loop tool.",
+    "preview": "screenshots/1.MainShowcaseForDark.png",
+    "readme": "README.md",
+    "usercss": "user.css",
+    "schemes": "color.ini",
+    "include": ["theme.js"],
+    "authors": [
+      {
+        "name": "Miabeyefendi",
+        "url": "https://github.com/Miabeyefendi"
+      }
+    ],
+    "tags": [
+      "dark",
+      "light",
+      "modular",
+      "custom-icons",
+      "lyrics",
+      "miniplayer",
+      "taskbar",
+      "settings-panel",
+      "loop",
+      "volume",
+      "multi-theme",
+      "vantablack",
+      "glass"
+    ]
+  }
+]
