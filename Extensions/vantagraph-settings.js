@@ -352,6 +352,7 @@
           { k: "snippet-hide-connect",         l: "Connect Device Button" },
           { k: "snippet-hide-volume",          l: "Volume Bar" },
           { k: "snippet-hide-np-widget",       l: "Now Playing Widget" },
+          { k: "snippet-hide-next-track",      l: "Next Track Widget" },
         ].forEach(s => {
           inner.appendChild(tog(s.l, getSetting(s.k, "false") === "true", v => applySetting(s.k, String(v))));
         });
@@ -458,6 +459,7 @@
         "vantagraph-snippet-hide-connect",
         "vantagraph-snippet-hide-volume",
         "vantagraph-snippet-hide-np-widget",
+        "vantagraph-snippet-hide-next-track",
         // hide elements (ads + home sections)
         "vantagraph-snippet-hide-ads-banner",
         "vantagraph-snippet-hide-podcasts",

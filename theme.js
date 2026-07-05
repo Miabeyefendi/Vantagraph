@@ -395,23 +395,28 @@
       'button[aria-label*="Remove"]',
     ];
 
+    const defaultColor = getComputedStyle(document.documentElement)
+      .getPropertyValue("--spice-subtext").trim() || "";
+
     function fixHeartPaths() {
       selectors.forEach(sel => {
         document.querySelectorAll(sel).forEach(btn => {
+          const liked = btn.getAttribute("aria-checked") === "true";
+          const color = liked ? heartColor : defaultColor;
           // overwrite inline fill/stroke (React would re-apply if removed)
           btn.querySelectorAll("svg path, svg circle").forEach(el => {
-            if (el.style.fill) el.style.setProperty("fill", heartColor, "important");
+            if (el.style.fill) el.style.setProperty("fill", color, "important");
             if (el.style.stroke && el.style.stroke.includes("transparent")) {
-              el.style.setProperty("stroke", heartColor, "important");
+              el.style.setProperty("stroke", color, "important");
             }
           });
           // currentColor inherit on svg+btn
           const svg = btn.querySelector("svg");
           if (svg) {
-            svg.style.setProperty("color", heartColor, "important");
-            svg.style.setProperty("fill", heartColor, "important");
+            svg.style.setProperty("color", color, "important");
+            svg.style.setProperty("fill", color, "important");
           }
-          btn.style.setProperty("color", heartColor, "important");
+          btn.style.setProperty("color", color, "important");
         });
       });
     }
@@ -1136,7 +1141,8 @@
       case "snippet-hide-repeat":
       case "snippet-hide-connect":
       case "snippet-hide-volume":
-      case "snippet-hide-np-widget": {
+      case "snippet-hide-np-widget":
+      case "snippet-hide-next-track": {
         const btnCss = {
           "snippet-hide-friend-activity": "button[aria-label='Friend Activity'],button[aria-label='Friend Activity'] ~ *{display:none !important}",
           "snippet-hide-whats-new": "button[aria-label=\"What's New\"],button[aria-label=\"What's New\"] ~ *{display:none !important}",
@@ -1149,6 +1155,7 @@
           "snippet-hide-connect": ".Root__now-playing-bar button[aria-label='Connect to a device'],.Root__now-playing-bar button[aria-label*='Connect to']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-volume": ".Root__now-playing-bar [data-testid='volume-bar'],.Root__now-playing-bar button[data-testid='volume-bar-toggle-mute-button']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-np-widget": ".Root__now-playing-bar [data-testid='now-playing-widget'],.Root__now-playing-bar [data-testid='cover-art-button']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
+          "snippet-hide-next-track": ".vg-next-track-card{display:none !important}",
         };
         const sid = "vantagraph-" + key;
         let sel = document.getElementById(sid);
@@ -2044,7 +2051,7 @@
       "snippet-hide-friend-activity", "snippet-hide-whats-new", "snippet-hide-fullscreen",
       "snippet-hide-lyrics-btn", "snippet-hide-miniplayer", "snippet-hide-queue-btn",
       "snippet-hide-shuffle", "snippet-hide-repeat", "snippet-hide-connect",
-      "snippet-hide-volume", "snippet-hide-np-widget", "snippet-hide-podcasts",
+      "snippet-hide-volume", "snippet-hide-np-widget", "snippet-hide-next-track", "snippet-hide-podcasts",
       "snippet-hide-promo-card", "snippet-hide-mood-recs",
       "snippet-hide-made-for-you", "snippet-hide-recents", "snippet-hide-top-mixes",
       "snippet-hide-jump-back", "snippet-hide-rec-stations", "snippet-hide-new-releases",

@@ -848,21 +848,11 @@ button[data-testid="control-button-playpause"]:hover>span {
   background-color: var(--spice-bar-bg, var(--spice-progress-bg-alpha)) !important;
 }
 
-/* heart fix: like/save button icon (scoped to button, not all subdued text) */
-button[data-testid="add-button"] svg,
-button[aria-label*="Save"] svg,
-button[aria-label*="Saved"] svg,
-button[aria-label*="save"] svg,
-button[aria-label*="Liked"] svg,
-button[aria-label*="liked"] svg,
-button[data-testid="add-button"] path {
-  fill: var(--spice-heart, currentColor) !important;
-}
-
-/* heart fix: filled (active) state */
-button[data-testid="add-button"][aria-checked="true"] svg,
-button[aria-label*="Saved"] svg,
-button[aria-label*="saved"] svg {
+/* heart fix: only paint red when actually liked (aria-checked=true) */
+button[aria-checked="true"][data-testid="add-button"] svg,
+button[aria-checked="true"][aria-label*="Save"] svg,
+button[aria-checked="true"][aria-label*="Like"] svg,
+button[aria-checked="true"][data-testid="add-button"] path {
   fill: var(--spice-heart, var(--spice-accent)) !important;
 }
 
@@ -1124,10 +1114,14 @@ button[aria-label*="saved"] svg {
 }
 
 /* heart/save icons: use --spice-heart (all themes). Scoped to icons
-   replaced by vantagraph-icons.js (mask-image + background:currentColor). */
-svg[data-vg-icon="save-library"],
-svg[data-vg-icon="add-liked-16"],
-svg[data-vg-icon="add-liked-24"] {
+   replaced by vantagraph-icons.js (mask-image + background:currentColor).
+   save-library = playlist-level save, always accent. add-liked-* = per-track
+   like, only red when actually liked (aria-checked=true). */
+svg[data-vg-icon="save-library"] {
+  color: var(--spice-heart) !important;
+}
+button[aria-checked="true"] svg[data-vg-icon="add-liked-16"],
+button[aria-checked="true"] svg[data-vg-icon="add-liked-24"] {
   color: var(--spice-heart) !important;
 }
 
