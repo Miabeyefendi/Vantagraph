@@ -1,0 +1,55 @@
+name: Feature request
+description: Suggest something the project does not do yet.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is a personal project. Suggestions are welcome, but nothing here is
+        a commitment and the roadmap moves with my own priorities.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before requesting
+      options:
+        - label: I searched the existing issues and this is not a duplicate.
+          required: true
+        - label: I checked the Roadmap section of the README.
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: >
+        What are you trying to do that is hard or impossible right now? Describe
+        the situation, not the solution you already have in mind.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What you tried instead
+      description: Workarounds, other tools, settings that almost worked.
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: How big do you think this is?
+      options:
+        - A setting or a small tweak
+        - A new feature inside something that already exists
+        - A whole new capability
+        - No idea
+    validations:
+      required: true

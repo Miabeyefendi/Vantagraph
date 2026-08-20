@@ -28,7 +28,7 @@ agree that:
   trademark, or other rights.
 - Your contribution is licensed under the project's license, the **GNU Affero
   General Public License v3.0 (AGPL-3.0)**, the same terms as the rest of the
-  project. See the LICENSE file.
+  project. See the LICENSE and NOTICE files.
 - You retain copyright on your own contribution; you are simply licensing it to
   the project (and its users) under the AGPL-3.0. There is no separate copyright
   assignment.
@@ -140,7 +140,7 @@ kabul edersin:
   başkasının telif, patent, ticari marka ya da diğer haklarını ihlal etmiyor.
 - Katkın, projenin lisansı olan **GNU Affero General Public License v3.0
   (AGPL-3.0)** altında, projenin geri kalanıyla aynı şartlarla lisanslanır. Bkz.
-  LICENSE dosyası.
+  LICENSE ve NOTICE dosyaları.
 - Kendi katkının telif hakkı sende kalır; onu yalnızca AGPL-3.0 altında projeye
   (ve kullanıcılarına) lisanslamış olursun. Ayrı bir telif devri yoktur.
 

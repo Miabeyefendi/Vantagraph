@@ -1,0 +1,88 @@
+name: Bug report
+description: Something works differently than it should.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report this.
+
+        **Before you post:** strip every token, cookie, session file, account
+        name and password out of anything you paste below. Logs from this
+        project can contain them. An issue is public and permanent.
+
+        Found a security vulnerability instead? Do not open an issue. Follow the
+        private process in [SECURITY.md](../blob/main/SECURITY.md).
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before reporting
+      options:
+        - label: I searched the existing issues and this is not a duplicate.
+          required: true
+        - label: I am on the latest release.
+          required: true
+        - label: I removed all credentials from the logs I am pasting.
+          required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Which release are you running?
+      placeholder: "v1.2.3"
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, and the host app or runtime with its version.
+      placeholder: "Windows 11, Node.js 20.11, Chrome 122"
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happens
+    attributes:
+      label: What happens
+      description: Describe the actual behaviour, not the cause you suspect.
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps, starting from a fresh launch.
+      placeholder: |
+        1. Open ...
+        2. Click ...
+        3. See ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: >
+        Relevant log output. This is rendered as code, no backticks needed.
+        Check it once more for tokens before you submit.
+      render: shell
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots, a recording, or context that does not fit above.

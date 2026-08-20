@@ -1,0 +1,12 @@
+# Removes the "blank issue" escape hatch, so every report goes through a form.
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/Miabeyefendi/Vantagraph/security/advisories/new
+    about: Never report a vulnerability in a public issue. Use a private advisory.
+  - name: Question or idea
+    url: https://github.com/Miabeyefendi/Vantagraph/discussions
+    about: For usage questions and open-ended ideas, start a discussion instead.
+  - name: Read the tutorial first
+    url: https://github.com/Miabeyefendi/Vantagraph/blob/main/TUTORIAL.md
+    about: Every feature and every setting is documented there.

@@ -51,7 +51,7 @@ Miabeyefendi projects:
 2. **Commercial exploitation and license abuse.** Taking this independent,
    open-source work and embedding it into a closed or commercial product (such as
    a SaaS) in violation of the AGPL-3.0, to gain unfair financial advantage. See
-   the LICENSE file.
+   the LICENSE and NOTICE files.
 3. **Toxic ego.** Using your technical knowledge as a weapon to belittle, crush,
    or demoralize other people, or to sabotage the project.
 4. **Insults, bullying, and harassment.** Personal insults, slurs, threats,
@@ -145,7 +145,7 @@ sonuçlanabilir:
    ihlaldir.
 2. **Ticari sömürü ve lisans suistimali.** Bu bağımsız, açık kaynaklı eseri alıp;
    AGPL-3.0'ı ihlal ederek kapalı veya ticari bir ürüne (örneğin SaaS) gömerek
-   haksız maddi kazanç sağlamak. Bkz. LICENSE dosyası.
+   haksız maddi kazanç sağlamak. Bkz. LICENSE ve NOTICE dosyaları.
 3. **Toksik ego.** Teknik bilgini; başkalarını küçük düşürmek, ezmek ya da
    projeyi sabote etmek için bir silah gibi kullanmak.
 4. **Hakaret, zorbalık ve taciz.** Herhangi bir katılımcıya veya bana yönelik

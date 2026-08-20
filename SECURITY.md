@@ -35,13 +35,13 @@ Letterboxd, Steam, Discord, GitHub, and similar). Because of this:
   are not affiliated with, endorsed by, or partnered with the maintainer. All
   trademarks belong to their respective owners and are referenced only for
   identification and interoperability (nominative fair use).
-- **Warranty and liability** are governed by the LICENSE file (AGPL-3.0 plus the
-  supplemental disclaimer). The software is provided "as is", with no warranty,
+- **Warranty and liability** are governed by the LICENSE file (AGPL-3.0) and the
+  supplemental disclaimer in the NOTICE file. The software is provided "as is", with no warranty,
   and the maintainer's liability is excluded to the maximum extent permitted by
   applicable law.
 
 This SECURITY.md does not create any new warranty, support obligation, or
-liability beyond what the LICENSE already states.
+liability beyond what the LICENSE and NOTICE files already state.
 
 ### 2. Supported versions
 
@@ -152,11 +152,12 @@ tarayıcı eklentileri veya araçlardır. Bu nedenle:
   üçüncü taraf platformlar; yürütücü ile bağlı, onaylanmış veya ortak değildir.
   Tüm ticari markalar ilgili sahiplerine aittir ve yalnızca tanımlama ile
   birlikte çalışabilirlik amacıyla anılmıştır (nominatif/dürüst kullanım).
-- **Garanti ve sorumluluk**, LICENSE dosyası (AGPL-3.0 ve ek feragatname) ile
-  düzenlenir. Yazılım "olduğu gibi", garanti olmaksızın sunulur ve yürütücünün
+- **Garanti ve sorumluluk**, LICENSE dosyası (AGPL-3.0) ve NOTICE dosyasındaki ek
+  feragatname ile düzenlenir. Yazılım "olduğu gibi", garanti olmaksızın sunulur ve yürütücünün
   sorumluluğu, uygulanabilir yasanın izin verdiği azami ölçüde hariç tutulur.
 
-Bu SECURITY.md; LICENSE'in hâlihazırda belirttiğinin ötesinde hiçbir yeni
+Bu SECURITY.md; LICENSE ve NOTICE dosyalarının hâlihazırda belirttiğinin ötesinde
+hiçbir yeni
 garanti, destek yükümlülüğü veya sorumluluk yaratmaz.
 
 ### 2. Desteklenen sürümler
