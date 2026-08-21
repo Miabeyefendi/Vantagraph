@@ -122,12 +122,12 @@
     };
   }
 
-  // 3b. Static CSS — color-INDEPENDENT animations. Injected once into each window as #staticStyles
+  // 3b. Static CSS - color-INDEPENDENT animations. Injected once into each window as #staticStyles
   // and never rewritten by the theme observer, so per-song color updates can't restart a running
   // animation (this is what made vinyl/effects appear frozen or stop on song change).
   function generateStaticStyles() {
     return `
-    /* Active-effect presets (transforms only — no colors) */
+    /* Active-effect presets (transforms only - no colors) */
     .vgfx-none  { transform:scale(1.04); }
     @keyframes lyricPulse { 0%,100%{transform:scale(1.04)} 50%{transform:scale(1.11)} }
     .vgfx-pulse { animation:lyricPulse 1.8s ease-in-out infinite; }
@@ -206,7 +206,7 @@
     /* NOTE: the 8 .vgfx-* effect keyframes + vinyl spin live in #staticStyles (generateStaticStyles),
        a stylesheet the theme observer never rewrites, so color updates can't restart them mid-play. */
 
-    /* Word-sync (karaoke only — off karaoke the whole active line is highlighted) */
+    /* Word-sync (karaoke only - off karaoke the whole active line is highlighted) */
     .lyric-word { display:inline-block; transition:color .12s, text-shadow .12s; }
     .karaoke .lyric.active .lyric-word { color:${c.subtext}; }
     .karaoke .lyric.active .lyric-word.spoken { color:${c.accent}; }
@@ -231,7 +231,7 @@
     .spinner { width:28px; height:28px; border:3px solid ${c.main}; border-top-color:${c.accent}; border-radius:50%; animation:spin .7s linear infinite; }
     @keyframes spin { to{transform:rotate(360deg)} }
 
-    /* Vinyl — spin/border-radius live in #staticStyles; only the colored rings are theme-bound here */
+    /* Vinyl - spin/border-radius live in #staticStyles; only the colored rings are theme-bound here */
     .vinyl .album-art { box-shadow:0 0 0 3px ${c.main}, 0 0 0 5px ${c.highlight}, 0 4px 20px #000; }
 
     /* Seekbar */
@@ -250,7 +250,7 @@
     .pip-ctx-menu button { display:block; width:100%; padding:7px 12px; background:none; border:none; color:${c.text}; font-size:12px; font-family:inherit; text-align:left; cursor:pointer; }
     .pip-ctx-menu button:hover { background:${c.highlight}; color:${c.accent}; }
 
-    /* Controls — buttons on top, volume on its own row directly below, bar spanning the
+    /* Controls - buttons on top, volume on its own row directly below, bar spanning the
        same width as the button group (volume row inherits the group's width). */
     .controls { display:flex; align-items:center; justify-content:center; padding:7px 12px 9px; background:${c.player}; flex-shrink:0; -webkit-app-region:no-drag; app-region:no-drag; }
     .ctrl-wrap { display:flex; flex-direction:column; align-items:center; gap:8px; max-width:100%; }
@@ -464,7 +464,7 @@
     </body></html>`);
     doc.close();
 
-    // Bridge — assign AFTER doc.close so document.open() can't wipe it.
+    // Bridge - assign AFTER doc.close so document.open() can't wipe it.
     // Methods close over extension scope, so they mutate the real state + live PiP DOM.
     win.__vg = {
       toggle(key) {
@@ -714,7 +714,7 @@
       const seekbar = doc.getElementById('seekbar'), seekTotal = doc.getElementById('seekTotal');
       const d = Spicetify.Player.getDuration() || 0;
       if (seekbar) seekbar.max = d; if (seekTotal) seekTotal.textContent = formatTime(d);
-      // Vinyl no longer needs a reflow on song change — the spin lives in #staticStyles which the
+      // Vinyl no longer needs a reflow on song change - the spin lives in #staticStyles which the
       // theme observer never rewrites, and an <img> src swap doesn't reset a CSS animation.
     }
   }
@@ -765,7 +765,7 @@
         lineContent = l.syllables.map(s => `<span class="lyric-word" data-start="${s.startTime}" data-end="${s.endTime}">${escapeHtml(s.text)}</span>`).join('');
       } else {
         // Derive word timings: distribute across line span. End is line end if present,
-        // otherwise next line start, otherwise +3s — so karaoke advances word-by-word.
+        // otherwise next line start, otherwise +3s - so karaoke advances word-by-word.
         const words   = l.text.split(/(\s+)/);
         const wordCnt = words.filter(w => w.trim()).length;
         const lineEnd = (l.endTime && l.endTime > l.startTime)
@@ -842,7 +842,7 @@
         el.classList.toggle('past', idx < activeIdx);
       }
 
-      // Karaoke word fill — uses RAW time (no lead) so the first word lands on the beat,
+      // Karaoke word fill - uses RAW time (no lead) so the first word lands on the beat,
       // not 150ms early. Current word glows, prior words stay lit. Karaoke mode only.
       const words = el.querySelectorAll('.lyric-word');
       if (karaokeMode && shouldActive) {
@@ -866,7 +866,7 @@
       }
     });
 
-    // Effect classes — recompute only when the target actually changes (key-diffed),
+    // Effect classes - recompute only when the target actually changes (key-diffed),
     // so loops keep playing. 'all' scope omits the index so it applies once and never restarts.
     const fxKey = effectScope === 'all'
       ? `all|${activeAnimation}`
@@ -897,7 +897,7 @@
     rafId = requestAnimationFrame(loop);
   }
 
-  // 16. live theme refresh — ONLY when colors actually change.
+  // 16. live theme refresh - ONLY when colors actually change.
   // Spotify mutates documentElement.style frequently (color extraction, vars). Rewriting the
   // PiP <style> on every mutation restarts all CSS animations from frame 0, so effects never
   // visibly play. Diffing the resolved theme colors avoids needless rewrites.
@@ -911,7 +911,7 @@
   });
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
 
-  // 17. topbar — single button
+  // 17. topbar - single button
   const LYRIC_ICON = '<svg data-encore-id="icon" role="img" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor"><path d="M14 1.5V11a3 3 0 1 1-2-2.83V4.21L6 5.37V13a3 3 0 1 1-2-2.83V3.5a.5.5 0 0 1 .38-.49l8-2A.5.5 0 0 1 14 1.5z"/></svg>';
   const lyricBtn = new Spicetify.Topbar.Button('Lyric Miniplayer', LYRIC_ICON, openPiP, false, true);
   if (lyricBtn.element) lyricBtn.element.classList.add('vg-topbar-btn');

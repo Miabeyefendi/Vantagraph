@@ -66,7 +66,7 @@
   // -----------------------------------------------------------------------
   console.group(`%cVantagraph Color Debug  [theme: ${themeName}]`, "font-size:14px;font-weight:bold;color:#1ed760;background:#111;padding:2px 6px;border-radius:4px");
 
-  // BLOCK A: Encore tokens — what Spotify sets vs what's computed now
+  // BLOCK A: Encore tokens - what Spotify sets vs what's computed now
   const ENCORE_TOKENS = [
     "--background-base",
     "--background-highlight",
@@ -95,7 +95,7 @@
     "--decorative-subdued",
   ];
 
-  console.group("%c[A] Encore Tokens  — Spotify default → computed (final)", "color:#f0a030;font-weight:bold");
+  console.group("%c[A] Encore Tokens  - Spotify default → computed (final)", "color:#f0a030;font-weight:bold");
   const encoreRows = ENCORE_TOKENS.map(token => {
     const spotifyDefault = encoreDefMap[token] || "(not found in sheet)";
     const computed       = live(token);
@@ -111,13 +111,13 @@
   console.table(encoreRows);
   console.groupEnd();
 
-  // BLOCK B: --spice-* — Spicetify sheet value vs Vantagraph inline override
+  // BLOCK B: --spice-* - Spicetify sheet value vs Vantagraph inline override
   const allSpiceProps = new Set([
     ...Object.keys(spiceSheetMap),
     ...Object.keys(vgInlineMap).filter(p => p.startsWith("--spice-")),
   ]);
 
-  console.group("%c[B] --spice-* vars  — Spicetify (color.ini) → Vantagraph override → computed", "color:#4488ff;font-weight:bold");
+  console.group("%c[B] --spice-* vars  - Spicetify (color.ini) → Vantagraph override → computed", "color:#4488ff;font-weight:bold");
   const spiceRows = [...allSpiceProps].sort().map(prop => {
     const spiceVal = spiceSheetMap[prop]?.value || "(not in sheet)";
     const vgVal    = vgInlineMap[prop]          || "(not overridden)";
@@ -143,8 +143,8 @@
   console.table(vgRows);
   console.groupEnd();
 
-  // BLOCK D: Mismatches — Vantagraph inline != computed (something else winning)
-  console.group("%c[D] Anomalies — inline set but computed differs (higher-specificity rule winning?)", "color:#ff6060;font-weight:bold");
+  // BLOCK D: Mismatches - Vantagraph inline != computed (something else winning)
+  console.group("%c[D] Anomalies - inline set but computed differs (higher-specificity rule winning?)", "color:#ff6060;font-weight:bold");
   let anomalyCount = 0;
   for (const [prop, val] of Object.entries(vgInlineMap)) {
     const computed = live(prop);

@@ -1,5 +1,5 @@
 Vantagraph Color Debug  [theme: R34 Purple]
-VM413:98 [A] Encore Tokens  — Spotify default → computed (final)
+VM413:98 [A] Encore Tokens  - Spotify default → computed (final)
 VM413:111 
 (index)
 token
@@ -32,7 +32,7 @@ Patched by Spice?
 23	'--decorative-base'	'(not found in sheet)'	'#F0EAF8'	'overridden'
 24	'--decorative-subdued'	'(not found in sheet)'	'#292929'	'overridden'
 Array(25)
-VM413:120 [B] --spice-* vars  — Spicetify (color.ini) → Vantagraph override → computed
+VM413:120 [B] --spice-* vars  - Spicetify (color.ini) → Vantagraph override → computed
 VM413:134 
 (index)
 variable
@@ -142,5 +142,5 @@ value
 27	'--spice-text'	'#F0EAF8'
 28	'--spice-window'	'#090C18'
 Array(29)
-VM413:147 [D] Anomalies — inline set but computed differs (higher-specificity rule winning?)
+VM413:147 [D] Anomalies - inline set but computed differs (higher-specificity rule winning?)
 VM413:156   No anomalies found.

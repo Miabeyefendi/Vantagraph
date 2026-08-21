@@ -1228,12 +1228,12 @@
               border: 1px solid rgba(0,255,136,0.3);
               backdrop-filter: blur(4px);
             }
-            body.vg-debug .Root__globalNav::before { content: 'TOPBAR — .Root__globalNav'; }
-            body.vg-debug .Root__nav-bar::before { content: 'LEFT SIDEBAR — #Desktop_LeftSidebar_Id'; }
-            body.vg-debug .Root__main-view::before { content: 'MAIN VIEW — .Root__main-view'; }
-            body.vg-debug .Root__right-sidebar::before { content: 'RIGHT PANEL — .Root__right-sidebar'; }
-            body.vg-debug .Root__now-playing-bar::before { content: 'NOW PLAYING — .Root__now-playing-bar'; }
-            body.vg-debug footer::before { content: 'PLAYER BAR — footer'; }
+            body.vg-debug .Root__globalNav::before { content: 'TOPBAR - .Root__globalNav'; }
+            body.vg-debug .Root__nav-bar::before { content: 'LEFT SIDEBAR - #Desktop_LeftSidebar_Id'; }
+            body.vg-debug .Root__main-view::before { content: 'MAIN VIEW - .Root__main-view'; }
+            body.vg-debug .Root__right-sidebar::before { content: 'RIGHT PANEL - .Root__right-sidebar'; }
+            body.vg-debug .Root__now-playing-bar::before { content: 'NOW PLAYING - .Root__now-playing-bar'; }
+            body.vg-debug footer::before { content: 'PLAYER BAR - footer'; }
 
             body.vg-debug .Root__nav-bar::after,
             body.vg-debug .Root__main-view::after,
@@ -1250,10 +1250,10 @@
               border: 1px solid rgba(255,255,255,0.1);
             }
             body.vg-debug .Root__globalNav::after { content: 'Safe Zone: TOP BAR (Min Risk)'; color: #4ecdc4; }
-            body.vg-debug .Root__nav-bar::after { content: 'Risk: HIGH — Dynamic filtering/resize'; color: #ff6b6b; }
-            body.vg-debug .Root__main-view::after { content: 'Risk: EXTREME — React unmount on route'; color: #ff4444; }
-            body.vg-debug .Root__right-sidebar::after { content: 'Risk: SEVERE — Contextual re-render'; color: #ff9f43; }
-            body.vg-debug .Root__now-playing-bar::after { content: 'Risk: MEDIUM — Horizontal overflow'; color: #ffe66d; }
+            body.vg-debug .Root__nav-bar::after { content: 'Risk: HIGH - Dynamic filtering/resize'; color: #ff6b6b; }
+            body.vg-debug .Root__main-view::after { content: 'Risk: EXTREME - React unmount on route'; color: #ff4444; }
+            body.vg-debug .Root__right-sidebar::after { content: 'Risk: SEVERE - Contextual re-render'; color: #ff9f43; }
+            body.vg-debug .Root__now-playing-bar::after { content: 'Risk: MEDIUM - Horizontal overflow'; color: #ffe66d; }
             body.vg-debug footer::after { content: 'footer element'; color: #666; }
           `,
         };
@@ -1385,7 +1385,7 @@
               });
             });
             window._vgMutObs.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class","style","data-testid","aria-label"] });
-            console.log("%c[VG] DOM Mutation Logger started — watching childList + attributes", "color:#0f0;font-weight:bold");
+            console.log("%c[VG] DOM Mutation Logger started - watching childList + attributes", "color:#0f0;font-weight:bold");
             Spicetify.showNotification("DOM Logger active → check DevTools console");
           }
         } else {
@@ -1642,13 +1642,13 @@
     if (changed && ntText) {
       ntText.classList.add("vg-ntc-fade-out");
       setTimeout(() => {
-        if (data.artist) { ntArtist.textContent = data.artist; ntSep.textContent = " — "; ntTitle.textContent = data.title; ntArtist.style.display = ""; ntSep.style.display = ""; }
+        if (data.artist) { ntArtist.textContent = data.artist; ntSep.textContent = " - "; ntTitle.textContent = data.title; ntArtist.style.display = ""; ntSep.style.display = ""; }
         else { ntArtist.textContent = ""; ntSep.textContent = ""; ntTitle.textContent = data.title; ntArtist.style.display = "none"; ntSep.style.display = "none"; }
         ntText.classList.remove("vg-ntc-fade-out"); ntText.classList.add("vg-ntc-fade-in");
         setTimeout(() => ntText.classList.remove("vg-ntc-fade-in"), 300);
       }, 200);
     } else if (ntText) {
-      if (data.artist) { ntArtist.textContent = data.artist; ntSep.textContent = " — "; ntTitle.textContent = data.title; ntArtist.style.display = ""; ntSep.style.display = ""; }
+      if (data.artist) { ntArtist.textContent = data.artist; ntSep.textContent = " - "; ntTitle.textContent = data.title; ntArtist.style.display = ""; ntSep.style.display = ""; }
       else { ntArtist.textContent = ""; ntSep.textContent = ""; ntTitle.textContent = data.title; ntArtist.style.display = "none"; ntSep.style.display = "none"; }
     }
     ntCard.classList.add("vg-ntc-visible");

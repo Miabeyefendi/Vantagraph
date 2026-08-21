@@ -1,4 +1,4 @@
-// VANTAGRAPH — Deep DOM Color Scanner
+// VANTAGRAPH - Deep DOM Color Scanner
 // Her --spice- değişkenini benzersiz renge çevirip,
 // tüm DOM'u tarayıp, o rengi KULLANAN elementleri BULUR.
 // Sayfalar arası gezer, context menu açar, her yeri tarar.
@@ -348,7 +348,7 @@
     const finds = RESULTS[varName];
     const visible = finds.filter(f => f.visible);
     if (finds.length === 0) {
-      console.log(`%c❌ --spice-${varName}: ETKİSİZ — hiçbir element kullanmıyor`, "color:#f44;font-weight:bold;");
+      console.log(`%c❌ --spice-${varName}: ETKİSİZ - hiçbir element kullanmıyor`, "color:#f44;font-weight:bold;");
     } else {
       console.log(`%c✅ --spice-${varName}: ${visible.length} görünür / ${finds.length} toplam element`, "color:#4f4;font-weight:bold;");
       finds.forEach(f => {

@@ -1,4 +1,4 @@
-// VANTAGRAPH — LAYOUT DIAGNOSTIC v4
+// VANTAGRAPH - LAYOUT DIAGNOSTIC v4
 // Paste into Spotify DevTools Console (F12)
 // v4: Density state, bar overflow detection, vertical gap analysis,
 
@@ -198,7 +198,7 @@
   }
 
   //
-  // DENSITY CSS DUMP — injected style content
+  // DENSITY CSS DUMP - injected style content
   //
   console.log("%c\n- DENSITY CSS (injected style) -", C.s);
   if (densityEl) {

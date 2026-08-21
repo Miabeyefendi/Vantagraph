@@ -246,7 +246,7 @@
   function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
   function fmtTime(ms) { const s = Math.floor((ms || 0) / 1000); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
 
-  // Set of IDs we own — anything else in body is foreign and must be removed
+  // Set of IDs we own - anything else in body is foreign and must be removed
   const OUR_IDS = new Set(['tp-art', 'tp-title', 'tp-artist', 'tp-lyric', 'tp-shuffle', 'tp-prev', 'tp-play', 'tp-next', 'tp-repeat', 'tp-vol-icon', 'tp-vol', 'tp-expand', 'tp-seekrow', 'tp-mainrow', 'tp-seek', 'tp-seek-cur', 'tp-seek-tot', 'tp-close', 'tp-like']);
   const OUR_HEAD_IDS = new Set(['tp-colors', 'tp-static']);
 
@@ -276,7 +276,7 @@
     const body = doc.body;
     if (body) {
       [...body.children].forEach(n => { if (!isOurBodyChild(n)) n.remove(); });
-      // Body class must stay empty or our 'no-lyric' — anything else is foreign
+      // Body class must stay empty or our 'no-lyric' - anything else is foreign
       const cls = body.className;
       const hasSynced = currentLyrics?.synced && currentLyrics.lines?.some(l => l.text?.trim());
       const want = hasSynced ? '' : 'no-lyric';
@@ -401,7 +401,7 @@
         if (!pipWin.document.getElementById('tp-art')) { scheduleRebuild(); return; }
 
         // Detect foreign injection: any node added directly to <body> or <head>
-        // whose ID/class isn't ours — Spotify's pip-mini-player injects here.
+        // whose ID/class isn't ours - Spotify's pip-mini-player injects here.
         let foreign = false;
         for (const m of muts) {
           if (m.type !== 'childList') continue;
@@ -584,7 +584,7 @@
   //   1. Shrink font from MAX→MIN until line fits
   //   2. If even at MIN it overflows → enable marquee (CSS scroll animation),
   //      duration scaled by text length so long lines aren't blazingly fast.
-  // Measurements use el.scrollWidth — container with white-space:nowrap +
+  // Measurements use el.scrollWidth - container with white-space:nowrap +
   // overflow:hidden reflects total content width including overflow (reliable).
   // inner.scrollWidth on an inline span returns inconsistent values across
   // engines, so don't trust it.
@@ -606,7 +606,7 @@
     let naturalW = el.scrollWidth;
     if (naturalW <= containerW) return;
 
-    // Stage 1: shrink font — ratio estimate then fine-tune
+    // Stage 1: shrink font - ratio estimate then fine-tune
     const ratio = containerW / naturalW;
     let size = Math.max(LYRIC_FONT_MIN, Math.floor(LYRIC_FONT_MAX * ratio));
     el.style.fontSize = size + 'px';
@@ -617,7 +617,7 @@
     }
     // Stage 2: still overflowing at MIN → bounce marquee.
     // First word anchored at left, slides left only as much as needed to expose
-    // the end (no full-sweep, no off-screen — wave envelope 0→1→0, never 0→2).
+    // the end (no full-sweep, no off-screen - wave envelope 0→1→0, never 0→2).
     if (el.scrollWidth > containerW) {
       // Shift = negative of how much text overflows past the right edge.
       // Add small breathing room so the last char isn't flush with the edge.
@@ -625,7 +625,7 @@
       inner.style.setProperty('--mq-shift', '-' + overflow + 'px');
       let dur;
       if (lineDurMs && lineDurMs >= 1500 && lineDurMs <= 30000) {
-        // One full bounce cycle per line — anchor→slide→anchor→return within line time
+        // One full bounce cycle per line - anchor→slide→anchor→return within line time
         dur = lineDurMs / 1000;
       } else {
         // Fallback: scale by overflow distance so longer text gets more time
@@ -636,7 +636,7 @@
     }
   }
 
-  // ── RAF LOOP (in MAIN doc — survives PiP doc wipes) ───────────────────────
+  // ── RAF LOOP (in MAIN doc - survives PiP doc wipes) ───────────────────────
   function startLoop() {
     if (rafId) cancelAnimationFrame(rafId);
     function loop() {
@@ -743,7 +743,7 @@
     _lastPlaying = null; _lastDur = -1;
     const uri = Spicetify.Player.data?.item?.uri;
     if (uri && uri !== currentUri) { currentUri = uri; loadLyrics(uri); }
-    // Spotify's pip-mini-player injects content here — sweep at multiple ticks
+    // Spotify's pip-mini-player injects content here - sweep at multiple ticks
     // because injection can be async.
     if (pipWin && !pipWin.closed) {
       cleanForeignNodes(pipWin);
@@ -753,7 +753,7 @@
     }
   });
   Spicetify.Player.addEventListener('onplaypause', () => { _lastPlaying = null; });
-  // Heart state can change from outside (other UI) — refresh when Spotify announces
+  // Heart state can change from outside (other UI) - refresh when Spotify announces
   try {
     Spicetify.Platform?.PlayerAPI?._events?.addListener?.('update', refreshLikeState);
   } catch (e) {}
@@ -782,7 +782,7 @@
 
   function injectLaunchBtn() {
     if (document.getElementById('vg-tbp-launch-btn')) return true;
-    // Anchor on fullscreen button — most stable selector across Spotify versions
+    // Anchor on fullscreen button - most stable selector across Spotify versions
     const ref = document.querySelector('[data-testid="fullscreen-mode-button"]')
              || document.querySelector('button[aria-label*="Full" i]')
              || document.querySelector('button[aria-label*="Tam" i]');

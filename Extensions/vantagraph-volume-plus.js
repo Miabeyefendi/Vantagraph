@@ -48,7 +48,7 @@
   if (!getSetting("ctrl-increment"))    setSetting("ctrl-increment",    "0.5");
   if (!getSetting("startup-restore"))   setSetting("startup-restore",   "true");
 
-  // Preferred volume (double-click restore) — set by user in settings modal
+  // Preferred volume (double-click restore) - set by user in settings modal
   function getPreferredVol() { return parseFloat(getSetting("preferred-vol", "100")); }
   function setPreferredVol(pct) { setSetting("preferred-vol", String(Math.round(pct))); }
 
@@ -373,7 +373,7 @@
       content.innerHTML = `
         <div style="display:grid;gap:16px;padding:8px 0;">
           <div style="display:grid;gap:6px;">
-            <label style="color:var(--spice-subtext);font-size:12px;">Preferred volume — double-click bar to restore</label>
+            <label style="color:var(--spice-subtext);font-size:12px;">Preferred volume - double-click bar to restore</label>
             <div id="vg-vp-preferred-row" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
@@ -391,7 +391,7 @@
               id="vg-vp-shift" style="background:var(--spice-tab-active);border:1px solid var(--spice-highlight);border-radius:6px;color:var(--spice-text);padding:8px 12px;font-size:14px;width:100%;font-family:inherit;">
           </div>
           <div style="display:grid;gap:6px;">
-            <label style="color:var(--spice-subtext);font-size:12px;">Ctrl + scroll increment (%) — fine control</label>
+            <label style="color:var(--spice-subtext);font-size:12px;">Ctrl + scroll increment (%) - fine control</label>
             <input type="number" min="0.1" max="10" step="0.1" value="${getSetting("ctrl-increment", "0.5")}"
               id="vg-vp-ctrl" style="background:var(--spice-tab-active);border:1px solid var(--spice-highlight);border-radius:6px;color:var(--spice-text);padding:8px 12px;font-size:14px;width:100%;font-family:inherit;">
           </div>

@@ -1,4 +1,4 @@
-# Spotify SVG Icon Catalog — Vantagraph Reference
+# Spotify SVG Icon Catalog - Vantagraph Reference
 
 > Harvested from Spotify Desktop Client via SVG Scanner tool.
 > Deduplicated from 2 scan sessions (87 + 59 raw → **76 unique icons**).
@@ -19,19 +19,19 @@
 | # | Icon | aria-ctx | viewBox | Paths | Key Selector |
 |---|------|----------|---------|-------|-------------|
 | 3 | 🛒 Marketplace | Marketplace | (none) | 1 | `.spicetify-sc-contentArea` |
-| 4 | ‹ Chevron Left | — | 0 0 16 16 | 1 | `.spicetify-sc-chevronStart` |
-| 5 | › Chevron Right | — | 0 0 16 16 | 1 | `.spicetify-sc-chevronEnd` |
+| 4 | ‹ Chevron Left | - | 0 0 16 16 | 1 | `.spicetify-sc-chevronStart` |
+| 5 | › Chevron Right | - | 0 0 16 16 | 1 | `.spicetify-sc-chevronEnd` |
 
 ### Search Section (`.main-globalNav-searchSection`)
 
 | # | Icon | aria-ctx | viewBox | Paths | Key Selector |
 |---|------|----------|---------|-------|-------------|
 | 6a | 🏠 Home (outline) | Home | 0 0 24 24 | 1 | `.main-globalNav-searchContainer` |
-| 6b | 🏠 Home (filled) | Home | 0 0 24 24 | 1 | same — active state |
+| 6b | 🏠 Home (filled) | Home | 0 0 24 24 | 1 | same - active state |
 | 7 | 🔍 Search | Search | 0 0 24 24 | 1 | `.main-globalNav-searchInputSection` |
 | 8 | ✕ Clear Search | Clear search field | 0 0 24 24 | 1 | `.e-10310-form-input-icon__icon--trailing` |
 | 9a | 🎵 Browse (outline) | Browse | 0 0 24 24 | 2 | `.main-globalNav-browseButtonWrapper` |
-| 9b | 🎵 Browse (filled) | Browse | 0 0 24 24 | 1 | same — active state |
+| 9b | 🎵 Browse (filled) | Browse | 0 0 24 24 | 1 | same - active state |
 
 ### Right Action Buttons (`.vg-topbar-right` / `.main-topBar-topbarContentRight`)
 
@@ -40,9 +40,9 @@
 | 10 | ⚙️ VG Settings | Vantagraph Settings | 0 0 16 16 | 1 | `.vg-topbar-btn` |
 | 11 | 🎵 Lyric Mini | Lyric Miniplayer | 0 0 16 16 | 1 | `.vg-topbar-btn` |
 | 12a | 🔔 What's New (outline) | What's New | 0 0 16 16 | 1 | `.main-actionButtons` |
-| 12b | 🔔 What's New (filled) | What's New | 0 0 16 16 | 1 | same — active state |
+| 12b | 🔔 What's New (filled) | What's New | 0 0 16 16 | 1 | same - active state |
 | 13a | 👥 Friend Activity (outline) | Friend Activity | 0 0 16 16 | 1 | `.main-actionButtons` |
-| 13b | 👥 Friend Activity (filled) | Friend Activity | 0 0 16 16 | 1 | same — active state |
+| 13b | 👥 Friend Activity (filled) | Friend Activity | 0 0 16 16 | 1 | same - active state |
 
 ---
 
@@ -63,10 +63,10 @@
 |---|------|----------|---------|-------|-------------|
 | 17 | 🎵 Liked Songs pin | Your Library | 0 0 16 16 | 1 | sidebar list subtitle |
 | 70 | ▦ Grid View | Custom order, Default grid view | 0 0 16 16 | 1 | `.main-yourLibraryX-libraryFilter` |
-| 71 | 🎵+ Create playlist | — | 0 0 24 24 | 1 | `.e-10310-legacy-list-row` |
-| 72 | 🌙 Moon/Crescent | — | (none) | 1 | `.e-10310-legacy-list-row` |
-| 73 | 📁 Folder | — | 0 0 24 24 | 1 | `.e-10310-legacy-list-row` |
-| 74 | 👤 Artist/Podcast | — | 0 0 24 24 | 1 | `.e-10310-legacy-list-row` |
+| 71 | 🎵+ Create playlist | - | 0 0 24 24 | 1 | `.e-10310-legacy-list-row` |
+| 72 | 🌙 Moon/Crescent | - | (none) | 1 | `.e-10310-legacy-list-row` |
+| 73 | 📁 Folder | - | 0 0 24 24 | 1 | `.e-10310-legacy-list-row` |
+| 74 | 👤 Artist/Podcast | - | 0 0 24 24 | 1 | `.e-10310-legacy-list-row` |
 
 ---
 

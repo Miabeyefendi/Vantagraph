@@ -1,6 +1,6 @@
 // Vantagraph Settings - center modal (CSS injected here, deps: window.VantagraphData)
 //
-// Written by Miabeyefendi — part of the Vantagraph Spicetify theme.
+// Written by Miabeyefendi - part of the Vantagraph Spicetify theme.
 // Repository: https://github.com/Miabeyefendi/Vantagraph
 
 (function vantagraphSettings() {

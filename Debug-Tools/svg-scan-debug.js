@@ -234,7 +234,7 @@
 
   window.__vgDiag = { stop: stop, download: downloadReport, data: fpMap };
 
-  console.log("%c🔴 LIVE SCANNING — Dolaş, tıkla, toggle yap.","color:#ff3333;font-weight:bold;font-size:14px");
+  console.log("%c🔴 LIVE SCANNING - Dolaş, tıkla, toggle yap.","color:#ff3333;font-weight:bold;font-size:14px");
   console.log("%c   Kırmızı=unmapped  Yeşil=mapped","color:#ffcc00");
   console.log("%c   State değiştir: shuffle/smart, repeat/once, mute/unmute","color:#ffcc00");
   console.log("%c","color:#ffcc00");

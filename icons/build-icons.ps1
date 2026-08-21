@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════════════════════
-#  Vantagraph — Icon Build Script
+#  Vantagraph - Icon Build Script
 #  Reads SVG files from icons/ directory, converts to base64,
 #  and injects into vantagraph-icons.js between markers.
 #
