@@ -8,10 +8,31 @@ Every released version of Vantagraph, newest first. The format follows
 
 ---
 
-## [Unreleased]
+## [5.0.2](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.0.2) - 2026-08-21
+
+### Fixed
+
+- The theme did nothing when installed from the Spicetify Marketplace. The
+  manifest listed `theme.js` in `include` as a relative path, and the
+  Marketplace uses those entries verbatim as script sources, resolved against
+  Spotify's own document. The request 404'd, the engine never ran, and without
+  it there are no `vg-*` classes and no colour bridge, so a Marketplace install
+  left the client untouched. The entries are absolute URLs now. Manual installs
+  were never affected, which is why this went unnoticed since the first release.
+
+### Added
+
+- Every extension now ships with the Marketplace install. Previously only the
+  theme was listed, so a Marketplace user got no settings panel, no icon set,
+  no lyric miniplayer, no taskbar player, no volume wheel and no loop tool.
 
 ### Changed
 
+- New Marketplace preview image. The old one was a full 1376x768 screenshot at
+  1.4 MB, which reads as a smudge in a grid of theme cards.
+- `docs/INSTALL.md` opens by separating the Marketplace path from the manual
+  one. It used to claim the files were already in place after a Marketplace
+  install and send the reader to a section full of commands they cannot run.
 - README rebuilt around the Spicetify Marketplace, which renders it inside
   Spotify. All image and document links are absolute, because the Marketplace
   does not rewrite relative links and a reader inside Spotify would otherwise
@@ -89,4 +110,5 @@ First public release.
 
 ---
 
-[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.1...HEAD
+[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.2...HEAD
+[5.0.2]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.1...5.0.2

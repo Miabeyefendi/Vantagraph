@@ -340,3 +340,6 @@ AGENTS.md
 # Local debug helper and the social preview source
 Extensions/_debug-perf.js
 screenshots/SocialTemplate.jpg
+
+# Image staging folder, never published
+for git/

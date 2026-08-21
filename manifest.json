@@ -2,11 +2,20 @@
   {
     "name": "Vantagraph",
     "description": "Modern, modular Spicetify theme: 11 hand-tuned palettes (5 dark + 6 light), in-app settings panel, custom icon set, PiP lyric karaoke, taskbar player, scroll-wheel volume, and per-track loop tool.",
-    "preview": "screenshots/main-showcase-dark.png",
+    "preview": "screenshots/preview.png",
     "readme": "README.md",
     "usercss": "user.css",
     "schemes": "color.ini",
-    "include": ["theme.js"],
+    "branch": "main",
+    "include": [
+      "https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/theme.js",
+      "https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/Extensions/vantagraph-settings.js",
+      "https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/Extensions/vantagraph-icons.js",
+      "https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/Extensions/vantagraph-volume-plus.js",
+      "https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/Extensions/vantagraph-lyric-miniplayer.js",
+      "https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/Extensions/vantagraph-loopyloop.js",
+      "https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/Extensions/vantagraph-taskbarplayer.js"
+    ],
     "authors": [
       {
         "name": "Miabeyefendi",

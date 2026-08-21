@@ -12,7 +12,20 @@
 | [Spicetify CLI](https://spicetify.app/docs/getting-started) | tested on `2.43` and newer |
 | Platform | Windows, macOS or Linux |
 
-If you installed through the Spicetify Marketplace, the files are already in place and you can skip to [choosing what to enable](#2-choose-what-to-enable).
+---
+
+## Marketplace, or by hand?
+
+**Spicetify Marketplace** is the short path. Search for Vantagraph, press install, done. The theme
+and every extension are pulled straight from this repository and start at once, so there is nothing
+to copy and nothing to enable. Skip the rest of this page and go to [Themes](./THEMES.md).
+
+Two things work differently there. Extensions are not individually switchable, because the
+Marketplace installs a theme as one unit; turn a feature off inside the settings panel instead. And
+updates arrive through a CDN that caches for a few hours, so a fresh release can take a moment to
+reach you.
+
+**By hand** gives you file-level control and instant updates. That is the rest of this page.
 
 ---
 
