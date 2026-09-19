@@ -81,6 +81,8 @@
     { className: "vg-content-spacing", selectors: [".contentSpacing"] },
     { className: "vg-shelf", selectors: [".main-shelf-shelf"] },
     { className: "vg-card", selectors: [".main-card-card", "[data-testid='card']"] },
+    // Spotify 1.3 big cards (More like ..., Made for you): the box whose footer holds the play button
+    { className: "vg-big-card", selectors: ["[data-encore-id='box']:has(> footer .main-playButton-PlayButton)"] },
     { className: "vg-card-image-wrap", selectors: [".main-cardImage-imageWrapper", "[data-testid='card-image']"] },
     { className: "vg-card-play", selectors: [".main-card-PlayButtonContainer"] },
     { className: "vg-card-image", selectors: [".main-cardImage-image"] },
@@ -502,6 +504,27 @@
 
 
   // applySetting
+  // bg filter string shared by the bg element and the panel glass layers
+  function bgFilterValue() {
+    const blur = getSetting("bg-blur", "0");
+    const bright = getSetting("bg-brightness", "100");
+    const cont = getSetting("bg-contrast", "100");
+    const sat = getSetting("bg-saturation", "100");
+    return `blur(${blur}px) brightness(${bright}%) contrast(${cont}%) saturate(${sat}%)`;
+  }
+
+  // user.css paints a pre-blurred copy of the bg behind each panel from these
+  function syncBgVars(url) {
+    const root = document.documentElement.style;
+    if (url) {
+      root.setProperty("--vg-bg-image", `url("${url}")`);
+      root.setProperty("--vg-bg-filter", bgFilterValue());
+    } else {
+      root.removeProperty("--vg-bg-image");
+      root.removeProperty("--vg-bg-filter");
+    }
+  }
+
   function applySetting(key, value) {
     const root = document.documentElement;
     Spicetify.LocalStorage.set(`vantagraph:${key}`, String(value));
@@ -993,11 +1016,8 @@
         
         if (value) {
           bgEl.style.backgroundImage = `url("${value}")`;
-          const blur = getSetting("bg-blur", "0");
-          const bright = getSetting("bg-brightness", "100");
-          const cont = getSetting("bg-contrast", "100");
-          const sat = getSetting("bg-saturation", "100");
-          bgEl.style.filter = `blur(${blur}px) brightness(${bright}%) contrast(${cont}%) saturate(${sat}%)`;
+          bgEl.style.filter = bgFilterValue();
+          syncBgVars(value);
           document.documentElement.style.setProperty("--spice-main", "transparent");
           waitForElement(".vg-root", (el) => { el.style.background = "transparent"; });
           document.body.style.background = "transparent";
@@ -1010,6 +1030,7 @@
           applyTheme("Glass");
         } else {
           bgEl.style.backgroundImage = "none";
+          syncBgVars(null);
           document.body.style.background = "";
           document.body.classList.remove("vg-bg-active");
           document.documentElement.style.removeProperty("--spice-main");
@@ -1032,6 +1053,7 @@
           if (customUrl) {
             applySetting("bg-url", customUrl);
           } else {
+            syncBgVars(null);
             document.body.style.background = "";
             document.body.classList.remove("vg-bg-active");
             document.documentElement.style.removeProperty("--spice-main");
@@ -1048,11 +1070,10 @@
       case "bg-saturation": {
         const bgEl = document.getElementById("vantagraph-bg-element");
         if (bgEl) {
-          const blur = getSetting("bg-blur", "0");
-          const bright = getSetting("bg-brightness", "100");
-          const cont = getSetting("bg-contrast", "100");
-          const sat = getSetting("bg-saturation", "100");
-          bgEl.style.filter = `blur(${blur}px) brightness(${bright}%) contrast(${cont}%) saturate(${sat}%)`;
+          bgEl.style.filter = bgFilterValue();
+          if (document.body.classList.contains("vg-bg-active")) {
+            document.documentElement.style.setProperty("--vg-bg-filter", bgFilterValue());
+          }
         }
         break;
       }
@@ -1092,6 +1113,20 @@
         if (value === "true" || value === true) {
           if (!sel) { sel = document.createElement("style"); sel.id = sid; document.head.appendChild(sel); }
           sel.textContent = `.vg-np-cover img, .vg-np-cover-collapsed img { animation: none !important; animation-play-state: paused !important; }`;
+        } else { if (sel) sel.remove(); }
+        break;
+      }
+      // reduced motion: every Spotify transition collapses to 1ms (transitionend
+      // still fires, so components waiting on it do not hang), delays dropped,
+      // programmatic scrolling instant. Keyframe animations (spinners, skeleton
+      // shimmer) are left alone. Theme-driven live elements are excluded.
+      case "snippet-reduced-motion": {
+        const sid = "vantagraph-snippet-reduced-motion";
+        let sel = document.getElementById(sid);
+        if (value === "true" || value === true) {
+          if (!sel) { sel = document.createElement("style"); sel.id = sid; document.head.appendChild(sel); }
+          sel.textContent = `*:not(.vg-wave-bar):not(.vg-ntc-text):not(.vg-next-track-card), *::before, *::after { transition-duration: 1ms !important; transition-delay: 0s !important; }
+html, body, * { scroll-behavior: auto !important; }`;
         } else { if (sel) sel.remove(); }
         break;
       }
@@ -1514,11 +1549,8 @@
     }
 
     bgEl.style.backgroundImage = `url("${albumUrl}")`;
-    const blur = getSetting("bg-blur", "0");
-    const bright = getSetting("bg-brightness", "100");
-    const cont = getSetting("bg-contrast", "100");
-    const sat = getSetting("bg-saturation", "100");
-    bgEl.style.filter = `blur(${blur}px) brightness(${bright}%) contrast(${cont}%) saturate(${sat}%)`;
+    bgEl.style.filter = bgFilterValue();
+    syncBgVars(albumUrl);
     document.documentElement.style.setProperty("--spice-main", "transparent");
     waitForElement(".vg-root", (el) => { el.style.background = "transparent"; });
     document.body.style.background = "transparent";
@@ -1541,12 +1573,13 @@
     function updateSpin() {
       waitForElement(".vg-np-cover img, .vg-np-cover-collapsed img", (img) => {
         let isPlaying = false; try { isPlaying = Spicetify.Player.isPlaying(); } catch(e) {}
-        if (isPlaying) {
+        if (!img.style.animationName) {
           img.style.animation = "vg-vinyl-spin 8s linear infinite";
           img.style.borderRadius = "50%";
-        } else {
-          img.style.animationPlayState = "paused";
         }
+        // only flip the play state; re-assigning `animation` restarted the
+        // rotation and repainted the cover on every resume
+        img.style.animationPlayState = isPlaying ? "running" : "paused";
       });
     }
 
@@ -1637,7 +1670,7 @@
     if (!data) { ntCard.classList.remove("vg-ntc-visible"); return; }
     const changed = (data.title !== ntLastTitle || data.artist !== ntLastArtist);
     ntLastTitle = data.title; ntLastArtist = data.artist;
-    if (data.img && ntCover) { ntCover.src = data.img; ntCover.style.display = ""; }
+    if (data.img && ntCover) { if (ntCover.src !== data.img) ntCover.src = data.img; ntCover.style.display = ""; }
     else if (ntCover) { ntCover.style.display = "none"; }
     if (changed && ntText) {
       ntText.classList.add("vg-ntc-fade-out");
@@ -1990,8 +2023,37 @@
   };
 
   // INIT
+  // Spicetify 2.45.x wrapper bug: its scroll optimizer (meant for Spotify <= 1.2.56)
+  // guards with `minor >= 2 && patch >= 57`, which fails on 1.3.x since patch resets
+  // to 0, so it runs getComputedStyle over every element on every DOM mutation.
+  // That optimizer is the only caller of this exact selector; answer it with nothing.
+  // Inert once upstream fixes the guard (the selector is never queried).
+  // Opt out: Spicetify.LocalStorage.set("vantagraph:wrapper-guard", "false")
+  function installWrapperScrollGuard(attempts = 100) {
+    if (getSetting("wrapper-guard", "true") === "false") return;
+    // Platform.version lands a bit after Platform itself
+    if (!Spicetify.Platform?.version) {
+      if (attempts > 0) setTimeout(() => installWrapperScrollGuard(attempts - 1), 50);
+      return;
+    }
+    const v = Spicetify.Platform.version.split(".").map(n => parseInt(n, 10));
+    if (!(v[0] > 1 || (v[0] === 1 && v[1] >= 3))) return;
+    const SCROLL_FIX_SELECTOR = "*:not([data-scroll-optimized])";
+    const nativeQSA = Document.prototype.querySelectorAll;
+    document.querySelectorAll = function (selector, ...rest) {
+      if (selector === SCROLL_FIX_SELECTOR) return [];
+      return nativeQSA.call(this, selector, ...rest);
+    };
+    // undo the layer promotion it already applied before theme.js ran
+    nativeQSA.call(document, "[data-scroll-optimized]").forEach((el) => {
+      el.style.willChange = "";
+      el.style.transform = "";
+    });
+  }
+
   function init() {
-    // 0. dynamic class mapping
+    // 0. wrapper guard, then dynamic class mapping
+    installWrapperScrollGuard();
     startDynamicClassObserver();
 
     // 1. theme
@@ -2059,7 +2121,7 @@
       "snippet-hide-home-shortcuts", "snippet-thin-library", "snippet-auto-hide-sidebar",
       "debug-labels", "snippet-dev-layout-grid", "snippet-dev-highlighter",
       "snippet-dev-spacing-viz", "snippet-dev-var-monitor", "snippet-dev-dom-logger",
-      "snippet-vinyl-stop",
+      "snippet-vinyl-stop", "snippet-reduced-motion",
     ];
     defaultOffSnippets.forEach(s => {
       const state = getSetting(s, "false");

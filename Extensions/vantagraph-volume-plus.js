@@ -61,10 +61,10 @@
       .vg-vol-preset-trigger:hover { color:var(--spice-text); }
       .vg-vol-preset-trigger svg { width:14px; height:14px; fill:currentColor; }
       .vg-vol-preset-trigger .vg-vol-preset-icon { width:16px; height:16px; background:currentColor; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat; -webkit-mask-position:center; mask-position:center; }
-      .vg-vol-preset-overlay { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(.9); background:var(--spice-player); border:1px solid var(--spice-highlight); border-radius:14px; padding:16px 20px; z-index:10000; display:flex; flex-direction:column; align-items:center; gap:12px; box-shadow:0 16px 48px rgba(0,0,0,.5); opacity:0; pointer-events:none; transition:opacity .2s ease,transform .2s ease; }
+      .vg-vol-preset-overlay { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:var(--spice-player); border:1px solid var(--spice-highlight); border-radius:14px; padding:16px 20px; z-index:10000; display:none; flex-direction:column; align-items:center; gap:12px; box-shadow:0 16px 48px rgba(0,0,0,.5);    }
       .vg-vol-preset-overlay .vg-vol-preset-title { font-size:11px; font-weight:600; color:var(--spice-subtext); text-transform:uppercase; letter-spacing:1px; }
       .vg-vol-preset-overlay .vg-vol-preset-row { display:flex; gap:6px; }
-      .vg-vol-preset-overlay.vg-visible { opacity:1; pointer-events:auto; transform:translate(-50%,-50%) scale(1); }
+      .vg-vol-preset-overlay.vg-visible { display:flex; }
       .vg-vol-preset-btn { background:var(--spice-tab-active); border:1px solid var(--spice-highlight); border-radius:8px; color:var(--spice-text); padding:8px 14px; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer; transition:background .15s,color .15s,box-shadow .15s; min-width:44px; text-align:center; }
       .vg-vol-preset-btn:hover { background:var(--spice-accent); color:var(--spice-player); }
       .vg-vol-preset-btn.vg-preset-active { box-shadow:0 0 0 2px rgba(218,165,32,0.85), 0 0 10px 3px rgba(218,165,32,0.35); }
@@ -322,7 +322,8 @@
   function showPresets() {
     createPresetOverlay();
     refreshPresetGlow(getVol());
-    requestAnimationFrame(() => presetOverlay.classList.add("vg-visible"));
+    // no fade: shown instantly, hidden with display:none (see vantagraph-settings.js)
+    presetOverlay.classList.add("vg-visible");
     if (presetTimeout) clearTimeout(presetTimeout);
     presetTimeout = setTimeout(hidePresets, 4000);
   }

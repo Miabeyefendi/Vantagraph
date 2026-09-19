@@ -27,8 +27,8 @@
     const s = document.createElement("style");
     s.id = "vg-settings-css";
     s.textContent = `
-.vg-sp{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);z-index:9999;width:clamp(440px, 35vw, 720px);max-height:85vh;background:var(--spice-panel,#121212);border:1px solid var(--spice-stroke,#1A1A1A);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.7);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none}
-.vg-sp.open{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.vg-sp{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;width:clamp(440px, 35vw, 720px);max-height:85vh;background:var(--spice-panel,#121212);border:1px solid var(--spice-stroke,#1A1A1A);border-radius:14px;display:none;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.7)}
+.vg-sp.open{display:flex}
 .vg-sh{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--spice-panel,#121212);border-bottom:1px solid var(--spice-stroke,#1A1A1A)}
 .vg-sh span{font-size:15px;font-weight:600;color:var(--spice-text,#FFF);letter-spacing:.5px}
 .vg-sh button{width:24px;height:24px;border-radius:50%;border:none;background:var(--spice-stroke,#1A1A1A);color:var(--spice-subtext,#A7A7A7);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s}
@@ -88,8 +88,23 @@
   }
 
   // open/close modal (toggles)
+  // panel is built once and kept in the DOM; open/close only flips display.
+  // No enter/exit animation: the 200ms fade over glass panels dropped frames.
+  // Content is rebuilt on reopen only when something outside the panel changed
+  // it (theme.js auto-switches to Glass when a background is set).
+  let renderedState = "";
+  function externalState() {
+    const g = window.VantagraphData.getSetting;
+    return [g("theme", ""), g("bg-url", ""), g("bg-use-album-cover", "")].join("|");
+  }
   function toggle() {
-    if (panelEl) { close(); return; }
+    if (panelEl) {
+      if (panelEl.classList.contains("open")) { close(); return; }
+      if (externalState() !== renderedState) render(panelEl.querySelector(".vg-sc"));
+      panelEl.classList.add("open");
+      document.addEventListener("keydown", esc);
+      return;
+    }
     ensureStyles();
     const V = window.VantagraphData;
 
@@ -122,14 +137,13 @@
     panelEl = p;
     render(sc);
     document.addEventListener("keydown", esc);
-    requestAnimationFrame(() => p.classList.add("open"));
+    p.classList.add("open");
   }
 
   function close() {
     if (!panelEl) return;
     document.removeEventListener("keydown", esc);
     panelEl.classList.remove("open");
-    setTimeout(() => { if (panelEl) { panelEl.remove(); panelEl = null; } }, 200);
   }
   function esc(e) { if (e.key === "Escape") close(); }
 
@@ -189,6 +203,7 @@
 
   // render active tab into container c
   function render(c) {
+    renderedState = externalState();
     c.innerHTML = "";
     const V = window.VantagraphData;
     const { THEMES, FONT_PRESETS, applyTheme, applyFont, applySetting, getSetting } = V;
@@ -336,6 +351,8 @@
         });
         // vinyl stop: default OFF
         inner.appendChild(tog("Stop Vinyl Animation", getSetting("snippet-vinyl-stop", "false") === "true", v => applySetting("snippet-vinyl-stop", String(v))));
+        // reduced motion: default OFF, collapses Spotify's transitions to 1ms
+        inner.appendChild(tog("Reduced Motion", getSetting("snippet-reduced-motion", "false") === "true", v => applySetting("snippet-reduced-motion", String(v))));
       }));
 
       // hide buttons (player bar + topbar controls)
@@ -447,6 +464,7 @@
         "vantagraph-snippet-rounded-images-off",
         "vantagraph-snippet-dark-context-menu",
         "vantagraph-snippet-vinyl-stop",
+        "vantagraph-snippet-reduced-motion",
         // hide buttons (topbar + player bar)
         "vantagraph-snippet-hide-friend-activity",
         "vantagraph-snippet-hide-whats-new",
