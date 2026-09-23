@@ -1179,13 +1179,13 @@ html, body, * { scroll-behavior: auto !important; }`;
       case "snippet-hide-np-widget":
       case "snippet-hide-next-track": {
         const btnCss = {
-          "snippet-hide-friend-activity": "button[aria-label='Friend Activity'],button[aria-label='Friend Activity'] ~ *{display:none !important}",
-          "snippet-hide-whats-new": "button[aria-label=\"What's New\"],button[aria-label=\"What's New\"] ~ *{display:none !important}",
+          "snippet-hide-friend-activity": ".main-actionButtons button[aria-label='Listening activity'],.main-actionButtons button[aria-label='Friend Activity']{display:none !important}",
+          "snippet-hide-whats-new": ".main-actionButtons button[aria-label=\"What's New\"]{display:none !important}",
           "snippet-hide-fullscreen": ".Root__now-playing-bar button[data-testid='fullscreen-mode-button'],.Root__now-playing-bar button[aria-label='Enter Full screen']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-lyrics-btn": ".Root__now-playing-bar button[data-testid='lyrics-button'],.Root__now-playing-bar .main-nowPlayingBar-lyricsButton,.main-nowPlayingBar-lyricsButton{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-miniplayer": ".Root__now-playing-bar button[data-testid='pip-toggle-button'],.Root__now-playing-bar button[aria-label='Open Miniplayer']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-queue-btn": ".Root__now-playing-bar button[data-testid='control-button-queue'],.Root__now-playing-bar button[aria-label='Queue'],.main-useDropTarget-base:has(button[data-testid='control-button-queue']){display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
-          "snippet-hide-shuffle": ".Root__now-playing-bar button[aria-label='Shuffle'],.Root__now-playing-bar button[aria-label='Enable shuffle']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
+          "snippet-hide-shuffle": ".Root__now-playing-bar button[data-testid='control-button-shuffle'],.Root__now-playing-bar .main-shuffleButton-button,.Root__now-playing-bar button[aria-label*='shuffle' i]{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-repeat": ".Root__now-playing-bar button[data-testid='control-button-repeat'],.Root__now-playing-bar button[aria-label*='repeat'],.Root__now-playing-bar button[aria-label*='Repeat']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-connect": ".Root__now-playing-bar button[aria-label='Connect to a device'],.Root__now-playing-bar button[aria-label*='Connect to']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-volume": ".Root__now-playing-bar [data-testid='volume-bar'],.Root__now-playing-bar button[data-testid='volume-bar-toggle-mute-button']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
@@ -1223,20 +1223,20 @@ html, body, * { scroll-behavior: auto !important; }`;
       case "snippet-dev-highlighter": {
         const cssMap = {
           "snippet-hide-podcasts": "button[aria-label='Podcasts']{display:none !important}",
-          "snippet-hide-ads-banner": `[class*="upgrade"],[data-testid*="upgrade"],[class*="Advertisement"],[data-testid*="ad-slot"],iframe[src*="ad"]{display:none !important}`,
-          "snippet-hide-promo-card": ".main-home-content > section:not([aria-label]):not([class*='main-shelf-shelf']):not([class*='vg-shelf']){display:none !important} [class*='PromotionDefaultNative']{display:none !important}",
-          "snippet-hide-mood-recs": "section[aria-label*='Soundtrack your'],section[aria-label*='Start your'],section[aria-label*='Good morning'],section[aria-label*='Good afternoon'],section[aria-label*='Good evening'],section[aria-label*='late night'],section[aria-label*='your Monday'],section[aria-label*='your Tuesday'],section[aria-label*='your Wednesday'],section[aria-label*='your Thursday'],section[aria-label*='your Friday'],section[aria-label*='your Saturday'],section[aria-label*='your Sunday']{display:none !important}",
+          "snippet-hide-ads-banner": `[data-testid="home-ads-container"],[data-testid="home-ad-card"],[data-testid="embedded-ad"],[data-testid="embedded-ad-carousel"],.main-topBar-UpgradeButton{display:none !important}`,
+          "snippet-hide-promo-card": "[data-testid='home-page'] section:not([aria-label]):not([data-testid]){display:none !important}",
+          "snippet-hide-mood-recs": "section[aria-label*='Soundtrack your'],section[aria-label*='Start your'],section[aria-label*='late night' i],section[aria-label*='your Monday'],section[aria-label*='your Tuesday'],section[aria-label*='your Wednesday'],section[aria-label*='your Thursday'],section[aria-label*='your Friday'],section[aria-label*='your Saturday'],section[aria-label*='your Sunday']{display:none !important}",
           "snippet-hide-made-for-you": "section[aria-label^='Made For'],.Root__main-view div[aria-label^='Made For']{display:none !important}",
           "snippet-hide-recents": "section[aria-label='Recents'],.Root__main-view div[aria-label='Recents']{display:none !important}",
           "snippet-hide-top-mixes": "section[aria-label='Your top mixes'],.Root__main-view div[aria-label='Your top mixes']{display:none !important}",
           "snippet-hide-jump-back": "section[aria-label='Jump back in'],.Root__main-view div[aria-label='Jump back in']{display:none !important}",
           "snippet-hide-rec-stations": "section[aria-label*='Recommended Stations'],.Root__main-view div[aria-label*='Recommended Stations']{display:none !important}",
           "snippet-hide-new-releases": "section[aria-label*='New releases'],.Root__main-view div[aria-label*='New releases'],.Root__main-view div[aria-label*='New Releases']{display:none !important}",
-          "snippet-hide-best-artists": "section[aria-label*='Best of artists'],.Root__main-view div[aria-label*='Best of artists']{display:none !important}",
-          "snippet-hide-fav-artists": "section[aria-label*='favorite artists'],.Root__main-view div[aria-label*='favorite artists'],.Root__main-view div[aria-label*='Your favorite']{display:none !important}",
-          "snippet-hide-rec-today": "section[aria-label*='Recommended for today'],.Root__main-view div[aria-label*='Recommended for today'],.Root__main-view div[aria-label*='Recommended for Today']{display:none !important}",
-          "snippet-hide-home-shortcuts": ".view-homeShortcutsGrid-shortcuts{display:none !important}",
-          "snippet-thin-library": ".main-yourLibraryX-listItem{padding-block:2px !important;display:flex !important;align-items:center !important}.main-yourLibraryX-listItem [role='group']{min-block-size:0 !important;align-items:center !important;display:flex !important}.main-yourLibraryX-listItem .x-entityImage-imageContainer,.main-yourLibraryX-rowCover{width:2em !important;height:2em !important;flex-shrink:0 !important}",
+          "snippet-hide-best-artists": "section[aria-label*='Best of artists' i]{display:none !important}",
+          "snippet-hide-fav-artists": "section[aria-label*='favorite artists' i]{display:none !important}",
+          "snippet-hide-rec-today": "section[aria-label*='Recommended for today' i]{display:none !important}",
+          "snippet-hide-home-shortcuts": "[data-testid='home-page'] section:has([data-testid='shortcut-background']),.view-homeShortcutsGrid-shortcuts{display:none !important}",
+          "snippet-thin-library": "#Desktop_LeftSidebar_Id [role='row'] [role='group']{padding-block:2px !important;min-block-size:0 !important}#Desktop_LeftSidebar_Id [role='row'] [role='group'] > *{min-block-size:0 !important;padding-block:0 !important}#Desktop_LeftSidebar_Id [role='row'] .x-entityImage-imageContainer{width:2em !important;height:2em !important;min-width:2em !important;flex-shrink:0 !important}",
           "snippet-auto-hide-sidebar": "@media(max-width:1200px){#Desktop_LeftSidebar_Id{width:0 !important;overflow:hidden}.LayoutResizer__resize-bar{display:none}}",
           "snippet-dev-layout-grid": ".Root__nav-bar{outline:2px dashed #ff6b6b !important}.Root__main-view{outline:2px dashed #4ecdc4 !important}.Root__right-sidebar{outline:2px dashed #ffe66d !important}.Root__now-playing-bar{outline:2px dashed #a8e6cf !important}.Root__globalNav{outline:2px dashed #dda0dd !important}#Desktop_LeftSidebar_Id{outline:2px dashed #ff9f43 !important}",
           "snippet-dev-highlighter": "*:hover{outline:1px solid rgba(29,185,84,0.5) !important;outline-offset:-1px}",
@@ -1331,7 +1331,8 @@ html, body, * { scroll-behavior: auto !important; }`;
             const pT = parseFloat(cs.paddingTop), pR = parseFloat(cs.paddingRight), pB = parseFloat(cs.paddingBottom), pL = parseFloat(cs.paddingLeft);
             const mT = parseFloat(cs.marginTop), mR = parseFloat(cs.marginRight), mB = parseFloat(cs.marginBottom), mL = parseFloat(cs.marginLeft);
             const gap = cs.gap && cs.gap !== "normal" ? cs.gap : null;
-            const w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+            const box = el.getBoundingClientRect();
+            const w = Math.round(box.width), h = Math.round(box.height);
             parts.push(w + "×" + h + "px");
             if (pT || pR || pB || pL) parts.push("pad " + pT + "/" + pR + "/" + pB + "/" + pL);
             if (mT || mR || mB || mL) parts.push("mar " + mT + "/" + mR + "/" + mB + "/" + mL);
@@ -1484,7 +1485,7 @@ html, body, * { scroll-behavior: auto !important; }`;
             lines.push("── ACTIVE STYLE TAGS ──");
             document.querySelectorAll("style[id]").forEach(s => lines.push("  #" + s.id + " (" + s.textContent.length + " chars)"));
 
-            const blob = new Blob([lines.join("\\n")], { type: "text/plain" });
+            const blob = new Blob([lines.join("\n")], { type: "text/plain" });
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a"); a.href = url; a.download = "vantagraph-encore-audit.txt";
             document.body.appendChild(a); a.click(); document.body.removeChild(a);
