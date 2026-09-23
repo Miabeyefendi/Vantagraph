@@ -378,26 +378,33 @@
             <div id="vg-vp-preferred-row" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
           </div>
           <div style="display:flex;align-items:center;gap:10px;">
-            <input type="checkbox" id="vg-vp-startup-restore" style="accent-color:var(--spice-accent);width:16px;height:16px;cursor:pointer;" ${getSetting("startup-restore", "true") === "true" ? "checked" : ""}>
+            <input type="checkbox" id="vg-vp-startup-restore" style="accent-color:var(--spice-accent);width:16px;height:16px;cursor:pointer;">
             <label for="vg-vp-startup-restore" style="color:var(--spice-text);font-size:13px;cursor:pointer;">Restore volume on Spotify launch</label>
           </div>
           <div style="display:grid;gap:6px;">
             <label style="color:var(--spice-subtext);font-size:12px;">Default scroll increment (%)</label>
-            <input type="number" min="0.5" max="100" step="0.5" value="${getSetting("default-increment", "1")}"
+            <input type="number" min="0.5" max="100" step="0.5"
               id="vg-vp-default" style="background:var(--spice-tab-active);border:1px solid var(--spice-highlight);border-radius:6px;color:var(--spice-text);padding:8px 12px;font-size:14px;width:100%;font-family:inherit;">
           </div>
           <div style="display:grid;gap:6px;">
             <label style="color:var(--spice-subtext);font-size:12px;">Shift + scroll increment (%)</label>
-            <input type="number" min="0.5" max="100" step="0.5" value="${getSetting("shift-increment", "10")}"
+            <input type="number" min="0.5" max="100" step="0.5"
               id="vg-vp-shift" style="background:var(--spice-tab-active);border:1px solid var(--spice-highlight);border-radius:6px;color:var(--spice-text);padding:8px 12px;font-size:14px;width:100%;font-family:inherit;">
           </div>
           <div style="display:grid;gap:6px;">
             <label style="color:var(--spice-subtext);font-size:12px;">Ctrl + scroll increment (%) - fine control</label>
-            <input type="number" min="0.1" max="10" step="0.1" value="${getSetting("ctrl-increment", "0.5")}"
+            <input type="number" min="0.1" max="10" step="0.1"
               id="vg-vp-ctrl" style="background:var(--spice-tab-active);border:1px solid var(--spice-highlight);border-radius:6px;color:var(--spice-text);padding:8px 12px;font-size:14px;width:100%;font-family:inherit;">
           </div>
         </div>
       `;
+      // stored values go in as DOM properties, never through the HTML parser
+      // (CodeQL js/xss-through-dom #1: they used to be interpolated into value="")
+      content.querySelector("#vg-vp-startup-restore").checked = getSetting("startup-restore", "true") === "true";
+      content.querySelector("#vg-vp-default").value = getSetting("default-increment", "1");
+      content.querySelector("#vg-vp-shift").value = getSetting("shift-increment", "10");
+      content.querySelector("#vg-vp-ctrl").value = getSetting("ctrl-increment", "0.5");
+
       const prefRow = content.querySelector("#vg-vp-preferred-row");
       [0, 20, 40, 50, 60, 80, 100].forEach(pct => {
         const btn = document.createElement("button");

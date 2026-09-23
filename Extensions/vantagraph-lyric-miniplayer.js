@@ -326,7 +326,7 @@
         };
       } catch (e) {}
       if (Spicetify.Platform?.Lyrics) {
-        try { const l = await Spicetify.Platform.Lyrics.getLyrics(trackUri); if (l?.lines) return { synced: true, wordSync: false, lines: l.lines.map(ln => ({ startTime: ln.startTimeMs || 0, endTime: 0, text: ln.words || ln.text || '', translation: null, syllables: null })) }; } catch (e) {}
+        try { const l = await Spicetify.Platform.Lyrics.getLyrics(trackUri); if (l?.lines) return { synced: true, wordSync: false, lines: l.lines.map(ln => ({ startTime: parseInt(ln.startTimeMs) || 0, endTime: 0, text: ln.words || ln.text || '', translation: null, syllables: null })) }; } catch (e) {}
       }
       try { const a = await Spicetify.CosmosAsync.get(`wg://lyrics/v1/track/${trackId}?format=json&market=from_token`); if (a?.lines) return { synced: true, wordSync: false, lines: a.lines.map(l => ({ startTime: parseInt(l.startTimeMs || l.time || 0), endTime: 0, text: l.words || l.text || '', translation: null, syllables: null })) }; } catch (e) {}
     } catch (e) {}
