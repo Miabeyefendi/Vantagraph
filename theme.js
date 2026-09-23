@@ -49,9 +49,9 @@
     { className: "vg-topbar-overlay", selectors: [".main-topBar-overlay", "[data-testid='topbar-overlay']"] },
     { className: "vg-topbar-right", selectors: [".main-topBar-topbarContentRight", "[data-testid='topbar-right']"] },
     { className: "vg-global-nav-link", selectors: [".main-globalNav-navLink"] },
-    { className: "vg-actionbar-bg", selectors: [".main-actionBarBackground-background", ".x-actionBarBackground-background"] },
+    { className: "vg-actionbar-bg", selectors: [".main-actionBarBackground-background"] },
     { className: "vg-home-header", selectors: [".main-home-homeHeader", "[data-testid='home-header']"] },
-    { className: "vg-entity-header-overlay", selectors: [".main-entityHeader-overlay", ".x-entityHeader-overlay"] },
+    { className: "vg-entity-header-overlay", selectors: [".main-entityHeader-overlay"] },
     { className: "vg-home-filter-chips", selectors: [".main-home-filterChipsSection", "[data-testid='home-filter-chips']"] },
     { className: "vg-user-widget", selectors: [".main-userWidget-box"] },
     { className: "vg-search-category", selectors: [".search-searchCategory-SearchCategory", ".search-searchCategory-contentArea"] },
@@ -65,7 +65,6 @@
     { className: "vg-rootlist-wrapper", selectors: [".main-rootlist-wrapper"] },
     { className: "vg-library-entrypoints", selectors: [".main-yourLibraryX-entryPoints"] },
     { className: "vg-library-nav-link", selectors: [".main-yourLibraryX-navLink"] },
-    { className: "vg-library-icon", selectors: [".main-yourLibraryX-iconContainer"] },
     { className: "vg-your-library", selectors: [".YourLibraryX", ".main-yourLibraryX-library"] },
     { className: "vg-your-library-filter", selectors: [".main-yourLibraryX-filterArea"] },
     { className: "vg-your-library-header", selectors: [".main-yourLibraryX-header", ".main-yourLibraryX-headerContent"] },
@@ -106,7 +105,6 @@
     { className: "vg-home-shortcut-image-wrapper", selectors: [".view-homeShortcutsGrid-imageWrapper"] },
     { className: "vg-artist-overview-image", selectors: [".artist-artistOverview-sideBlock > div > section > div:nth-child(3) > section:nth-child(2) > div > img"] },
     { className: "vg-artist-overview-section", selectors: [".artist-artistOverview-sideBlock > div > section"] },
-    { className: "vg-special-rounded", selectors: [".T_JcGdJujSuj014SZfjl"] },
 
     // right panel
     { className: "vg-right", selectors: [".Root__right-sidebar", "[data-testid='right-sidebar']", "aside[aria-label*='Right']"] },
@@ -155,7 +153,6 @@
     { className: "vg-connect-device", selectors: [".connect-device-list-container"] },
 
     // lyrics
-    { className: "vg-lyrics-container", selectors: [".lyrics-lyricsContainer-LyricsContainer"] },
     { className: "vg-lyrics-highlight", selectors: [".lyrics-lyricsContent-highlight"] },
     { className: "vg-lyrics-bg", selectors: [".lyrics-lyrics-background"] },
     { className: "vg-lyrics-content", selectors: [".lyrics-lyricsContent-lyric", ".lyrics-lyricsContent-text"] },
@@ -176,14 +173,37 @@
   let vgClassObserver = null;
   let vgClassRaf = null;
 
-  function applyDynamicClasses() {
-    VG_CLASS_MAP.forEach(({ className, selectors }) => {
-      selectors.forEach((selector) => {
-        document.querySelectorAll(selector).forEach((el) => {
-          el.classList.add(className);
-        });
-      });
-    });
+  // Classes that follow a state flip on an element that already exists; they
+  // get a cheap global pass on every flush. Everything else is structural and
+  // is only looked up inside newly added subtrees.
+  const VG_STATE_CLASSES = new Set([
+    "vg-add-button-active", "vg-progressbar-interactive", "vg-progressbar-dragging",
+    "vg-lyrics-highlight", "vg-lyrics-active", "vg-encore-dark",
+  ]);
+  const validSelector = (sel) => {
+    try { document.createDocumentFragment().querySelector(sel); return true; } catch (e) { return false; }
+  };
+  const VG_COMPILED = VG_CLASS_MAP.map(({ className, selectors }) => {
+    const ok = selectors.filter(validSelector);
+    return { className, sel: ok.join(","), has: ok.some(x => x.includes(":has(")) };
+  }).filter(e => e.sel);
+  const VG_STRUCT = VG_COMPILED.filter(e => !VG_STATE_CLASSES.has(e.className));
+  const VG_STATE = VG_COMPILED.filter(e => VG_STATE_CLASSES.has(e.className));
+  const VG_STRUCT_NAMES = new Set(VG_STRUCT.map(e => e.className));
+
+  function classifySubtree(root) {
+    for (const { className, sel, has } of VG_STRUCT) {
+      if (root.matches(sel)) root.classList.add(className);
+      root.querySelectorAll(sel).forEach(el => el.classList.add(className));
+      // :has() entries match an ancestor once its descendants arrive
+      if (has && root.parentElement) root.parentElement.closest(sel)?.classList.add(className);
+    }
+  }
+
+  function applyStateClasses() {
+    for (const { className, sel } of VG_STATE) {
+      document.querySelectorAll(sel).forEach(el => el.classList.add(className));
+    }
 
     document.querySelectorAll(".vg-track-row").forEach((row) => {
       const isActive = row.classList.contains("main-trackList-active") ||
@@ -197,18 +217,60 @@
     });
   }
 
+  // full pass: init, and callers outside theme.js (VantagraphData)
+  function applyDynamicClasses() {
+    classifySubtree(document.documentElement);
+    applyStateClasses();
+  }
+
+  // The old observer re-ran all selectors over the whole document on every
+  // DOM change (5-9 ms per frame on scrolling lists). Now added subtrees are
+  // classified once per frame, and when React rewrites a className the
+  // stripped structural vg-* classes are put back in the same microtask.
+  const vgPendingRoots = new Set();
+  function flushDynamicClasses() {
+    vgClassRaf = null;
+    const roots = [...vgPendingRoots];
+    vgPendingRoots.clear();
+    if (roots.length > 150) {
+      applyDynamicClasses();
+      return;
+    }
+    const set = new Set(roots);
+    for (const root of roots) {
+      if (!root.isConnected) continue;
+      let covered = false;
+      for (let a = root.parentElement; a; a = a.parentElement) {
+        if (set.has(a)) { covered = true; break; }
+      }
+      if (!covered) classifySubtree(root);
+    }
+    applyStateClasses();
+  }
+
   function startDynamicClassObserver() {
     applyDynamicClasses();
     if (vgClassObserver) return;
-    vgClassObserver = new MutationObserver(() => {
-      if (vgClassRaf) return;
-      vgClassRaf = requestAnimationFrame(() => {
-        vgClassRaf = null;
-        applyDynamicClasses();
-      });
+    vgClassObserver = new MutationObserver((mutations) => {
+      for (const m of mutations) {
+        if (m.type === "attributes") {
+          const old = m.oldValue;
+          if (!old || !old.includes("vg-")) continue;
+          const el = m.target;
+          for (const token of old.split(" ")) {
+            if (VG_STRUCT_NAMES.has(token) && !el.classList.contains(token)) el.classList.add(token);
+          }
+          continue;
+        }
+        for (const n of m.addedNodes) if (n.nodeType === 1) vgPendingRoots.add(n);
+      }
+      if (vgPendingRoots.size && !vgClassRaf) vgClassRaf = requestAnimationFrame(flushDynamicClasses);
     });
     if (document.body) {
-      vgClassObserver.observe(document.body, { childList: true, subtree: true });
+      vgClassObserver.observe(document.body, {
+        childList: true, subtree: true,
+        attributes: true, attributeFilter: ["class"], attributeOldValue: true,
+      });
     }
   }
 
@@ -451,7 +513,23 @@
   }
 
   // applyFont
+  // Font name goes into a <style> string and font URL into <link href>, both
+  // from a free-text field (CodeQL js/xss-through-dom #2). Name: characters that
+  // can break out of the CSS string are stripped. URL: absolute http(s) only,
+  // anything else (javascript:, data:, relative) is dropped.
+  function safeFontFamily(name) {
+    return String(name || "").replace(/["'\\{}<>;@]|[\u0000-\u001f\u007f]/g, "").trim().slice(0, 100);
+  }
+  function safeFontUrl(url) {
+    try {
+      const u = new URL(String(url || ""));
+      return (u.protocol === "https:" || u.protocol === "http:") ? u.href : "";
+    } catch (e) { return ""; }
+  }
+
   function applyFont(fontFamily, fontUrl) {
+    fontFamily = safeFontFamily(fontFamily);
+    fontUrl = safeFontUrl(fontUrl);
     const styleId = "vantagraph-font";
     let styleEl = document.getElementById(styleId);
     if (!styleEl) {
@@ -1144,6 +1222,7 @@ html, body, * { scroll-behavior: auto !important; }`;
       case "snippet-custom-accent": {
         const sid = "vantagraph-snippet-custom-accent";
         let sel = document.getElementById(sid);
+        if (!/^#[0-9a-f]{3,8}$/i.test(String(value))) value = "";
         if (value && value !== "false" && value !== "") {
           if (!sel) { sel = document.createElement("style"); sel.id = sid; document.head.appendChild(sel); }
           const root = document.documentElement;
@@ -1786,7 +1865,7 @@ html, body, * { scroll-behavior: auto !important; }`;
     if (document.getElementById("vg-wave-css")) return;
     const s = document.createElement("style"); s.id = "vg-wave-css";
     s.textContent = `.vg-wave-container{display:flex !important;align-items:flex-end !important;justify-content:center !important;gap:2px !important;height:25px !important;padding-top:0px !important;padding-bottom:0px !important;padding-left:0px !important;padding-right:20px !important;flex-shrink:0 !important;transition:opacity 2s ease;overflow:hidden !important;clip-path:inset(0) !important;contain:layout paint !important;box-sizing:border-box !important;width:75px !important;margin-right:auto !important;}
-.vg-wave-bar{width:3px;border-radius:1.5px 1.5px 0 0;background:var(--spice-accent);will-change:height;transition:height .15s cubic-bezier(.4,0,.2,1);min-height:0;flex-shrink:0;}`;
+.vg-wave-bar{width:3px;height:100%;border-radius:1.5px 1.5px 0 0;background:var(--spice-accent);transform-origin:bottom;transform:scaleY(.03);will-change:transform;transition:transform .15s cubic-bezier(.4,0,.2,1);flex-shrink:0;}`;
     document.head.appendChild(s);
   }
 
@@ -1915,17 +1994,25 @@ html, body, * { scroll-behavior: auto !important; }`;
         waveBarTargets[i] = Math.max(WAVE_MIN_H, Math.min(100, barHeight));
         waveBarSpeeds[i] = useReal ? (80 + Math.random() * 120) : (150 + Math.random() * 300);
       }
-      if (waveBars[i]) waveBars[i].style.height = waveBarTargets[i] + "%";
+      if (waveBars[i]) waveSetBar(i, waveBarTargets[i]);
     }
     waveRafId = requestAnimationFrame(waveLoop);
   }
 
+  // bars animate transform (compositor) instead of height (layout every frame);
+  // a bar is only written when its target changes
+  const waveBarShown = new Array(WAVE_BARS).fill(-1);
+  function waveSetBar(i, pct) {
+    if (waveBarShown[i] === pct) return;
+    waveBarShown[i] = pct;
+    waveBars[i].style.transform = "scaleY(" + (pct / 100).toFixed(3) + ")";
+  }
   function waveStart() { waveStop(); waveLastFrame = 0; waveRafId = requestAnimationFrame(waveLoop); }
   function waveStop() { if (waveRafId) { cancelAnimationFrame(waveRafId); waveRafId = null; } }
   function waveShow() { if (waveEl) waveEl.style.opacity = "1"; }
   function waveHide() { if (waveEl) waveEl.style.opacity = "0"; }
   function waveResetBars() {
-    for (let i = 0; i < WAVE_BARS; i++) { waveBarTargets[i] = WAVE_MIN_H; waveBarTimers[i] = 0; if (waveBars[i]) waveBars[i].style.height = WAVE_MIN_H + "%"; }
+    for (let i = 0; i < WAVE_BARS; i++) { waveBarTargets[i] = WAVE_MIN_H; waveBarTimers[i] = 0; if (waveBars[i]) waveSetBar(i, WAVE_MIN_H); }
   }
   function waveInstantStart() { waveAmplitude = 1; waveShow(); waveStart(); }
   function waveInstantStop() { waveStop(); if (waveFadeTimer) { clearInterval(waveFadeTimer); waveFadeTimer = null; } waveResetBars(); waveHide(); }
@@ -1985,8 +2072,8 @@ html, body, * { scroll-behavior: auto !important; }`;
       waveEl = document.createElement("div"); waveEl.className = "vg-wave-container";
       waveBars = [];
       for (let i = 0; i < WAVE_BARS; i++) {
-        const bar = document.createElement("div"); bar.className = "vg-wave-bar"; bar.style.height = WAVE_MIN_H + "%";
-        waveEl.appendChild(bar); waveBars.push(bar);
+        const bar = document.createElement("div"); bar.className = "vg-wave-bar";
+        waveEl.appendChild(bar); waveBars.push(bar); waveBarShown[i] = -1; waveSetBar(i, WAVE_MIN_H);
       }
       playbackBar.insertBefore(waveEl, playbackBar.firstChild); waveInjected = true;
       let _isPlaying = false; try { _isPlaying = Spicetify.Player.isPlaying(); } catch(e) {}

@@ -476,23 +476,35 @@
   function startObserver() {
     if (observer) observer.disconnect();
 
+    // The HTMLElement check used to skip <svg> nodes (they are SVGElement), so a
+    // swapped icon waited for the periodic scan and showed Spotify's glyph for
+    // up to 1s. Now added <svg>, added <path> inside an svg, and path `d`
+    // changes (outline<->filled, shuffle<->smart) are handled in the same tick.
     observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
+        if (mutation.type === "attributes") {
+          const svg = mutation.target.closest && mutation.target.closest("svg");
+          if (svg) matchAndReplaceSvg(svg);
+          continue;
+        }
         for (const node of mutation.addedNodes) {
-          if (!(node instanceof HTMLElement)) continue;
-          if (node.tagName === "svg") {
+          if (!(node instanceof Element)) continue;
+          if (node.localName === "svg") {
             matchAndReplaceSvg(node);
-          } else if (node.querySelector && node.querySelector("svg")) {
+          } else if (node instanceof SVGElement) {
+            const svg = node.closest("svg");
+            if (svg) matchAndReplaceSvg(svg);
+          } else if (node.querySelector("svg")) {
             processContainer(node);
           }
         }
       }
     });
 
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["d"] });
 
-    // periodic scan: catches outline<->filled / shuffle<->smart attribute flips
-    scanInterval = setInterval(scanAllRegions, 1000);
+    // safety net only; the observer handles swaps and path changes directly
+    scanInterval = setInterval(scanAllRegions, 5000);
   }
 
 
