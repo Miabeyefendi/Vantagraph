@@ -1861,204 +1861,81 @@ html, body, * { scroll-behavior: auto !important; }`;
   }
 
   // WAVE ANIMATION
+  // Pure CSS: every bar loops its own transform keyframes on the compositor and
+  // JS only starts and stops them. The old loop rewrote bar sizes many times a
+  // second, and each write forced a full frame on this heavy page (40-75% of the
+  // main thread while music played). Its audio-analysis source
+  // (audio-attributes/v1) no longer answers, so the bars were random anyway.
   function injectWaveCSS() {
     if (document.getElementById("vg-wave-css")) return;
     const s = document.createElement("style"); s.id = "vg-wave-css";
-    s.textContent = `.vg-wave-container{display:flex !important;align-items:flex-end !important;justify-content:center !important;gap:2px !important;height:25px !important;padding-top:0px !important;padding-bottom:0px !important;padding-left:0px !important;padding-right:20px !important;flex-shrink:0 !important;transition:opacity 2s ease;overflow:hidden !important;clip-path:inset(0) !important;contain:layout paint !important;box-sizing:border-box !important;width:75px !important;margin-right:auto !important;}
-.vg-wave-bar{width:3px;height:100%;border-radius:1.5px 1.5px 0 0;background:var(--spice-accent);transform-origin:bottom;transform:scaleY(.03);will-change:transform;transition:transform .15s cubic-bezier(.4,0,.2,1);flex-shrink:0;}`;
+    s.textContent = `.vg-wave-container{display:flex !important;align-items:flex-end !important;justify-content:center !important;gap:2px !important;height:25px !important;padding-top:0px !important;padding-bottom:0px !important;padding-left:0px !important;padding-right:20px !important;flex-shrink:0 !important;transition:opacity 2s ease;overflow:hidden !important;clip-path:inset(0) !important;contain:layout paint !important;box-sizing:border-box !important;width:75px !important;margin-right:auto !important;transform-origin:bottom;}
+.vg-wave-bar{width:3px;border-radius:1.5px 1.5px 0 0;background:var(--spice-accent);transform-origin:bottom;transform:scaleY(.12);will-change:transform;flex-shrink:0;animation:vg-wave-a 1s ease-in-out infinite alternate;animation-play-state:paused;}
+.vg-wave-container.vg-wave-live .vg-wave-bar{animation-play-state:running;}
+@keyframes vg-wave-a{0%{transform:scaleY(.12)}30%{transform:scaleY(.85)}55%{transform:scaleY(.35)}80%{transform:scaleY(1)}100%{transform:scaleY(.2)}}
+@keyframes vg-wave-b{0%{transform:scaleY(.25)}20%{transform:scaleY(.6)}45%{transform:scaleY(.15)}70%{transform:scaleY(.95)}100%{transform:scaleY(.4)}}
+@keyframes vg-wave-c{0%{transform:scaleY(.4)}35%{transform:scaleY(.1)}60%{transform:scaleY(.75)}85%{transform:scaleY(.3)}100%{transform:scaleY(.9)}}`;
     document.head.appendChild(s);
   }
 
-  const WAVE_BARS = 13, WAVE_MID = Math.floor(WAVE_BARS / 2), WAVE_MIN_H = 3;
-  const WAVE_MAX_H = [];
-  for (let i = 0; i < WAVE_BARS; i++) { WAVE_MAX_H[i] = 100 - (Math.abs(i - WAVE_MID) / WAVE_MID) * 40; }
+  const WAVE_BARS = 13, WAVE_MID = Math.floor(WAVE_BARS / 2);
+  const WAVE_KEYFRAMES = ["vg-wave-a", "vg-wave-b", "vg-wave-c"];
 
-  // zone: bass 0-3, mid 4-8, treble 9-12
-  const WAVE_BAR_ZONE = [];
-  for (let i = 0; i < WAVE_BARS; i++) {
-    if (i <= 3) WAVE_BAR_ZONE[i] = "bass";
-    else if (i <= 8) WAVE_BAR_ZONE[i] = "mid";
-    else WAVE_BAR_ZONE[i] = "treble";
-  }
-
-  let waveEl = null, waveBars = [], waveInjected = false, waveRafId = null;
-  let waveAmplitude = 1, waveFadeTimer = null, waveFadingOut = false;
+  let waveEl = null, waveBars = [], waveInjected = false;
   let waveProgressPoller = null, waveListenersRegistered = false;
-
-  // audio analysis state (loudness + timbre per segment)
-  let waveSegments = null;
-  let waveFallbackMode = false;
-
-  const waveBarTargets = new Array(WAVE_BARS).fill(WAVE_MIN_H);
-  const waveBarSpeeds = [];
-  for (let i = 0; i < WAVE_BARS; i++) { waveBarSpeeds[i] = 150 + Math.random() * 300; }
-  const waveBarTimers = new Array(WAVE_BARS).fill(0);
+  let waveFadingOut = false, waveLastVol = -1, wavePauseTimer = null;
 
   function waveGetVolume() { try { const v = Spicetify.Player.getVolume(); return typeof v === "number" ? v : 1; } catch (e) { return 1; } }
 
-  // fetch audio analysis: loudness + timbre
-  async function waveFetchAnalysis() {
-    waveSegments = null;
-    waveFallbackMode = false;
-    try {
-      const uri = Spicetify.Player.data?.item?.uri;
-      if (!uri) { waveFallbackMode = true; return; }
-      const id = uri.split(":").pop();
-      const analysis = await Spicetify.CosmosAsync.get(
-        `https://spclient.wg.spotify.com/audio-attributes/v1/audio-analysis/${id}?format=json`
-      );
-      if (analysis?.segments?.length > 0) {
-        const s0 = analysis.segments[0];
-        if (typeof s0.start === "number" && typeof s0.loudness_max === "number") {
-          waveSegments = analysis.segments;
-        } else {
-          waveFallbackMode = true;
-        }
-      } else {
-        waveFallbackMode = true;
-      }
-    } catch (e) {
-      waveFallbackMode = true;
-    }
+  // bars shrink with the volume; written only when the rounded value changes
+  function waveApplyVolume() {
+    if (!waveEl) return;
+    const v = Math.round(waveGetVolume() * 20) / 20;
+    if (v === waveLastVol) return;
+    waveLastVol = v;
+    waveEl.style.transform = "scaleY(" + v + ")";
   }
 
-  // binary-search current segment, interp loudness curve, derive bass/mid/treble from timbre
-  function waveGetSegmentAtProgress() {
-    if (!waveSegments || waveSegments.length === 0) return null;
-    try {
-      const progressSec = Spicetify.Player.getProgress() / 1000;
-      let lo = 0, hi = waveSegments.length - 1, seg = waveSegments[0];
-      while (lo <= hi) {
-        const mid = (lo + hi) >> 1;
-        if (waveSegments[mid].start <= progressSec) { seg = waveSegments[mid]; lo = mid + 1; }
-        else { hi = mid - 1; }
-      }
-      const lStart = typeof seg.loudness_start === "number" ? seg.loudness_start : -20;
-      const lMax = typeof seg.loudness_max === "number" ? seg.loudness_max : -10;
-      const lEnd = typeof seg.loudness_end === "number" ? seg.loudness_end : lStart;
-      const dur = seg.duration || 0.5;
-      const maxTime = seg.loudness_max_time || (dur * 0.3);
-
-      const elapsed = progressSec - seg.start;
-      let loudnessDb;
-      if (elapsed < maxTime) {
-        const t = maxTime > 0 ? elapsed / maxTime : 0;
-        loudnessDb = lStart + t * (lMax - lStart);
-      } else {
-        const remaining = dur - maxTime;
-        const t = remaining > 0 ? (elapsed - maxTime) / remaining : 1;
-        loudnessDb = lMax + t * (lEnd - lMax);
-      }
-
-      if (isNaN(loudnessDb)) loudnessDb = -15;
-      const amplitude = Math.max(0, Math.min(1, Math.pow(10, loudnessDb / 20)));
-      if (isNaN(amplitude)) return null;
-
-      const timbre = seg.timbre || [];
-      const brightness = timbre.length > 1 ? timbre[1] : 0;
-      const normBright = Math.max(-1, Math.min(1, brightness / 150));
-
-      const bass = amplitude * Math.max(0.2, 1 - normBright * 0.8);
-      const treble = amplitude * Math.max(0.2, 1 + normBright * 0.8);
-      const mid = amplitude * (1 - Math.abs(normBright) * 0.5);
-
-      return { amplitude, bass, mid, treble };
-    } catch (e) { return null; }
+  function waveStart() {
+    if (!waveEl) return;
+    if (wavePauseTimer) { clearTimeout(wavePauseTimer); wavePauseTimer = null; }
+    waveApplyVolume();
+    waveEl.classList.add("vg-wave-live");
+    waveEl.style.opacity = "1";
+  }
+  // fade over the container's 2s opacity transition, then stop the keyframes
+  function waveStop() {
+    if (!waveEl) return;
+    waveEl.style.opacity = "0";
+    if (wavePauseTimer) clearTimeout(wavePauseTimer);
+    wavePauseTimer = setTimeout(() => { wavePauseTimer = null; if (waveEl) waveEl.classList.remove("vg-wave-live"); }, 2000);
   }
 
-  // RAF loop: real audio data when available, randomized fallback otherwise
-  let waveLastFrame = 0;
-  function waveLoop(ts) {
-    if (!waveLastFrame) waveLastFrame = ts;
-    const dt = ts - waveLastFrame; waveLastFrame = ts;
-    const vol = waveGetVolume(), amp = waveAmplitude * vol;
-
-    const segData = (!waveFallbackMode) ? waveGetSegmentAtProgress() : null;
-    const useReal = segData !== null;
-
-    for (let i = 0; i < WAVE_BARS; i++) {
-      waveBarTimers[i] += dt;
-      if (waveBarTimers[i] >= waveBarSpeeds[i]) {
-        waveBarTimers[i] = 0;
-        const bellCurve = WAVE_MAX_H[i] / 100;
-        let barHeight;
-        if (useReal) {
-          const zone = WAVE_BAR_ZONE[i];
-          const energy = zone === "bass" ? segData.bass : zone === "treble" ? segData.treble : segData.mid;
-          const variation = 0.75 + Math.random() * 0.5;
-          barHeight = WAVE_MIN_H + energy * bellCurve * variation * amp * (100 - WAVE_MIN_H);
-        } else {
-          const maxH = WAVE_MAX_H[i] * amp;
-          barHeight = maxH <= WAVE_MIN_H ? WAVE_MIN_H : WAVE_MIN_H + Math.random() * (maxH - WAVE_MIN_H);
-        }
-        waveBarTargets[i] = Math.max(WAVE_MIN_H, Math.min(100, barHeight));
-        waveBarSpeeds[i] = useReal ? (80 + Math.random() * 120) : (150 + Math.random() * 300);
-      }
-      if (waveBars[i]) waveSetBar(i, waveBarTargets[i]);
-    }
-    waveRafId = requestAnimationFrame(waveLoop);
-  }
-
-  // bars animate transform (compositor) instead of height (layout every frame);
-  // a bar is only written when its target changes
-  const waveBarShown = new Array(WAVE_BARS).fill(-1);
-  function waveSetBar(i, pct) {
-    if (waveBarShown[i] === pct) return;
-    waveBarShown[i] = pct;
-    waveBars[i].style.transform = "scaleY(" + (pct / 100).toFixed(3) + ")";
-  }
-  function waveStart() { waveStop(); waveLastFrame = 0; waveRafId = requestAnimationFrame(waveLoop); }
-  function waveStop() { if (waveRafId) { cancelAnimationFrame(waveRafId); waveRafId = null; } }
-  function waveShow() { if (waveEl) waveEl.style.opacity = "1"; }
-  function waveHide() { if (waveEl) waveEl.style.opacity = "0"; }
-  function waveResetBars() {
-    for (let i = 0; i < WAVE_BARS; i++) { waveBarTargets[i] = WAVE_MIN_H; waveBarTimers[i] = 0; if (waveBars[i]) waveSetBar(i, WAVE_MIN_H); }
-  }
-  function waveInstantStart() { waveAmplitude = 1; waveShow(); waveStart(); }
-  function waveInstantStop() { waveStop(); if (waveFadeTimer) { clearInterval(waveFadeTimer); waveFadeTimer = null; } waveResetBars(); waveHide(); }
-  function waveFadeIn() {
-    if (waveFadeTimer) clearInterval(waveFadeTimer);
-    waveAmplitude = 0.05; waveShow(); waveStart();
-    waveFadeTimer = setInterval(() => { waveAmplitude = Math.min(1, waveAmplitude + (1 / 30)); if (waveAmplitude >= 1) { clearInterval(waveFadeTimer); waveFadeTimer = null; } }, 100);
-  }
-  function waveFadeOut() {
-    if (waveFadeTimer) clearInterval(waveFadeTimer);
-    waveFadeTimer = setInterval(() => { waveAmplitude = Math.max(0, waveAmplitude - 0.05); if (waveAmplitude <= 0) { clearInterval(waveFadeTimer); waveFadeTimer = null; waveResetBars(); waveHide(); waveStop(); } }, 100);
-  }
-  // poll progress: trigger fade-out near end of track (97%)
+  // poll progress: fade out near the end of the track (97%), follow the volume
   function waveStartProgressPoll() {
     if (waveProgressPoller) clearInterval(waveProgressPoller);
     waveFadingOut = false;
     waveProgressPoller = setInterval(() => {
       try {
         if (!Spicetify.Player.isPlaying()) return;
+        waveApplyVolume();
         const pct = Spicetify.Player.getProgress() / Spicetify.Player.getDuration();
-        if (pct >= 0.97 && !waveFadingOut) { waveFadingOut = true; waveFadeOut(); }
+        if (pct >= 0.97 && !waveFadingOut) { waveFadingOut = true; waveStop(); }
       } catch (e) {}
     }, 500);
   }
   function waveStopProgressPoll() { if (waveProgressPoller) { clearInterval(waveProgressPoller); waveProgressPoller = null; } }
 
-  // played-tracks set: fade-in only on first play, instant on replay (capped at 200)
-  const wavePlayedTracks = new Set();
-
   function waveOnPlayPause() {
-    if (Spicetify.Player.isPlaying()) { waveInstantStart(); waveStartProgressPoll(); }
-    else { waveInstantStop(); waveStopProgressPoll(); }
+    if (Spicetify.Player.isPlaying()) { waveStart(); waveStartProgressPoll(); }
+    else { waveStop(); waveStopProgressPoll(); }
   }
   function waveOnSongChange() {
-    waveStop(); waveStopProgressPoll();
-    if (waveFadeTimer) { clearInterval(waveFadeTimer); waveFadeTimer = null; }
-    waveFadingOut = false; waveAmplitude = 0; waveResetBars(); waveHide();
-    waveFetchAnalysis();
-    let trackUri = ""; try { trackUri = Spicetify.Player.data?.item?.uri || ""; } catch (e) {}
+    waveStopProgressPoll();
+    waveFadingOut = false;
     setTimeout(() => {
       if (!Spicetify.Player.isPlaying()) return;
-      if (trackUri && !wavePlayedTracks.has(trackUri)) {
-        if (wavePlayedTracks.size >= 200) wavePlayedTracks.clear();
-        wavePlayedTracks.add(trackUri); waveFadeIn();
-      } else { waveInstantStart(); }
-      waveStartProgressPoll();
+      waveStart(); waveStartProgressPoll();
     }, 300);
   }
 
@@ -2066,19 +1943,25 @@ html, body, * { scroll-behavior: auto !important; }`;
   function injectWaveAnimation() {
     waitForElement(".vg-playback-bar", (playbackBar) => {
       if (waveInjected && waveEl && waveEl.parentNode) {
-        if (Spicetify.Player.isPlaying()) { waveInstantStart(); waveStartProgressPoll(); }
+        if (Spicetify.Player.isPlaying()) { waveStart(); waveStartProgressPoll(); }
         return;
       }
       waveEl = document.createElement("div"); waveEl.className = "vg-wave-container";
+      waveEl.style.opacity = "0";
       waveBars = [];
       for (let i = 0; i < WAVE_BARS; i++) {
         const bar = document.createElement("div"); bar.className = "vg-wave-bar";
-        waveEl.appendChild(bar); waveBars.push(bar); waveBarShown[i] = -1; waveSetBar(i, WAVE_MIN_H);
+        // bell-shaped heights; each bar gets its own keyframes, speed and phase
+        bar.style.height = (100 - (Math.abs(i - WAVE_MID) / WAVE_MID) * 40) + "%";
+        bar.style.animationName = WAVE_KEYFRAMES[i % WAVE_KEYFRAMES.length];
+        bar.style.animationDuration = (0.55 + Math.random() * 0.5).toFixed(2) + "s";
+        bar.style.animationDelay = (-Math.random()).toFixed(2) + "s";
+        waveEl.appendChild(bar); waveBars.push(bar);
       }
+      waveLastVol = -1;
       playbackBar.insertBefore(waveEl, playbackBar.firstChild); waveInjected = true;
-      let _isPlaying = false; try { _isPlaying = Spicetify.Player.isPlaying(); } catch(e) {}
-      if (_isPlaying) { waveFetchAnalysis(); waveAmplitude = 1; waveShow(); waveStart(); waveStartProgressPoll(); }
-      else { waveHide(); }
+      let _isPlaying = false; try { _isPlaying = Spicetify.Player.isPlaying(); } catch (e) {}
+      if (_isPlaying) { waveStart(); waveStartProgressPoll(); }
       if (!waveListenersRegistered) {
         Spicetify.Player.addEventListener("onplaypause", waveOnPlayPause);
         Spicetify.Player.addEventListener("songchange", waveOnSongChange);

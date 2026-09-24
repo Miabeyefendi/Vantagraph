@@ -270,7 +270,8 @@
   }
 
 
-  // 4. CSS gen: A=selector-based, B=path-fingerprint via :has() (zero-flicker, browser paint)
+  // 4. CSS gen: A=selector-based, B=one rule per fingerprint icon keyed on the
+  // data-vg-icon attribute the JS matcher sets (section 5)
   // technique: mask-image w/ data URI + currentColor fill + contain sizing
   // 4A. selector-based mask rule
   function generateIconCSS(entry) {
@@ -303,18 +304,18 @@
       }`;
   }
 
-  // 4B. fingerprint-based: svg:has(path[d^="..."]) chained on |
+  // 4B. fingerprint icons: the matcher marks the svg with data-vg-icon, this
+  // rule paints it. Used to be svg:has(path[d^="..."]) x139, which Chromium
+  // re-evaluated for every svg a scrolling list mounted, plus a copy of the
+  // data URI written inline on each svg.
   function generateFingerprintCSS(entry) {
     const dataUri = iconUrl(entry.file);
     if (!dataUri) return "";
     const url = `url("${dataUri}")`;
-
-    const fpParts = entry.pathFingerprint.split("|");
-    const hasChain = fpParts.map(fp => `:has(path[d^="${fp}"])`).join("");
-    const sel = `svg${hasChain}`;
+    const sel = `svg[data-vg-icon="${entry.id}"]`;
 
     return `
-      /* ${entry.id} ← fingerprint */
+      /* ${entry.id} */
       ${sel} {
         -webkit-mask-image: ${url} !important;
         mask-image: ${url} !important;
@@ -325,10 +326,6 @@
         -webkit-mask-position: center !important;
         mask-position: center !important;
         background: currentColor !important;
-      }
-      ${sel} > * {
-        fill: transparent !important;
-        stroke: transparent !important;
       }`;
   }
 
@@ -370,10 +367,15 @@
     fpEntries.sort((a, b) => a.pathFingerprint.length - b.pathFingerprint.length);
 
     if (fpEntries.length > 0) {
-      rules.push(`\n      /* fingerprint rules: svg:has(path[d^=...]) */`);
+      rules.push(`\n      /* fingerprint icons, keyed on data-vg-icon set by the matcher */`);
       for (const entry of fpEntries) {
         rules.push(generateFingerprintCSS(entry));
       }
+      rules.push(`
+      svg[data-vg-icon] path, svg[data-vg-icon] circle, svg[data-vg-icon] line, svg[data-vg-icon] rect {
+        fill: transparent !important;
+        stroke: transparent !important;
+      }`);
     }
 
     const styleEl = document.createElement("style");
@@ -388,6 +390,8 @@
   // 5. JS path-d matcher: handles icons CSS can't distinguish (context menu, state variants)
   // matches first N chars of <path d="..."> via MutationObserver
   let fingerprintMap = null;
+  let fingerprintAnyPath = [];
+  let fingerprintIds = new Set();
 
   // build map from registry; sort length DESC so specific fingerprints check before generic
   function buildFingerprintMap(availableFiles) {
@@ -404,24 +408,20 @@
       }
     }
 
+    // any-path fallback keeps what the old :has() rules matched: a part may sit
+    // on any path, the longest fingerprint wins, ties go to the later entry
+    fingerprintAnyPath = unsorted
+      .map(([fp, data], idx) => ({ parts: fp.split("|"), len: fp.length, idx, data }))
+      .sort((a, b) => (b.len - a.len) || (b.idx - a.idx));
+
     unsorted.sort((a, b) => b[0].length - a[0].length);
     fingerprintMap = new Map(unsorted);
+    fingerprintIds = new Set(unsorted.map(([, data]) => data.id));
   }
 
-  // apply mask-image to single SVG (sets fill on children to transparent)
+  // mark the svg; the svg[data-vg-icon="..."] rule from section 4B paints the
+  // mask and hides the original glyph (no inline styles, no per-svg data URI)
   function applyMaskToSvg(svg, iconData) {
-    svg.style.setProperty("-webkit-mask-image", `url("${iconData.url}")`, "important");
-    svg.style.setProperty("mask-image", `url("${iconData.url}")`, "important");
-    svg.style.setProperty("mask-size", "contain", "important");
-    svg.style.setProperty("mask-repeat", "no-repeat", "important");
-    svg.style.setProperty("mask-position", "center", "important");
-    svg.style.setProperty("background", "currentColor", "important");
-
-    svg.querySelectorAll("path, circle, line, rect").forEach(el => {
-      el.style.setProperty("fill", "transparent", "important");
-      el.style.setProperty("stroke", "transparent", "important");
-    });
-
     svg.dataset.vgIcon = iconData.id;
   }
 
@@ -452,6 +452,20 @@
         applyMaskToSvg(svg, iconData);
         return true;
       }
+    }
+
+    for (const { parts, data } of fingerprintAnyPath) {
+      if (parts.every(fp => pathDs.some(d => d.startsWith(fp)))) {
+        if (svg.dataset.vgIcon === data.id) return false;
+        applyMaskToSvg(svg, data);
+        return true;
+      }
+    }
+    // path changed to something we do not replace: drop the stale mark so the
+    // native glyph shows instead of the previous icon
+    if (svg.dataset.vgIcon && fingerprintIds.has(svg.dataset.vgIcon)) {
+      delete svg.dataset.vgIcon;
+      return true;
     }
     return false;
   }
@@ -567,7 +581,8 @@
     injectCSS(available);
     buildFingerprintMap(available);
     startObserver();
-    // delayed scan to catch state-variant icons after first paint
+    // icons already in the DOM right away, then once more for state variants
+    scanAllRegions();
     setTimeout(scanAllRegions, 500);
   }
 
