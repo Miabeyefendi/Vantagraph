@@ -35,7 +35,7 @@ Spicetify keeps themes and extensions in two **separate** folders. Run `spicetif
 
 | What | Where it goes |
 |---|---|
-| The `Vantagraph` folder, with `color.ini`, `user.css`, `theme.js` and `icons/` | `…/spicetify/Themes/Vantagraph/` |
+| The `Vantagraph` folder, with `color.ini`, `user.css` and `theme.js` | `…/spicetify/Themes/Vantagraph/` |
 | Every `.js` file inside `Vantagraph/Extensions/` | `…/spicetify/Extensions/` |
 
 The result should look like this:
@@ -46,8 +46,7 @@ spicetify/
 │  └─ Vantagraph/
 │     ├─ color.ini
 │     ├─ user.css
-│     ├─ theme.js
-│     └─ icons/
+│     └─ theme.js
 └─ Extensions/
    ├─ vantagraph-settings.js          required
    ├─ vantagraph-icons.js             preferred
@@ -148,4 +147,4 @@ To clear the stored settings as well, open the panel first and press **↻ Reset
 
 **The gear icon disappeared after an update.** Same cause. If it persists after re-applying, Spotify may have changed the topbar markup; open an [issue](https://github.com/Miabeyefendi/Vantagraph/issues/new?template=bug_report.yml) with your Spotify and Spicetify versions.
 
-**A colour looks wrong in one place only.** Some Encore tokens are hardcoded by Spotify and cannot be reached from `color.ini`. `vantagraph-debug.js` prints the full override chain for any variable, which is the fastest way to find out which layer is winning. The [tutorial](../TUTORIAL.md) explains that system.
+**A colour looks wrong in one place only.** Some Encore tokens are hardcoded by Spotify and cannot be reached from `color.ini`. `vantagraph-debug.js` prints the full override chain for any variable, which is the fastest way to find out which layer is winning. The [tutorial](./guides/TUTORIAL.md) explains that system.

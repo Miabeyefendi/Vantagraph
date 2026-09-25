@@ -11,11 +11,11 @@
 [![下载量](https://img.shields.io/github/downloads/Miabeyefendi/Vantagraph/total?style=for-the-badge&color=22C55E&label=downloads)](https://github.com/Miabeyefendi/Vantagraph/releases)
 [![Spicetify](https://img.shields.io/badge/Spicetify_2.43%2B-1E293B?style=for-the-badge&logo=spotify&logoColor=white)](https://spicetify.app/)
 
-[English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_RU.md)
+[English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_RU.md)
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-dark.png" width="94%" alt="Spotify 内并排展示的五套 Vantagraph 深色配色：VantaBlack、R34 Purple、Crimson、Olive 和 Spotify Default">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-dark.png" width="94%" alt="Spotify 内并排展示的五套 Vantagraph 深色配色：VantaBlack、R34 Purple、Crimson、Olive 和 Spotify Default">
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-light.png" width="94%" alt="Spotify 内并排展示的六套 Vantagraph 浅色配色：VantaWhite、Glass、Lavender Blush、Teal Green、Rose Vale 和 Japanese Indigo">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-light.png" width="94%" alt="Spotify 内并排展示的六套 Vantagraph 浅色配色：VantaWhite、Glass、Lavender Blush、Teal Green、Rose Vale 和 Japanese Indigo">
 
 </div>
 
@@ -32,7 +32,7 @@
 **三十多个片段开关。** 隐藏好友动态、广告横幅、"Made for You"、播客筛选器。把图片改成圆角、把媒体库行变窄、在宽度小于 1200px 时自动收起侧边栏。
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-settings.png" width="82%" alt="在 Spotify 内打开的 Vantagraph 设置面板，主题选择器每一行都带三个色块预览">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="82%" alt="在 Spotify 内打开的 Vantagraph 设置面板，主题选择器每一行都带三个色块预览">
 </div>
 
 ---
@@ -62,7 +62,7 @@ Spotify 会带着主题重启，顶栏出现齿轮图标。这是最小安装。
 | [**十一套主题**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/THEMES.md) | 每套配色的截图，以及它是照着什么调的 |
 | [**设置**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/SETTINGS.md) | 全部五个标签页、每个滑块和每一个片段开关 |
 | [**扩展**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/EXTENSIONS.md) | 六个扩展的细节，以及它们所基于的致谢 |
-| [**技术指南**](https://github.com/Miabeyefendi/Vantagraph/blob/main/TUTORIAL.md) | 三层配色系统底层是怎么运作的 |
+| [**技术指南**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/guides/TUTORIAL.md) | 三层配色系统底层是怎么运作的 |
 | [**更新日志**](https://github.com/Miabeyefendi/Vantagraph/blob/main/CHANGELOG.md) | 每个版本改了什么 |
 
 > 你是在 Spotify 里看这段吗？上面的链接会在浏览器中打开。安装主题所需的一切，这一页上已经有了。

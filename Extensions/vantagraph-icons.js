@@ -1,4 +1,4 @@
-// Vantagraph v5 Icons - replaces Spotify Encore SVGs with embedded /icons/ data URIs
+// Vantagraph v5 Icons - replaces Spotify Encore SVGs with data URIs embedded from src/assets/icons/
 // sections: 0 wait | 1 config | 2 registry | 3 availability | 4 CSS | 5 path-d match | 6 observer | 7 settings | 8 init
 //
 // Written by Miabeyefendi - part of the Vantagraph Spicetify theme.

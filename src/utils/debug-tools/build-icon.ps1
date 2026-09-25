@@ -6,8 +6,9 @@
 #  Usage: powershell -ExecutionPolicy Bypass -File build-icons.ps1
 # ═══════════════════════════════════════════════════════════
 
-$iconsDir = Join-Path $PSScriptRoot "icons"
-$targetFile = Join-Path $PSScriptRoot "Extensions\vantagraph-icons.js"
+$projectRoot = (Resolve-Path (Join-Path $PSScriptRoot "..\..\..")).Path
+$iconsDir = Join-Path $projectRoot "src\assets\icons"
+$targetFile = Join-Path $projectRoot "Extensions\vantagraph-icons.js"
 $startMarker = "// __ICON_DATA_START__"
 $endMarker = "// __ICON_DATA_END__"
 

@@ -8,5 +8,5 @@ contact_links:
     url: https://github.com/Miabeyefendi/Vantagraph/discussions
     about: For usage questions and open-ended ideas, start a discussion instead.
   - name: Read the tutorial first
-    url: https://github.com/Miabeyefendi/Vantagraph/blob/main/TUTORIAL.md
+    url: https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/guides/TUTORIAL.md
     about: Every feature and every setting is documented there.

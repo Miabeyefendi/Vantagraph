@@ -9,7 +9,7 @@ Seven files ship with the theme. One is required, one is strongly recommended, f
 ## Taskbar Player
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-taskbar-player.png" width="88%" alt="The Vantagraph Taskbar Player floating above a fullscreen window, showing artwork, track information, lyrics and transport controls">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-taskbar-player.png" width="88%" alt="The Vantagraph Taskbar Player floating above a fullscreen window, showing artwork, track information, lyrics and transport controls">
 </div>
 
 A borderless, always-on-top bar built on `documentPictureInPicture`. It keeps working while another application is fullscreen, which is the entire reason it exists: alt-tabbing out of a game to skip a track is the problem it removes.

@@ -339,7 +339,22 @@ CLAUDE.md
 AGENTS.md
 # Local debug helper and the social preview source
 Extensions/_debug-perf.js
-screenshots/SocialTemplate.jpg
+design/screenshots/SocialTemplate.jpg
 
 # Image staging folder, never published
 for git/
+
+# Backups and experiments stay local; only the folder skeleton is published
+archive/**
+!archive/**/
+!archive/**/.gitkeep
+
+# internal notes (Turkish, local only)
+docs/guides/ayar-sistemi.md
+docs/guides/dosya-haritasi.md
+docs/guides/gorseller.md
+docs/guides/ikon-sistemi.md
+docs/guides/kurulum-test-deploy.md
+docs/guides/oneriler-ve-acik-sorular.md
+docs/guides/renk-sistemi.md
+docs/guides/tuzaklar.md

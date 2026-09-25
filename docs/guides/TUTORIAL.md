@@ -1,6 +1,6 @@
 # How Vantagraph works underneath
 
-[Back to the README](https://github.com/Miabeyefendi/Vantagraph#readme) · [Install](./docs/INSTALL.md) · [Themes](./docs/THEMES.md) · [Settings](./docs/SETTINGS.md) · [Extensions](./docs/EXTENSIONS.md)
+[Back to the README](https://github.com/Miabeyefendi/Vantagraph#readme) · [Install](../INSTALL.md) · [Themes](../THEMES.md) · [Settings](../SETTINGS.md) · [Extensions](../EXTENSIONS.md)
 
 This page is for people editing the theme, forking it, or trying to work out why a colour is not doing what they told it to. If you only want to use Vantagraph, the [README](https://github.com/Miabeyefendi/Vantagraph#readme) and the four guides above cover everything.
 
@@ -67,9 +67,9 @@ Reaching DevTools inside Spotify is `Ctrl + Shift + I` once Spicetify has enable
 | `user.css` | The stylesheet. Numbered sections following Spotify's DOM from the top bar down. |
 | `color.ini` | The eleven palettes. The comment block at the top documents every key. |
 | `manifest.json` | Marketplace metadata: name, description, preview image, readme path. |
-| `icons/` | 66 source SVGs. |
+| `src/assets/icons/` | 66 source SVGs. |
 | `Extensions/` | The seven extensions. |
-| `Debug-Tools/` | Development scripts, not shipped to users. |
+| `src/utils/debug-tools/` | Development scripts, not shipped to users. |
 
 ### Inside `theme.js`
 
@@ -131,7 +131,7 @@ Worth knowing about before you rediscover them.
 
 ## The icon system
 
-`vantagraph-icons.js` swaps Spotify's Encore SVGs for data URIs from `icons/`. The registry is grouped by DOM region: topbar navigation, topbar search, topbar right, sidebar header, sidebar list, main action bar, universal, main misc, player controls, player right, right panel, context menu.
+`vantagraph-icons.js` swaps Spotify's Encore SVGs for data URIs from `src/assets/icons/`. The registry is grouped by DOM region: topbar navigation, topbar search, topbar right, sidebar header, sidebar list, main action bar, universal, main misc, player controls, player right, right panel, context menu.
 
 Two matching techniques, chosen per icon:
 
@@ -142,7 +142,7 @@ Where CSS cannot distinguish two icons, which happens in context menus and with 
 
 Global hooks: `window.vantagraphIconsToggle(bool)` and `window.vantagraphIconsRemove()`.
 
-**Do not reformat `icons/` or the registry's path data.** A prettifier that "cleans up" a path string breaks the fingerprint match, and the failure is silent: the icon simply stays as Spotify's.
+**Do not reformat `src/assets/icons/` or the registry's path data.** A prettifier that "cleans up" a path string breaks the fingerprint match, and the failure is silent: the icon simply stays as Spotify's.
 
 ---
 

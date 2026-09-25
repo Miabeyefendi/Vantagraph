@@ -5,7 +5,7 @@
 Everything is configured from inside Spotify. Click the **gear** at the top right of the topbar and a five-tab modal opens. Nothing here needs a file edit, and nothing needs a restart: every slider takes effect as you drag it.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-settings.png" width="88%" alt="The Vantagraph settings panel open inside Spotify, showing the theme picker">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="88%" alt="The Vantagraph settings panel open inside Spotify, showing the theme picker">
 </div>
 
 Settings are stored under `vantagraph:*` keys in Spicetify's localStorage. They survive a Spotify update; they do not survive **↻ Reset to Defaults**, which is the point of that button.
@@ -14,7 +14,7 @@ Settings are stored under `vantagraph:*` keys in Spicetify's localStorage. They 
 
 ## 🎨 Theme
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/settings-theme.png" width="62%" alt="The theme tab with dark and light groups, each row showing a three-swatch preview"/>
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/settings-theme.png" width="62%" alt="The theme tab with dark and light groups, each row showing a three-swatch preview"/>
 
 The palette picker, split into dark and light groups. Each row shows three swatches, panel, window and accent, so you can judge a scheme before applying it.
 
@@ -28,7 +28,7 @@ The palette picker, split into dark and light groups. Each row shows three swatc
 
 ## ✏️ Font
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/settings-font.png" width="62%" alt="The font tab with preset families and a size slider"/>
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/settings-font.png" width="62%" alt="The font tab with preset families and a size slider"/>
 
 | Control | What it does |
 |---|---|
@@ -40,7 +40,7 @@ The palette picker, split into dark and light groups. Each row shows three swatc
 
 ## 📐 Layout
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/settings-layout.png" width="62%" alt="The layout tab with icon size, density and corner radius sliders"/>
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/settings-layout.png" width="62%" alt="The layout tab with icon size, density and corner radius sliders"/>
 
 | Control | Range | What it does |
 |---|---|---|
@@ -54,7 +54,7 @@ Each slider has a **DEF** button that restores the value Spotify ships with, so 
 
 ## 🖼️ Background
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/settings-background.png" width="62%" alt="The background tab with a URL field, an album cover toggle and image filter sliders"/>
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/settings-background.png" width="62%" alt="The background tab with a URL field, an album cover toggle and image filter sliders"/>
 
 | Control | What it does |
 |---|---|
@@ -73,11 +73,11 @@ Thirty-plus toggles, grouped into accordions.
 <table>
 <tr>
   <td align="center" width="50%">
-    <img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/settings-snippets-1.png" width="100%" alt="Snippets tab, visual options and hide-button toggles"/><br/>
+    <img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/settings-snippets-1.png" width="100%" alt="Snippets tab, visual options and hide-button toggles"/><br/>
     <sub><b>Visual and hide buttons</b></sub>
   </td>
   <td align="center" width="50%">
-    <img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/settings-snippets-2.png" width="100%" alt="Snippets tab, hide elements, layout and developer tools"/><br/>
+    <img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/settings-snippets-2.png" width="100%" alt="Snippets tab, hide elements, layout and developer tools"/><br/>
     <sub><b>Hide elements, layout and dev tools</b></sub>
   </td>
 </tr>

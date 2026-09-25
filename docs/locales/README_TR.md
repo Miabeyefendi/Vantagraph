@@ -11,11 +11,11 @@
 [![İndirme](https://img.shields.io/github/downloads/Miabeyefendi/Vantagraph/total?style=for-the-badge&color=22C55E&label=downloads)](https://github.com/Miabeyefendi/Vantagraph/releases)
 [![Spicetify](https://img.shields.io/badge/Spicetify_2.43%2B-1E293B?style=for-the-badge&logo=spotify&logoColor=white)](https://spicetify.app/)
 
-[English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_RU.md)
+[English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_RU.md)
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-dark.png" width="94%" alt="Spotify içinde yan yana beş koyu Vantagraph şeması: VantaBlack, R34 Purple, Crimson, Olive ve Spotify Default">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-dark.png" width="94%" alt="Spotify içinde yan yana beş koyu Vantagraph şeması: VantaBlack, R34 Purple, Crimson, Olive ve Spotify Default">
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-light.png" width="94%" alt="Spotify içinde yan yana altı açık Vantagraph şeması: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale ve Japanese Indigo">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-light.png" width="94%" alt="Spotify içinde yan yana altı açık Vantagraph şeması: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale ve Japanese Indigo">
 
 </div>
 
@@ -32,7 +32,7 @@
 **Otuz küsur snippet.** Arkadaş etkinliğini, reklam bandını, "Made for You"yu, podcast filtresini gizle. Görselleri yuvarlat, kütüphane satırlarını incelt, 1200px altında kenar çubuğunu otomatik gizle.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-settings.png" width="82%" alt="Spotify içinde açık Vantagraph ayar paneli; her satırda üç renk örneği taşıyan tema seçici">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="82%" alt="Spotify içinde açık Vantagraph ayar paneli; her satırda üç renk örneği taşıyan tema seçici">
 </div>
 
 ---
@@ -62,7 +62,7 @@ Spotify tema açık ve üst çubukta dişli ikonuyla yeniden başlıyor. Bu asga
 | [**On bir tema**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/THEMES.md) | Her palet, ekran görüntüsü ve neye göre ayarlandığı |
 | [**Ayarlar**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/SETTINGS.md) | Beş sekmenin tamamı, her kaydırıcı ve her snippet |
 | [**Eklentiler**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/EXTENSIONS.md) | Altı eklenti detaylı, ve üzerine inşa edildikleri atıflar |
-| [**Teknik rehber**](https://github.com/Miabeyefendi/Vantagraph/blob/main/TUTORIAL.md) | Üç katmanlı renk sisteminin arka planda nasıl çalıştığı |
+| [**Teknik rehber**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/guides/TUTORIAL.md) | Üç katmanlı renk sisteminin arka planda nasıl çalıştığı |
 | [**Değişiklikler**](https://github.com/Miabeyefendi/Vantagraph/blob/main/CHANGELOG.md) | Her sürümde ne değişti |
 
 > Bunu Spotify içinden mi okuyorsun? Yukarıdaki linkler tarayıcında açılır. Temayı kurmak için gereken her şey zaten bu sayfada.

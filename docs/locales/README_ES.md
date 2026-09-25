@@ -11,11 +11,11 @@
 [![Descargas](https://img.shields.io/github/downloads/Miabeyefendi/Vantagraph/total?style=for-the-badge&color=22C55E&label=downloads)](https://github.com/Miabeyefendi/Vantagraph/releases)
 [![Spicetify](https://img.shields.io/badge/Spicetify_2.43%2B-1E293B?style=for-the-badge&logo=spotify&logoColor=white)](https://spicetify.app/)
 
-[English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_RU.md)
+[English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_RU.md)
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-dark.png" width="94%" alt="Los cinco esquemas oscuros de Vantagraph uno junto a otro dentro de Spotify: VantaBlack, R34 Purple, Crimson, Olive y Spotify Default">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-dark.png" width="94%" alt="Los cinco esquemas oscuros de Vantagraph uno junto a otro dentro de Spotify: VantaBlack, R34 Purple, Crimson, Olive y Spotify Default">
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-light.png" width="94%" alt="Los seis esquemas claros de Vantagraph uno junto a otro dentro de Spotify: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale y Japanese Indigo">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-light.png" width="94%" alt="Los seis esquemas claros de Vantagraph uno junto a otro dentro de Spotify: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale y Japanese Indigo">
 
 </div>
 
@@ -32,7 +32,7 @@
 **Más de treinta snippets.** Oculta la actividad de amigos, la franja de anuncios, "Made for You" o el filtro de podcasts. Redondea las imágenes, adelgaza las filas de la biblioteca, oculta la barra lateral por debajo de 1200px.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-settings.png" width="82%" alt="El panel de ajustes de Vantagraph abierto dentro de Spotify, con el selector de temas y tres muestras de color en cada fila">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="82%" alt="El panel de ajustes de Vantagraph abierto dentro de Spotify, con el selector de temas y tres muestras de color en cada fila">
 </div>
 
 ---
@@ -62,7 +62,7 @@ Spotify se reinicia con el tema puesto y un engranaje en la barra superior. Eso 
 | [**Los once temas**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/THEMES.md) | Cada paleta con su captura y para qué fue afinada |
 | [**Ajustes**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/SETTINGS.md) | Las cinco pestañas, cada control y cada snippet |
 | [**Extensiones**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/EXTENSIONS.md) | Las seis en detalle, y los créditos sobre los que están construidas |
-| [**Guía técnica**](https://github.com/Miabeyefendi/Vantagraph/blob/main/TUTORIAL.md) | Cómo funciona por dentro el sistema de color de tres capas |
+| [**Guía técnica**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/guides/TUTORIAL.md) | Cómo funciona por dentro el sistema de color de tres capas |
 | [**Cambios**](https://github.com/Miabeyefendi/Vantagraph/blob/main/CHANGELOG.md) | Qué cambió en cada versión |
 
 > ¿Estás leyendo esto dentro de Spotify? Los enlaces de arriba se abren en tu navegador. Todo lo que necesitas para instalar el tema ya está en esta página.

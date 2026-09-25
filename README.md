@@ -11,11 +11,11 @@
 [![Downloads](https://img.shields.io/github/downloads/Miabeyefendi/Vantagraph/total?style=for-the-badge&color=22C55E&label=downloads)](https://github.com/Miabeyefendi/Vantagraph/releases)
 [![Spicetify](https://img.shields.io/badge/Spicetify_2.43%2B-1E293B?style=for-the-badge&logo=spotify&logoColor=white)](https://spicetify.app/)
 
-[English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/README_RU.md)
+[English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_RU.md)
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-dark.png" width="94%" alt="The five dark Vantagraph schemes side by side inside Spotify: VantaBlack, R34 Purple, Crimson, Olive and Spotify Default">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-dark.png" width="94%" alt="The five dark Vantagraph schemes side by side inside Spotify: VantaBlack, R34 Purple, Crimson, Olive and Spotify Default">
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-light.png" width="94%" alt="The six light Vantagraph schemes side by side inside Spotify: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale and Japanese Indigo">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-light.png" width="94%" alt="The six light Vantagraph schemes side by side inside Spotify: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale and Japanese Indigo">
 
 </div>
 
@@ -32,7 +32,7 @@
 **Thirty-plus snippets.** Hide friend activity, the ads banner, "Made for You", the podcasts filter. Round the images, thin the library rows, auto-hide the sidebar under 1200px.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/screenshots/main-showcase-settings.png" width="82%" alt="The Vantagraph settings panel open inside Spotify, showing the theme picker with a three-swatch preview on every row">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="82%" alt="The Vantagraph settings panel open inside Spotify, showing the theme picker with a three-swatch preview on every row">
 </div>
 
 ---
@@ -62,7 +62,7 @@ Spotify restarts with the theme on and a gear icon in the topbar. That is the mi
 | [**The eleven themes**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/THEMES.md) | Each palette with a screenshot and what it was tuned for |
 | [**Settings**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/SETTINGS.md) | All five tabs, every slider and every one of the snippets |
 | [**Extensions**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/EXTENSIONS.md) | The six add-ons in detail, and the credits they are built on |
-| [**Tutorial**](https://github.com/Miabeyefendi/Vantagraph/blob/main/TUTORIAL.md) | How the three-layer colour system works underneath |
+| [**Tutorial**](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/guides/TUTORIAL.md) | How the three-layer colour system works underneath |
 | [**Changelog**](https://github.com/Miabeyefendi/Vantagraph/blob/main/CHANGELOG.md) | What changed in each release |
 
 > Reading this inside Spotify? The links above open in your browser. Everything you need to install the theme is already on this page.
