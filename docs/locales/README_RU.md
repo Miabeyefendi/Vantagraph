@@ -13,9 +13,7 @@
 
 [English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_RU.md)
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-dark.png" width="94%" alt="Пять тёмных схем Vantagraph рядом внутри Spotify: VantaBlack, R34 Purple, Crimson, Olive и Spotify Default">
-
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-light.png" width="94%" alt="Шесть светлых схем Vantagraph рядом внутри Spotify: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale и Japanese Indigo">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/palettes-grid.png" width="94%" alt="Все одиннадцать палитр Vantagraph на одном и том же экране Spotify и панель настроек">
 
 </div>
 
@@ -32,7 +30,7 @@
 **Больше тридцати сниппетов.** Скрыть активность друзей, рекламную полосу, «Made for You», фильтр подкастов. Скруглить обложки, сузить строки медиатеки, автоматически прятать боковую панель при ширине меньше 1200px.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="82%" alt="Панель настроек Vantagraph, открытая внутри Spotify, с выбором темы и тремя образцами цвета в каждой строке">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/showcase-settings.png" width="82%" alt="Панель настроек Vantagraph, открытая внутри Spotify, с выбором темы и тремя образцами цвета в каждой строке">
 </div>
 
 ---

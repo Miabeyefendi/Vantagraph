@@ -13,9 +13,7 @@
 
 [English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_RU.md)
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-dark.png" width="94%" alt="Spotify 内并排展示的五套 Vantagraph 深色配色：VantaBlack、R34 Purple、Crimson、Olive 和 Spotify Default">
-
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-light.png" width="94%" alt="Spotify 内并排展示的六套 Vantagraph 浅色配色：VantaWhite、Glass、Lavender Blush、Teal Green、Rose Vale 和 Japanese Indigo">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/palettes-grid.png" width="94%" alt="同一个 Spotify 界面上的全部十一套 Vantagraph 配色，以及设置面板">
 
 </div>
 
@@ -32,7 +30,7 @@
 **三十多个片段开关。** 隐藏好友动态、广告横幅、"Made for You"、播客筛选器。把图片改成圆角、把媒体库行变窄、在宽度小于 1200px 时自动收起侧边栏。
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="82%" alt="在 Spotify 内打开的 Vantagraph 设置面板，主题选择器每一行都带三个色块预览">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/showcase-settings.png" width="82%" alt="在 Spotify 内打开的 Vantagraph 设置面板，主题选择器每一行都带三个色块预览">
 </div>
 
 ---

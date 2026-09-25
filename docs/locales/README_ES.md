@@ -13,9 +13,7 @@
 
 [English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_RU.md)
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-dark.png" width="94%" alt="Los cinco esquemas oscuros de Vantagraph uno junto a otro dentro de Spotify: VantaBlack, R34 Purple, Crimson, Olive y Spotify Default">
-
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-light.png" width="94%" alt="Los seis esquemas claros de Vantagraph uno junto a otro dentro de Spotify: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale y Japanese Indigo">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/palettes-grid.png" width="94%" alt="Las once paletas de Vantagraph en la misma pantalla de Spotify, junto al panel de ajustes">
 
 </div>
 
@@ -32,7 +30,7 @@
 **Más de treinta snippets.** Oculta la actividad de amigos, la franja de anuncios, "Made for You" o el filtro de podcasts. Redondea las imágenes, adelgaza las filas de la biblioteca, oculta la barra lateral por debajo de 1200px.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="82%" alt="El panel de ajustes de Vantagraph abierto dentro de Spotify, con el selector de temas y tres muestras de color en cada fila">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/showcase-settings.png" width="82%" alt="El panel de ajustes de Vantagraph abierto dentro de Spotify, con el selector de temas y tres muestras de color en cada fila">
 </div>
 
 ---

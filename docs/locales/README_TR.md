@@ -13,9 +13,7 @@
 
 [English](https://github.com/Miabeyefendi/Vantagraph#readme) · [Türkçe](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_TR.md) · [Español](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ES.md) · [简体中文](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_ZH.md) · [Русский](https://github.com/Miabeyefendi/Vantagraph/blob/main/docs/locales/README_RU.md)
 
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-dark.png" width="94%" alt="Spotify içinde yan yana beş koyu Vantagraph şeması: VantaBlack, R34 Purple, Crimson, Olive ve Spotify Default">
-
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-light.png" width="94%" alt="Spotify içinde yan yana altı açık Vantagraph şeması: VantaWhite, Glass, Lavender Blush, Teal Green, Rose Vale ve Japanese Indigo">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/palettes-grid.png" width="94%" alt="Aynı Spotify ekranında on bir Vantagraph paleti ve ayar paneli">
 
 </div>
 
@@ -32,7 +30,7 @@
 **Otuz küsur snippet.** Arkadaş etkinliğini, reklam bandını, "Made for You"yu, podcast filtresini gizle. Görselleri yuvarlat, kütüphane satırlarını incelt, 1200px altında kenar çubuğunu otomatik gizle.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/main-showcase-settings.png" width="82%" alt="Spotify içinde açık Vantagraph ayar paneli; her satırda üç renk örneği taşıyan tema seçici">
+<img src="https://raw.githubusercontent.com/Miabeyefendi/Vantagraph/main/design/screenshots/showcase-settings.png" width="82%" alt="Spotify içinde açık Vantagraph ayar paneli; her satırda üç renk örneği taşıyan tema seçici">
 </div>
 
 ---

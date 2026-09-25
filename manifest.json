@@ -2,7 +2,7 @@
   {
     "name": "Vantagraph",
     "description": "Modern, modular Spicetify theme: 11 hand-tuned palettes (5 dark + 6 light), in-app settings panel, custom icon set, PiP lyric karaoke, taskbar player, scroll-wheel volume, and per-track loop tool.",
-    "preview": "design/screenshots/preview.png",
+    "preview": "design/screenshots/preview.gif",
     "readme": "README.md",
     "usercss": "user.css",
     "schemes": "color.ini",
