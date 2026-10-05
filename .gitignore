@@ -358,3 +358,7 @@ docs/guides/kurulum-test-deploy.md
 docs/guides/oneriler-ve-acik-sorular.md
 docs/guides/renk-sistemi.md
 docs/guides/tuzaklar.md
+
+# QA harness output
+src/utils/qa/out/
+src/utils/qa/win-placement.txt
