@@ -45,7 +45,7 @@ Copy the `Vantagraph` folder into `…/spicetify/Themes/` and every `.js` from `
 
 ```bash
 spicetify config inject_css 1 replace_colors 1 overwrite_assets 1 inject_theme_js 1
-spicetify config current_theme vantagraph
+spicetify config current_theme Vantagraph
 spicetify config extensions vantagraph-settings.js
 spicetify apply
 ```
