@@ -121,7 +121,7 @@
     topbarSearch: [
       { id: "home-outline",   file: "home-outlined.svg",              selectors: [], pathFingerprint: "M12.5 3.247" },
       { id: "home-fill",      file: "home-filled.svg",                selectors: [], pathFingerprint: "M13.5 1.515" },
-      { id: "search",         file: "all-search.svg",                 selectors: ['.main-globalNav-searchInputSection button[aria-label="Search"] svg'] },
+      { id: "search",         file: "all-search.svg",                 selectors: ['.main-globalNav-searchInputSection button[aria-label="Search"] svg'], pathFingerprint: "M10.533 1.27893C5.35215 1.27893 1.12598" },
       { id: "clear-search",   file: "all-search.svg",        selectors: ['button[aria-label="Clear search field"] svg'] },
       { id: "browse-outline", file: "topbar-browse-outlined.svg",     selectors: [], pathFingerprint: "M15 15.5" },
       { id: "browse-fill",    file: "topbar-browse-filled.svg",       selectors: [], pathFingerprint: "M4 2a" },

@@ -37,6 +37,90 @@
   }
 
 
+  // LEGACY CLASS ALIASES
+  // Spotify 1.3.3 re-hashed its class names and Spicetify's css-map does not cover
+  // them yet, so the legacy names the rules in this theme are written against
+  // ("main-card-card", "main-trackList-trackListRow", ...) never reach the DOM.
+  // Each entry gives such a name to the markup that stands for it now (data-testid,
+  // roles, encore ids, structure). Once Spicetify maps the names again, both routes
+  // land on the same elements.
+  const VG_LEGACY_ALIASES = [
+    { name: "main-playButton-PlayButton", selectors: ["[data-encore-id=\"card\"] div:has(> button[data-encore-id=\"buttonPrimary\"])", "[data-encore-id=\"box\"] > footer div:has(> button[data-encore-id=\"buttonPrimary\"])"] },
+    { name: "main-shelf-shelf", selectors: ["section[data-testid=\"component-shelf\"]", "section.Shelf"] },
+    { name: "main-shelf-title", selectors: ["[data-testid=\"component-shelf\"] [data-encore-id=\"listRowTitle\"]"] },
+    { name: "main-trackList-trackListRow", selectors: ["#main-view [role=\"row\"]:has(> [role=\"presentation\"] > [role=\"gridcell\"][aria-colindex])", "#Desktop_PanelContainer_Id [role=\"row\"]:has(> [role=\"presentation\"] > [role=\"gridcell\"][aria-colindex])"] },
+    { name: "main-trackList-trackListHeaderRow", selectors: ["#main-view [role=\"row\"]:has(> [role=\"columnheader\"])"] },
+    { name: "main-trackList-rowTitle", selectors: ["#main-view [role=\"row\"] [role=\"gridcell\"] div.standalone-ellipsis-one-line"] },
+    { name: "main-trackList-rowSubTitle", selectors: ["#main-view [role=\"row\"] [role=\"gridcell\"] span.standalone-ellipsis-one-line"] },
+    { name: "main-trackList-rowImage", selectors: ["#main-view [role=\"row\"] [role=\"gridcell\"] > img"] },
+    { name: "main-entityHeader-title", selectors: ["[data-testid=\"entityTitle\"]", "[data-testid=\"adaptiveEntityTitle\"]"] },
+    { name: "main-entityHeader-backgroundColor", selectors: ["[data-testid=\"entity-header\"] > div:not(.contentSpacing):nth-child(1)"] },
+    { name: "main-entityHeader-gradient", selectors: ["[data-testid=\"entity-header\"] > div:not(.contentSpacing):nth-child(2)"] },
+    { name: "main-entityHeader-overlay", selectors: ["[data-testid=\"entity-header\"] > div:not(.contentSpacing):nth-child(2)"] },
+    { name: "main-entityHeader-shadow", selectors: ["[data-testid=\"entity-header\"] img"] },
+    { name: "x-entityImage-imageContainer", selectors: ["[data-testid=\"entity-header\"] [data-testid=\"playlist-image\"]", "[data-testid=\"entity-header\"] button:has(> div > img)", "[class*=\"_image-container_\"]"] },
+    { name: "main-actionBarBackground-background", selectors: ["section[data-testid$=\"-page\"] > div:has(+ div [data-testid=\"action-bar\"])"] },
+    { name: "main-home-homeHeader", selectors: ["main > div > div:first-child:has(~ [data-testid=\"home-page\"])"] },
+    { name: "main-home-filterChipsSection", selectors: ["main > div > div:has(+ [data-testid=\"home-page\"])"] },
+    { name: "view-homeShortcutsGrid-shortcuts", selectors: ["section:has([data-testid=\"shortcut-background\"])"] },
+    { name: "view-homeShortcutsGrid-shortcut", selectors: ["div[draggable=\"true\"]:has(> [data-testid=\"shortcut-background\"])"] },
+    { name: "view-homeShortcutsGrid-imageWrapper", selectors: ["div[draggable=\"true\"]:has(> [data-testid=\"shortcut-background\"]) > a > div"] },
+    { name: "view-homeShortcutsGrid-image", selectors: ["div[draggable=\"true\"]:has(> [data-testid=\"shortcut-background\"]) > a img"] },
+    { name: "x-categoryCard-image", selectors: ["#searchPage [role=\"listitem\"] > a > div > img"] },
+    { name: "main-topBar-background", selectors: [".main-topBar-container > div:first-child"] },
+    { name: "main-topBar-overlay", selectors: [".main-topBar-container > div:first-child > div:first-child"] },
+    { name: "main-topBar-button", selectors: ["button.main-actionButtons-button"] },
+    { name: "main-topBar-topbarContentRight", selectors: [".main-globalNav-contentRight"] },
+    { name: "main-userWidget-box", selectors: ["[data-testid=\"user-widget-link\"]"] },
+    { name: "main-globalNav-searchContainer", selectors: ["#global-nav-bar form[role=\"search\"]"] },
+    { name: "x-searchInput-searchInputInput", selectors: ["form[role=\"search\"] input[role=\"combobox\"]"] },
+    { name: "main-trackInfo-name", selectors: ["[data-testid=\"now-playing-widget\"] div.standalone-ellipsis-one-line", "[data-testid=\"now-playing-widget\"] [data-encore-id=\"text\"]"] },
+    { name: "main-nowPlayingWidget-coverArt", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"]"] },
+    { name: "main-coverSlotCollapsed-container", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"]"] },
+    { name: "cover-art", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"] > div"] },
+    { name: "cover-art-image", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"] img"] },
+    { name: "main-shuffleButton-button", selectors: ["[data-testid=\"general-controls\"] .player-controls__left > button:first-child"] },
+    { name: "main-repeatButton-button", selectors: ["[data-testid=\"control-button-repeat\"]"] },
+    { name: "control-button-heart", selectors: ["[data-testid=\"now-playing-widget\"] button[aria-checked]:last-of-type"] },
+    { name: "playback-progressbar-container", selectors: ["[data-testid=\"playback-progressbar\"]"] },
+    { name: "playback-progressbar-isInteractive", selectors: ["[data-testid=\"playback-progressbar\"]"] },
+    { name: "progress-bar__bg", selectors: ["[data-testid=\"progress-bar-background\"]"] },
+    { name: "progress-bar__slider", selectors: ["[data-testid=\"progress-bar-background\"] > div:nth-child(2)"] },
+    { name: "volume-bar", selectors: ["[data-testid=\"volume-bar\"]"] },
+    { name: "volume-bar__icon-button", selectors: ["[data-testid=\"volume-bar-toggle-mute-button\"]"] },
+    { name: "volume-bar__slider-container", selectors: ["[data-testid=\"volume-bar\"] > div:has([data-testid=\"progress-bar\"])"] },
+    { name: "main-navBar-navBar", selectors: ["#Desktop_LeftSidebar_Id > nav"] },
+    { name: "main-navBar-mainNav", selectors: ["#Desktop_LeftSidebar_Id > nav"] },
+    { name: "Root__nav-bar", selectors: ["#Desktop_LeftSidebar_Id > nav"] },
+    { name: "main-yourLibraryX-library", selectors: [".YourLibraryX"] },
+    { name: "main-yourLibraryX-libraryContainer", selectors: [".YourLibraryX"] },
+    { name: "main-yourLibraryX-entryPoints", selectors: [".YourLibraryX > div:first-child"] },
+    { name: "main-yourLibraryX-filterArea", selectors: [".YourLibraryX > div:first-child > div:last-child"] },
+    { name: "main-yourLibraryX-listItem", selectors: [".YourLibraryX [role=\"row\"]"] },
+    { name: "main-rootlist-wrapper", selectors: [".YourLibraryX [role=\"grid\"]"] },
+    { name: "main-nowPlayingView-section", selectors: [".NowPlayingView"] },
+    { name: "main-nowPlayingView-content", selectors: [".NowPlayingView > div > div:nth-child(2)"] },
+    { name: "main-nowPlayingWidget-trackInfo", selectors: ["[data-testid=\"now-playing-widget\"] > div:nth-child(2)"] },
+    { name: "main-trackInfo-artists", selectors: ["[data-testid=\"now-playing-widget\"] > div:nth-child(2) > div:nth-child(3)"] },
+    { name: "x-toggle-indicatorWrapper", selectors: ["label > input[type=\"checkbox\"] ~ span"] },
+    { name: "main-globalNav-searchInputSection", selectors: ["#global-nav-bar form[role=\"search\"]"] },
+    { name: "main-yourLibraryX-headerContent", selectors: [".main-yourLibraryX-header"] },
+    { name: "main-yourLibraryX-libraryFilter", selectors: [".YourLibraryX > div:first-child > div:last-child"] },
+    { name: "main-actionBar-ActionBarRow", selectors: ["[data-testid=\"action-bar-row\"]"] },
+  ];
+
+  // Not aliased on purpose: main-card-card, main-cardImage-*, main-card-PlayButtonContainer.
+  // Spotify still ships CSS for the old Card component under those names, so putting
+  // them on today's cards would revive it. The vg-card* entries below match the new
+  // markup directly instead.
+
+  // Root grid children are told apart by their grid-area, which is a stable name.
+  const VG_AREA_ALIASES = {
+    "main-view": "Root__main-view",
+    "right-sidebar": "Root__right-sidebar",
+    "now-playing-bar": "Root__now-playing-bar",
+  };
+
   // CLASS MAP
   const VG_CLASS_MAP = [
     // topbar
@@ -79,13 +163,13 @@
     { className: "vg-main-view-overlay", selectors: [".Root__main-view-overlay"] },
     { className: "vg-content-spacing", selectors: [".contentSpacing"] },
     { className: "vg-shelf", selectors: [".main-shelf-shelf"] },
-    { className: "vg-card", selectors: [".main-card-card", "[data-testid='card']"] },
+    { className: "vg-card", selectors: [".main-card-card", "[data-testid='card']", "[data-encore-id='card']"] },
     // Spotify 1.3 big cards (More like ..., Made for you): the box whose footer holds the play button
     { className: "vg-big-card", selectors: ["[data-encore-id='box']:has(> footer .main-playButton-PlayButton)"] },
-    { className: "vg-card-image-wrap", selectors: [".main-cardImage-imageWrapper", "[data-testid='card-image']"] },
-    { className: "vg-card-play", selectors: [".main-card-PlayButtonContainer"] },
-    { className: "vg-card-image", selectors: [".main-cardImage-image"] },
-    { className: "vg-card-image-circular", selectors: [".main-cardImage-circular"] },
+    { className: "vg-card-image-wrap", selectors: [".main-cardImage-imageWrapper", "[data-testid='card-image']", "[data-encore-id='card'] > div:has(> div > div > img)"] },
+    { className: "vg-card-play", selectors: [".main-card-PlayButtonContainer", "[data-encore-id='card'] div:has(> button[data-encore-id='buttonPrimary'])"] },
+    { className: "vg-card-image", selectors: [".main-cardImage-image", "[data-encore-id='card'] img"] },
+    { className: "vg-card-image-circular", selectors: [".main-cardImage-circular", "[data-encore-id='card'][aria-labelledby*=':artist:'] > div:has(> div > div > img)", "[data-encore-id='card'][aria-labelledby*=':user:'] > div:has(> div > div > img)"] },
     { className: "vg-track-row", selectors: [".main-trackList-trackListRow", "[data-testid='tracklist-row']"] },
     { className: "vg-track-row-title", selectors: [".main-trackList-rowTitle"] },
     { className: "vg-track-row-image", selectors: [".main-trackList-rowImage"] },
@@ -190,8 +274,32 @@
   const VG_STRUCT = VG_COMPILED.filter(e => !VG_STATE_CLASSES.has(e.className));
   const VG_STATE = VG_COMPILED.filter(e => VG_STATE_CLASSES.has(e.className));
   const VG_STRUCT_NAMES = new Set(VG_STRUCT.map(e => e.className));
+  const VG_ALIAS_COMPILED = VG_LEGACY_ALIASES.map(({ name, selectors }) => {
+    const ok = selectors.filter(validSelector);
+    return { className: name, sel: ok.join(","), has: ok.some(x => x.includes(":has(")) };
+  }).filter(e => e.sel);
+  // names put back when React rewrites a className (see the observer below)
+  const VG_PROTECTED = new Set([...VG_STRUCT_NAMES, ...VG_ALIAS_COMPILED.map(e => e.className), ...Object.values(VG_AREA_ALIASES)]);
+  const markAlias = (el, name) => { if (el) el.classList.add(name, "vg-aliased"); };
+  let vgLayoutDirty = true;
+
+  function classifyLayoutAreas() {
+    vgLayoutDirty = false;
+    const top = document.querySelector(".Root__top-container");
+    if (!top) { vgLayoutDirty = true; return; }
+    for (const child of top.children) {
+      // the real panels serialise as one name; overlays that merely start in an area ("main-view / left-sidebar / ...") must not match
+      const name = VG_AREA_ALIASES[getComputedStyle(child).gridArea];
+      if (name) markAlias(child, name);
+    }
+  }
 
   function classifySubtree(root) {
+    for (const { className, sel, has } of VG_ALIAS_COMPILED) {
+      if (root.matches(sel)) markAlias(root, className);
+      root.querySelectorAll(sel).forEach(el => markAlias(el, className));
+      if (has && root.parentElement) markAlias(root.parentElement.closest(sel), className);
+    }
     for (const { className, sel, has } of VG_STRUCT) {
       if (root.matches(sel)) root.classList.add(className);
       root.querySelectorAll(sel).forEach(el => el.classList.add(className));
@@ -201,6 +309,7 @@
   }
 
   function applyStateClasses() {
+    if (vgLayoutDirty) classifyLayoutAreas();
     for (const { className, sel } of VG_STATE) {
       document.querySelectorAll(sel).forEach(el => el.classList.add(className));
     }
@@ -258,10 +367,11 @@
           if (!old || !old.includes("vg-")) continue;
           const el = m.target;
           for (const token of old.split(" ")) {
-            if (VG_STRUCT_NAMES.has(token) && !el.classList.contains(token)) el.classList.add(token);
+            if (VG_PROTECTED.has(token) && !el.classList.contains(token)) el.classList.add(token);
           }
           continue;
         }
+        if (m.target.classList && m.target.classList.contains("Root__top-container")) vgLayoutDirty = true;
         for (const n of m.addedNodes) if (n.nodeType === 1) vgPendingRoots.add(n);
       }
       if (vgPendingRoots.size && !vgClassRaf) vgClassRaf = requestAnimationFrame(flushDynamicClasses);
@@ -887,6 +997,24 @@
           #main-view#main-view {
             margin: ${d.mainMargin} 0 !important;
           }
+          /* Spotify 1.3.3 paints the left panel on the grid area and the right panel on its
+             first child, so they take the main view's inset instead of padding */
+          :root body:not(.vg-bg-active) #Desktop_LeftSidebar_Id {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin: ${d.mainMargin} 0 !important;
+          }
+          :root body:not(.vg-bg-active) .Root__right-sidebar {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+          }
+          :root body:not(.vg-bg-active) .Root__right-sidebar > div:first-child {
+            margin: ${d.mainMargin} 0 !important;
+          }
+          :root body.vg-bg-active .Root__right-sidebar {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+          }
 
           /* topbar */
           :root .main-topBar-container {
@@ -1114,6 +1242,10 @@
           document.documentElement.style.removeProperty("--spice-main");
           const vgRoot = document.querySelector(".vg-root");
           if (vgRoot) vgRoot.style.removeProperty("background");
+          // setting an image forced Glass; give the palette back that was active before
+          const preBg = Spicetify.LocalStorage.get("vantagraph:pre-bg-theme");
+          if (preBg !== null && preBg !== "null" && getSetting("theme", "") === "Glass") applyTheme(preBg || "Spotify Default");
+          Spicetify.LocalStorage.remove("vantagraph:pre-bg-theme");
         }
         break;
       // bg-use-album-cover: live update bg from now-playing cover
