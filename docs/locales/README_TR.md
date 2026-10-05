@@ -37,7 +37,7 @@
 
 ## 📦 Kurulum
 
-[Spotify](https://www.spotify.com/download/) `1.2.86+` ve [Spicetify](https://spicetify.app/docs/getting-started) `2.43+` gerekiyor.
+[Spotify](https://www.spotify.com/download/) `1.3.3+` ve [Spicetify](https://spicetify.app/docs/getting-started) `2.45.2+` gerekiyor. Spotify 1.3.1 veya daha eskiyse [eski sürümü](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.0.3-outdated) kullanın.
 
 `Vantagraph` klasörünü `…/spicetify/Themes/` içine, `Vantagraph/Extensions/` altındaki her `.js` dosyasını da `…/spicetify/Extensions/` içine kopyala. Sonra:
 

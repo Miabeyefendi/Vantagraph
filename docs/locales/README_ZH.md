@@ -37,7 +37,7 @@
 
 ## 📦 安装
 
-需要 [Spotify](https://www.spotify.com/download/) `1.2.86+` 和 [Spicetify](https://spicetify.app/docs/getting-started) `2.43+`。
+需要 [Spotify](https://www.spotify.com/download/) `1.3.3+` 和 [Spicetify](https://spicetify.app/docs/getting-started) `2.45.2+`。 Spotify 1.3.1 或更早版本请使用[旧版本](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.0.3-outdated)。
 
 把 `Vantagraph` 目录复制到 `…/spicetify/Themes/`，把 `Vantagraph/Extensions/` 里的每个 `.js` 复制到 `…/spicetify/Extensions/`。然后：
 

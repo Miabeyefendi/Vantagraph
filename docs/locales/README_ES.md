@@ -37,7 +37,7 @@
 
 ## 📦 Instalación
 
-Necesitas [Spotify](https://www.spotify.com/download/) `1.2.86+` y [Spicetify](https://spicetify.app/docs/getting-started) `2.43+`.
+Necesitas [Spotify](https://www.spotify.com/download/) `1.3.3+` y [Spicetify](https://spicetify.app/docs/getting-started) `2.45.2+`. ¿Spotify 1.3.1 o anterior? Usa la [versión desactualizada](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.0.3-outdated).
 
 Copia la carpeta `Vantagraph` en `…/spicetify/Themes/` y cada `.js` de `Vantagraph/Extensions/` en `…/spicetify/Extensions/`. Después:
 

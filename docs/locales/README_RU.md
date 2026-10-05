@@ -37,7 +37,7 @@
 
 ## 📦 Установка
 
-Нужны [Spotify](https://www.spotify.com/download/) `1.2.86+` и [Spicetify](https://spicetify.app/docs/getting-started) `2.43+`.
+Нужны [Spotify](https://www.spotify.com/download/) `1.3.3+` и [Spicetify](https://spicetify.app/docs/getting-started) `2.45.2+`. Spotify 1.3.1 или старше? Используйте [устаревшую сборку](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.0.3-outdated).
 
 Скопируйте папку `Vantagraph` в `…/spicetify/Themes/`, а каждый `.js` из `Vantagraph/Extensions/` в `…/spicetify/Extensions/`. Затем:
 
