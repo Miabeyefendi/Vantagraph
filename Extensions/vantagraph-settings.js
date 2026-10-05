@@ -563,6 +563,8 @@
     );
     // custom class: stable CSS targeting hook
     if (settingsBtn.element) settingsBtn.element.classList.add("vg-topbar-btn");
+    // other Vantagraph windows (lyric miniplayer settings) link here
+    window.__vgOpenSettings = () => { if (!(panelEl && panelEl.classList.contains("open"))) toggle(); };
   }
 
   waitForVantagraphData(init);

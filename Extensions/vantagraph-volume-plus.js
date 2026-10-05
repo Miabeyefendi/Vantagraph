@@ -316,6 +316,11 @@
     hintBot.className = "vg-vol-preset-hint";
     hintBot.textContent = "Middle-click bar → mute / unmute";
     presetOverlay.appendChild(hintBot);
+    const cfgBtn = document.createElement("button");
+    cfgBtn.className = "vg-vol-preset-btn";
+    cfgBtn.textContent = "Volume+ settings";
+    cfgBtn.addEventListener("click", (e) => { e.stopPropagation(); hidePresets(); openSettingsModal(); });
+    presetOverlay.appendChild(cfgBtn);
     document.body.appendChild(presetOverlay);
   }
 
@@ -337,6 +342,8 @@
     if (presetOverlay && presetOverlay.classList.contains("vg-visible")) hidePresets();
     else showPresets();
   });
+  presetBtn.title = "Volume Presets (right-click: Volume+ settings)";
+  presetBtn.addEventListener("contextmenu", (e) => { e.preventDefault(); e.stopPropagation(); hidePresets(); openSettingsModal(); });
   document.addEventListener("click", (e) => {
     if (presetOverlay && !presetOverlay.contains(e.target) && e.target !== presetBtn) hidePresets();
   });
@@ -366,9 +373,10 @@
     }, 4000);
   }
 
-  // 15. settings menu (increment config + preferred volume)
-  if (Spicetify.Menu) {
-    new Spicetify.Menu.Item("Volume+", false, () => {
+  // 15. settings (increment config + preferred volume)
+  // Spicetify.Menu items do not show up in the profile menu on Spotify 1.3.3, so the same
+  // window also opens from the preset overlay and from a right-click on the % button.
+  function openSettingsModal() {
       const content = document.createElement("div");
       const currentPref = getPreferredVol();
       content.innerHTML = `
@@ -425,7 +433,10 @@
       content.querySelector("#vg-vp-shift").addEventListener("change",   function() { setSetting("shift-increment",   this.value); });
       content.querySelector("#vg-vp-ctrl").addEventListener("change",    function() { setSetting("ctrl-increment",    this.value); });
       PopupModal.display({ title: "Volume+", content: content, isLarge: false });
-    }, `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M14.9,8c0-0.4-0.3-0.8-0.7-0.8h-2.1V5.2c0-0.4-0.4-0.7-0.8-0.7c-0.4,0-0.7,0.3-0.7,0.7v2.1H8.5C8.1,7.2,7.7,7.6,7.7,8c0,0.4,0.3,0.8,0.8,0.8h2.1v2.1c0,0.4,0.4,0.7,0.8,0.7c0.4,0,0.7-0.3,0.7-0.7V8.8h2.1C14.6,8.8,14.9,8.4,14.9,8z"/><path d="M10.1,1.5c0-0.4-0.3-0.8-0.7-0.8c-0.1,0-0.3,0-0.4,0.1l-6.9,4c-1.7,1-2.3,3.2-1.3,5c0.3,0.6,0.8,1,1.3,1.3l6.9,4c0.4,0.2,0.8,0.1,1-0.3c0.1-0.1,0.1-0.2,0.1-0.4v-1.9c-0.5-0.1-1-0.4-1.5-0.7v1.3L2.8,9.9C1.8,9.3,1.4,8,2,6.9c0.2-0.3,0.5-0.6,0.8-0.8l5.8-3.3v1.3c0.4-0.3,1-0.5,1.5-0.7V1.5z"/></svg>`).register();
+  }
+
+  if (Spicetify.Menu) {
+    new Spicetify.Menu.Item("Volume+", false, openSettingsModal, `<svg viewBox="0 0 16 16" fill="currentColor"><path d="M14.9,8c0-0.4-0.3-0.8-0.7-0.8h-2.1V5.2c0-0.4-0.4-0.7-0.8-0.7c-0.4,0-0.7,0.3-0.7,0.7v2.1H8.5C8.1,7.2,7.7,7.6,7.7,8c0,0.4,0.3,0.8,0.8,0.8h2.1v2.1c0,0.4,0.4,0.7,0.8,0.7c0.4,0,0.7-0.3,0.7-0.7V8.8h2.1C14.6,8.8,14.9,8.4,14.9,8z"/><path d="M10.1,1.5c0-0.4-0.3-0.8-0.7-0.8c-0.1,0-0.3,0-0.4,0.1l-6.9,4c-1.7,1-2.3,3.2-1.3,5c0.3,0.6,0.8,1,1.3,1.3l6.9,4c0.4,0.2,0.8,0.1,1-0.3c0.1-0.1,0.1-0.2,0.1-0.4v-1.9c-0.5-0.1-1-0.4-1.5-0.7v1.3L2.8,9.9C1.8,9.3,1.4,8,2,6.9c0.2-0.3,0.5-0.6,0.8-0.8l5.8-3.3v1.3c0.4-0.3,1-0.5,1.5-0.7V1.5z"/></svg>`).register();
   }
 
 })();

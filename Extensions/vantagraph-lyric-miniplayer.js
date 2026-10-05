@@ -370,12 +370,37 @@
   function openSettingsWindow() {
     if (settingsWindow && !settingsWindow.closed) { settingsWindow.focus(); return; }
     const sw = window.screen.availWidth, sh = window.screen.availHeight;
+    let w = null;
     try {
-      settingsWindow = window.open('about:blank', 'VGLyricsSettings',
+      w = window.open('about:blank', 'VGLyricsSettings',
         `width=290,height=500,left=${Math.floor((sw - 290) / 2)},top=${Math.floor((sh - 500) / 2)},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no`
       );
-      if (settingsWindow) setupSettingsWindow(settingsWindow);
-      else Spicetify.showNotification('Could not open settings.', true);
+    } catch (e) { w = null; }
+    if (w) { settingsWindow = w; setupSettingsWindow(w); return; }
+    openSettingsInModal();
+  }
+
+  // Spotify 1.3.3 answers window.open with null, so the same settings page is hosted
+  // in an iframe inside a Spotify modal instead.
+  function openSettingsInModal() {
+    try {
+      const frame = document.createElement('iframe');
+      frame.style.cssText = 'width:290px;height:500px;border:0;border-radius:12px;display:block;margin:0 auto;background:#111;color-scheme:dark;';
+      Spicetify.PopupModal.display({ title: 'Lyric Miniplayer', content: frame, isLarge: false });
+      let tries = 0;
+      const wait = setInterval(() => {
+        const win = frame.contentWindow;
+        if (win && frame.isConnected && win.document) {
+          clearInterval(wait);
+          settingsWindow = {
+            get closed() { return !frame.isConnected; },
+            focus() {},
+            close() { Spicetify.PopupModal.hide(); },
+            get document() { return frame.contentWindow.document; },
+          };
+          setupSettingsWindow(win);
+        } else if (++tries > 40) { clearInterval(wait); Spicetify.showNotification('Could not open settings.', true); }
+      }, 50);
     } catch (e) { Spicetify.showNotification('Could not open settings.', true); }
   }
 
@@ -515,7 +540,7 @@
       },
       openVgSettings() {
         if (typeof window.__vgOpenSettings === 'function') window.__vgOpenSettings();
-        else Spicetify.showNotification('Open Profile Menu → Vantagraph to access settings');
+        else Spicetify.showNotification('Use the Vantagraph Settings button in the top bar');
       },
     };
 
