@@ -107,6 +107,10 @@
     { name: "main-yourLibraryX-headerContent", selectors: [".main-yourLibraryX-header"] },
     { name: "main-yourLibraryX-libraryFilter", selectors: [".YourLibraryX > div:first-child > div:last-child"] },
     { name: "main-actionBar-ActionBarRow", selectors: ["[data-testid=\"action-bar-row\"]"] },
+    // top bar: Spicetify.Topbar.Button looks for these names (back/forward box on the left, bell + friend feed box on the right)
+    { name: "main-globalNav-historyButtons", selectors: ["#global-nav-bar > div:first-of-type div:has(> button[data-encore-id=\"buttonTertiary\"]:first-child + button[data-encore-id=\"buttonTertiary\"]:last-child)"] },
+    { name: "main-actionButtons", selectors: ["#global-nav-bar div:has(> button[data-restore-focus-key=\"buddy_feed\"])"] },
+    { name: "main-actionButtons-button", selectors: ["#global-nav-bar div:has(> button[data-restore-focus-key=\"buddy_feed\"]) > button[data-encore-id=\"buttonTertiary\"]"] },
     // Spotify 1.3.4 dropped Root__top-container from the root grid; the panels are found through it (classifyLayoutAreas)
     { name: "Root__top-container", selectors: ["div:has(> #Desktop_LeftSidebar_Id)"] },
     // player bar (Spotify 1.3.4 renamed all of these; the bar is an <aside data-testid="now-playing-bar"> with one container)
