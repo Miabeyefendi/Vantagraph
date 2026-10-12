@@ -107,6 +107,15 @@
     { name: "main-yourLibraryX-headerContent", selectors: [".main-yourLibraryX-header"] },
     { name: "main-yourLibraryX-libraryFilter", selectors: [".YourLibraryX > div:first-child > div:last-child"] },
     { name: "main-actionBar-ActionBarRow", selectors: ["[data-testid=\"action-bar-row\"]"] },
+    // Spotify 1.3.4 dropped Root__top-container from the root grid; the panels are found through it (classifyLayoutAreas)
+    { name: "Root__top-container", selectors: ["div:has(> #Desktop_LeftSidebar_Id)"] },
+    // player bar (Spotify 1.3.4 renamed all of these; the bar is an <aside data-testid="now-playing-bar"> with one container)
+    { name: "main-nowPlayingBar-container", selectors: ["[data-testid=\"now-playing-bar\"] > div"] },
+    { name: "main-nowPlayingBar-left", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has([data-testid=\"now-playing-widget\"])"] },
+    { name: "main-nowPlayingBar-center", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has(> [data-testid=\"player-controls\"])"] },
+    { name: "main-nowPlayingBar-right", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has([data-testid=\"volume-bar\"])"] },
+    { name: "main-nowPlayingBar-extraControls", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has([data-testid=\"volume-bar\"]) > div"] },
+    { name: "playback-bar", selectors: ["[data-testid=\"player-controls\"] > div:has([data-testid=\"playback-progressbar\"])"] },
   ];
 
   // Not aliased on purpose: main-card-card, main-cardImage-*, main-card-PlayButtonContainer.
