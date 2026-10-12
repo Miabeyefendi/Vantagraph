@@ -930,7 +930,7 @@
           compact: {
             panelGap: "8px",
             panelPad: "2px",
-            mainMargin: "7px",
+            mainMargin: "8px",
             playerMinH: "",
             navGap: "4px",
             navInnerPadX: "0px",
@@ -958,7 +958,7 @@
           comfortable: {
             panelGap: "10px",
             panelPad: "6px",
-            mainMargin: "11px",
+            mainMargin: "10px",
             playerMinH: "120px",
             navGap: "10px",
             navInnerPadX: "0px",
@@ -993,7 +993,6 @@
             --panel-gap: ${d.panelGap} !important;
             column-gap: ${d.panelGap} !important;
           }
-          :root .Root__nav-bar,
           :root #Desktop_LeftSidebar_Id {
             padding-top: ${d.panelPad} !important;
             padding-bottom: ${d.panelPad} !important;
@@ -1076,11 +1075,7 @@
           }
 
           /* player bar */
-          :root footer,
-          :root .Root__now-playing-bar,
           :root [data-testid="now-playing-bar"] {
-            margin: -8px !important;
-            padding: 8px !important;
             ${d.playerMinH ? `min-height: ${d.playerMinH} !important;` : ""}
           }
           ${(d.playerTopPad || d.playerControlsGap || d.playerAlignBottom) ? `
