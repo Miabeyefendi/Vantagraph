@@ -8,6 +8,31 @@ Every released version of Vantagraph, newest first. The format follows
 
 ---
 
+## [5.1.1](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.1.1) - 2026-10-12
+
+Spotify 1.3.4 support. Spotify 1.3.4 removed more class names, this time from the player bar, the root grid and the top bar. Same
+method as the last release: the elements are found again through markup Spotify keeps. Needs Spotify `1.3.3+` (tested on
+`1.3.4.258`) and Spicetify `2.45.2+`.
+
+### Fixed
+
+- The player bar lost its layout. Spotify fixes its box at 72px, so the progress row pushed the controls against the bottom edge.
+  The bar has its height back, with the progress row on top and the controls centred.
+- The three panel areas (`Root__main-view`, `Root__right-sidebar`, `Root__now-playing-bar`) were no longer found because the root grid
+  lost its class name. They are found from the left sidebar's position now.
+- The top bar buttons of the theme (Vantagraph Settings, Lyric Miniplayer) were not added at all, because Spicetify looks for two boxes by
+  class names Spotify removed.
+- The fill of the progress and volume bars fell back to Spotify's light colour.
+- Shuffle, previous, next and repeat sat higher than play, and the progress row left a gap under them. All six controls share one
+  centre line now.
+- The left panel was painted 2px shorter than the main view, and the main view carried a 5px inset of its own inside its box. Left,
+  main and right share the same top and bottom edge.
+
+### Changed
+
+- The player bar is a card inset like the panels: the same 8px from both window edges. The gap above and below the panels equals
+  the gap between them (8px, 10px with Comfortable density).
+
 ## [5.1.0](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.1.0) - 2026-10-05
 
 Spotify 1.3.3 support. Spotify re-hashed its class names and Spicetify's `css-map` does not know the new ones yet, so every rule
@@ -169,7 +194,8 @@ First public release.
 
 ---
 
-[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.0...HEAD
+[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.1...HEAD
+[5.1.1]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.3...5.1.0
 [5.0.3]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.2...5.0.3
 [5.0.2]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.1...5.0.2
