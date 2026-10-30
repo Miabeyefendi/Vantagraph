@@ -64,14 +64,23 @@ body {
 /* topbar button sizing: Encore wraps each button to its SVG intrinsic width
    (20x32 native vs 32x32 VG). Force uniform 32x32 on all action buttons (excl. profile). */
 
-/* uniform 16x16 SVG */
+/* top-right icons: 19px inside the 32px buttons (Spotify draws 16px), the theme's
+   buttons and Spotify's What's New / Friend Activity alike */
 button[aria-label="Vantagraph Settings"] svg,
 button[aria-label="Lyric Miniplayer"] svg,
 button[title="Vantagraph Settings"] svg,
 button[title="Lyric Miniplayer"] svg,
-.vg-topbar-btn svg {
-  width: 16px !important;
-  height: 16px !important;
+.vg-topbar-btn svg,
+#global-nav-bar .spicetify-topbar-button button svg,
+#global-nav-bar div:has(> button[data-restore-focus-key="buddy_feed"]) > button svg {
+  width: 19px !important;
+  height: 19px !important;
+}
+
+/* Spotify pads the What's New / Friend Activity pair 8px on the left, which put 16px
+   before the bell and 8px everywhere else: one 8px gap between all four buttons */
+#global-nav-bar div:has(> button[data-restore-focus-key="buddy_feed"]) {
+  padding-left: 0 !important;
 }
 
 /* container gap */
