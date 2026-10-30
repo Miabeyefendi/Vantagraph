@@ -8,6 +8,26 @@ Every released version of Vantagraph, newest first. The format follows
 
 ---
 
+## [5.1.2](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.1.2) - 2026-10-30
+
+macOS consistency for Spotify 1.3.6 and Spicetify 2.46. Spicetify 2.46 maps 153 legacy class names only on macOS builds
+of Spotify: cards, the track list, the entity header, the top bar, home shortcuts, the progress bars and the playlist page.
+Windows builds do not get them, so on a Mac the theme's rules written against those names reached other elements than on
+Windows: boxes shifted and the top bar sat crooked. Needs Spotify `1.3.3+` (tested on `1.3.6.1921`) and Spicetify `2.45.2+`
+(tested on `2.46.4`). The macOS path was checked on Windows with the macOS names emulated.
+
+### Fixed
+
+- macOS: a new `MAC` section in `theme.js` lists those names. On a Mac the alias layer gives them as `vg-mac--<name>`, and the
+  theme's own selectors (class map, aliases, `user.css`, the styles `theme.js` injects, the Marketplace copy of `user.css`) read
+  that twin, so every rule reaches the same elements as on Windows. Spotify's own stylesheets are left alone.
+- The Now Playing panel is found again on Spotify 1.3.6, which dropped its `NowPlayingView` class.
+
+### Added
+
+- `src/utils/qa/qa-mac.js` checks the macOS path rule by rule, and `src/utils/qa/diag-console.js` prints versions, platform,
+  panel geometry and where each legacy name comes from, for reports from other machines.
+
 ## [5.1.1](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.1.1) - 2026-10-12
 
 Spotify 1.3.4 support. Spotify 1.3.4 removed more class names, this time from the player bar, the root grid and the top bar. Same
@@ -194,7 +214,8 @@ First public release.
 
 ---
 
-[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.1...HEAD
+[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.2...HEAD
+[5.1.2]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.3...5.1.0
 [5.0.3]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.2...5.0.3
