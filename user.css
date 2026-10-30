@@ -83,6 +83,47 @@ button[title="Lyric Miniplayer"] svg,
   padding-left: 0 !important;
 }
 
+/* Spicetify adds the theme's buttons in whatever order the extensions finish loading,
+   so they swapped places between launches: Lyric Miniplayer first, then Vantagraph Settings */
+#global-nav-bar .spicetify-topbar-button:has(> button[aria-label="Lyric Miniplayer"]) {
+  order: -2 !important;
+}
+
+#global-nav-bar .spicetify-topbar-button:has(> button[aria-label="Vantagraph Settings"]) {
+  order: -1 !important;
+}
+
+/* left group (back, forward, Marketplace and other Spicetify nav links) follows the
+   right one: 32px buttons, one 8px gap, no tile behind the icon */
+#global-nav-bar > div:first-of-type > div {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+#global-nav-bar > div:first-of-type div:has(> button[data-encore-id="buttonTertiary"]:first-child + button[data-encore-id="buttonTertiary"]:last-child) {
+  gap: 8px !important;
+  padding-inline: 0 !important;
+}
+
+#global-nav-bar > div:first-of-type div:has(> button[data-encore-id="buttonTertiary"]:first-child + button[data-encore-id="buttonTertiary"]:last-child) > button,
+#global-nav-bar .custom-navlinks-scrollable_container button {
+  width: 32px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+}
+
+#global-nav-bar > div:first-of-type div:has(> button[data-encore-id="buttonTertiary"]:first-child + button[data-encore-id="buttonTertiary"]:last-child) > button svg,
+#global-nav-bar .custom-navlinks-scrollable_container button svg {
+  width: 19px !important;
+  height: 19px !important;
+}
+
 /* container gap */
 .main-actionButtons {
   display: flex !important;
