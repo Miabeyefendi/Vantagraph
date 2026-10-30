@@ -98,7 +98,7 @@
     { name: "main-yourLibraryX-filterArea", selectors: [".YourLibraryX > div:first-child > div:last-child"] },
     { name: "main-yourLibraryX-listItem", selectors: [".YourLibraryX [role=\"row\"]"] },
     { name: "main-rootlist-wrapper", selectors: [".YourLibraryX [role=\"grid\"]"] },
-    { name: "main-nowPlayingView-section", selectors: [".NowPlayingView"] },
+    { name: "main-nowPlayingView-section", selectors: [".NowPlayingView", ".Root__right-sidebar aside:has([data-testid=\"cover-art-slot\"])"] },
     { name: "main-nowPlayingView-content", selectors: [".NowPlayingView > div > div:nth-child(2)"] },
     { name: "main-nowPlayingWidget-trackInfo", selectors: ["[data-testid=\"now-playing-widget\"] > div:nth-child(2)"] },
     { name: "main-trackInfo-artists", selectors: ["[data-testid=\"now-playing-widget\"] > div:nth-child(2) > div:nth-child(3)"] },
@@ -133,6 +133,130 @@
     "right-sidebar": "Root__right-sidebar",
     "now-playing-bar": "Root__now-playing-bar",
   };
+
+  // MAC
+  // Spicetify 2.46 maps the legacy names below only on macOS builds of Spotify 1.3.x
+  // (css-map.json, spicetify/cli commit 0d0ab88, 153 entries). Windows builds never carry
+  // them, so every rule this theme writes against them was tuned where they reach nothing,
+  // or only the element the alias layer picked. On a Mac they land on Spotify's own choice
+  // of element and the same rules reach more, or other, elements: boxes shift and the top
+  // bar sits crooked. On macOS the theme keeps its rules where they are on Windows:
+  //   1. an alias for one of these names adds "vg-mac--<name>", never the name itself;
+  //   2. its own selectors (class map, aliases, user.css, the styles theme.js and the
+  //      Marketplace inject) read ".vg-mac--<name>" instead of ".<name>", which only an
+  //      alias can satisfy.
+  // Spotify's stylesheets are left alone: on a Mac they style those elements natively.
+  // QA: localStorage "vg-qa-platform" = "mac" runs this path on any platform.
+  const VG_MAC_NAMES = [
+    "Root__right-sidebar-expanded", "Root__right-sidebar-fauxMainViewEnd", "Root__right-sidebar-overlayWrapper",
+    "Root__right-sidebar-peek", "Root__right-sidebar-peekContent", "main-actionBar-ActionBar", "main-actionBar-ActionBarRow",
+    "main-card-DownloadStatusIndicator", "main-card-PlayButtonContainer", "main-card-PlayButtonContainerVisible",
+    "main-card-card", "main-card-cardContainer", "main-card-cardLink", "main-card-cardMetadata", "main-card-cardTitle",
+    "main-card-hero", "main-card-imageContainer", "main-card-imageContainerOld", "main-card-imageContainerSkeleton",
+    "main-card-imagePlaceholder", "main-card-newEpisodeIndicator", "main-card-type", "main-cardImage-circular",
+    "main-cardImage-image", "main-cardImage-imageWrapper", "main-entityHeader-container", "main-entityHeader-containerNormal",
+    "main-entityHeader-contentWrapper", "main-entityHeader-creatorWrapper", "main-entityHeader-headerText",
+    "main-entityHeader-image", "main-entityHeader-imageContainer", "main-entityHeader-imageContainerNew",
+    "main-entityHeader-metaDataText", "main-entityHeader-shadow", "main-entityHeader-title", "main-entityHeader-titleButton",
+    "main-entityHeader-titleInner", "main-entityHeader-topbarContent", "main-gridContainer-gridContainer",
+    "main-gridContainer-uniformRowHeight", "main-home-content", "main-topBar-background", "main-topBar-button",
+    "main-topBar-container", "main-topBar-contentArea", "main-topBar-forward", "main-topBar-historyButtons", "main-topBar-icon",
+    "main-topBar-overlay", "main-topBar-responsiveForward", "main-topBar-topbarContent", "main-topBar-topbarContentContainer",
+    "main-topBar-topbarContentWrapper", "main-topBar-withBackgroundBlur", "main-trackInfo-artists", "main-trackInfo-container",
+    "main-trackInfo-name", "main-trackInfo-xsmallBadges", "main-trackList-column", "main-trackList-durationHeader",
+    "main-trackList-enhanced", "main-trackList-indexable", "main-trackList-rowDuration", "main-trackList-rowImage",
+    "main-trackList-rowImagePlayButton", "main-trackList-rowMainContent", "main-trackList-rowMarker",
+    "main-trackList-rowSectionEnd", "main-trackList-rowSectionIndex", "main-trackList-rowSectionStart",
+    "main-trackList-rowSectionVariable", "main-trackList-rowSeperator", "main-trackList-rowTitle", "main-trackList-sortable",
+    "main-trackList-trackList", "main-trackList-trackListContainer", "main-trackList-trackListHeader",
+    "main-trackList-trackListHeaderRow", "main-trackList-trackListRow", "main-trackList-trackListRowGrid", "playback-progressbar",
+    "playback-progressbar-isInteractive", "playlist-playlist-artistResultListTitle", "playlist-playlist-clickableImageWrapper",
+    "playlist-playlist-concertsFooter", "playlist-playlist-ctaLink", "playlist-playlist-disclaimerContainer",
+    "playlist-playlist-emptySearchTermContainer", "playlist-playlist-emptyStateContainer", "playlist-playlist-findMoreButton",
+    "playlist-playlist-header", "playlist-playlist-icon", "playlist-playlist-leadingSlot", "playlist-playlist-mixingBackground",
+    "playlist-playlist-mixingBackgroundVisible", "playlist-playlist-optimizedHeaderDescription", "playlist-playlist-page",
+    "playlist-playlist-playlistContent", "playlist-playlist-playlistDescription", "playlist-playlist-playlistImageContainer",
+    "playlist-playlist-playlistInlineCurationBackButton", "playlist-playlist-playlistInlineCurationCloseButton",
+    "playlist-playlist-playlistInlineCurationSection", "playlist-playlist-playlistInlineCurationTitle",
+    "playlist-playlist-playlistInlineCurationWrapper", "playlist-playlist-promoImage", "playlist-playlist-promoRow",
+    "playlist-playlist-promoTitle", "playlist-playlist-refreshButton", "playlist-playlist-searchBoxContainer",
+    "playlist-playlist-searchResultListContainer", "playlist-playlist-sectionGrid", "playlist-playlist-sectionTitleWrapper",
+    "playlist-playlist-sponsoredPlaylistHeaderLandscape", "playlist-playlist-sponsoredPlaylistHeaderPortrait",
+    "playlist-playlist-subtitle", "progress-bar", "progress-bar__slider", "view-homeShortcutsGrid-PlayButtonContainer",
+    "view-homeShortcutsGrid-PlayButtonContainerVisible", "view-homeShortcutsGrid-content", "view-homeShortcutsGrid-draggable",
+    "view-homeShortcutsGrid-episodeExtraContent", "view-homeShortcutsGrid-episodeProgressBar",
+    "view-homeShortcutsGrid-equaliserImage", "view-homeShortcutsGrid-grid", "view-homeShortcutsGrid-gridOf4Columns",
+    "view-homeShortcutsGrid-iconDownloaded", "view-homeShortcutsGrid-image", "view-homeShortcutsGrid-imageContainer",
+    "view-homeShortcutsGrid-imageHolder", "view-homeShortcutsGrid-imageWrapper", "view-homeShortcutsGrid-main",
+    "view-homeShortcutsGrid-name", "view-homeShortcutsGrid-nameWrapper", "view-homeShortcutsGrid-playButton",
+    "view-homeShortcutsGrid-playingEqualizer", "view-homeShortcutsGrid-shortcut", "view-homeShortcutsGrid-shortcutLink",
+    "view-homeShortcutsGrid-shortcutNewEpisodeIndicator", "view-homeShortcutsGrid-shortcuts",
+    "view-homeShortcutsGrid-shortcutsGrid--large", "view-homeShortcutsGrid-shortcutsGrid--medium",
+    "view-homeShortcutsGrid-shortcutsGrid--small", "view-homeShortcutsGrid-skeletonShortcut", "view-homeShortcutsGrid-title",
+    "view-homeShortcutsGrid-trailingIndicator", "view-homeShortcutsGrid-trailingOverlay", "x-progressBar-fillColor",
+    "x-progressBar-progressBarBg", "x-progressBar-progressFillColor", "x-progressBar-sliderArea",
+  ];
+  const VG_MAC = (() => {
+    try { if (localStorage.getItem("vg-qa-platform") === "mac") return true; } catch (e) { }
+    return /Mac/i.test(navigator.platform || "") || /Macintosh|Mac OS X/.test(navigator.userAgent || "");
+  })();
+  const VG_MAC_SET = new Set(VG_MAC_NAMES);
+  const VG_MAC_RE = new RegExp("\\.(" + [...VG_MAC_NAMES].sort((a, b) => b.length - a.length).join("|") + ")(?![\\w-])", "g");
+  const vgMacName = (name) => (VG_MAC && VG_MAC_SET.has(name) ? "vg-mac--" + name : name);
+  const vgMacSel = (sel) => (VG_MAC ? sel.replace(VG_MAC_RE, (m, n) => ".vg-mac--" + n) : sel);
+
+  // the theme's own sheets: user.css (local link or Marketplace style) and the styles
+  // theme.js and its extensions add; snippets and Spotify's own CSS are not touched
+  const vgMacOwnSheet = (node) => {
+    if (!node) return false;
+    if (node.tagName === "LINK") return /(^|\/)user\.css(\?|$)/.test(node.getAttribute("href") || "");
+    if (node.tagName !== "STYLE" || node.classList.contains("marketplaceSnippets")) return false;
+    return node.classList.contains("marketplaceUserCSS") || /^(vg-|vantagraph)/.test(node.id || "") || /vg-|vantagraph/i.test(node.textContent || "");
+  };
+  function vgMacRewriteRules(list) {
+    let rules;
+    try { rules = list.cssRules; } catch (e) { return; }
+    for (let i = rules.length - 1; i >= 0; i--) {
+      const r = rules[i];
+      if (!r.selectorText) { if (r.cssRules) vgMacRewriteRules(r); continue; }
+      VG_MAC_RE.lastIndex = 0;
+      if (VG_MAC_RE.test(r.selectorText)) r.selectorText = vgMacSel(r.selectorText);
+    }
+  }
+  function vgMacRewriteNode(node) {
+    if (!vgMacOwnSheet(node)) return;
+    if (node.sheet) vgMacRewriteRules(node.sheet);
+    if (node.tagName === "LINK" && !node.dataset.vgMacLoad) {
+      node.dataset.vgMacLoad = "1";
+      node.addEventListener("load", () => node.sheet && vgMacRewriteRules(node.sheet));
+    }
+  }
+  function vgMacStart() {
+    if (!VG_MAC) return;
+    document.documentElement.classList.add("vg-mac");
+    document.querySelectorAll("style, link[rel='stylesheet']").forEach(vgMacRewriteNode);
+    // styles live in <head> (theme.js) or directly in <body> (Marketplace); a style whose
+    // text is set again is parsed again, so its own children are watched too
+    const watch = new MutationObserver((muts) => {
+      const seen = new Set();
+      for (const m of muts) {
+        if (m.target.tagName === "STYLE") seen.add(m.target);
+        for (const n of m.addedNodes) {
+          if (n.nodeType !== 1 || (n.tagName !== "STYLE" && n.tagName !== "LINK")) continue;
+          seen.add(n);
+          if (n.tagName === "STYLE" && n.parentNode !== document.head) watch.observe(n, { childList: true });
+        }
+      }
+      seen.forEach(vgMacRewriteNode);
+    });
+    watch.observe(document.head, { childList: true, subtree: true });
+    const watchBody = () => {
+      watch.observe(document.body, { childList: true });
+      document.querySelectorAll("body > style").forEach((n) => watch.observe(n, { childList: true }));
+    };
+    if (document.body) watchBody(); else document.addEventListener("DOMContentLoaded", watchBody, { once: true });
+  }
+  vgMacStart();
 
   // CLASS MAP
   const VG_CLASS_MAP = [
@@ -281,15 +405,15 @@
     try { document.createDocumentFragment().querySelector(sel); return true; } catch (e) { return false; }
   };
   const VG_COMPILED = VG_CLASS_MAP.map(({ className, selectors }) => {
-    const ok = selectors.filter(validSelector);
+    const ok = selectors.map(vgMacSel).filter(validSelector);
     return { className, sel: ok.join(","), has: ok.some(x => x.includes(":has(")) };
   }).filter(e => e.sel);
   const VG_STRUCT = VG_COMPILED.filter(e => !VG_STATE_CLASSES.has(e.className));
   const VG_STATE = VG_COMPILED.filter(e => VG_STATE_CLASSES.has(e.className));
   const VG_STRUCT_NAMES = new Set(VG_STRUCT.map(e => e.className));
   const VG_ALIAS_COMPILED = VG_LEGACY_ALIASES.map(({ name, selectors }) => {
-    const ok = selectors.filter(validSelector);
-    return { className: name, sel: ok.join(","), has: ok.some(x => x.includes(":has(")) };
+    const ok = selectors.map(vgMacSel).filter(validSelector);
+    return { className: vgMacName(name), sel: ok.join(","), has: ok.some(x => x.includes(":has(")) };
   }).filter(e => e.sel);
   // names put back when React rewrites a className (see the observer below)
   const VG_PROTECTED = new Set([...VG_STRUCT_NAMES, ...VG_ALIAS_COMPILED.map(e => e.className), ...Object.values(VG_AREA_ALIASES)]);
