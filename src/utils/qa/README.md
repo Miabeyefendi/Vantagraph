@@ -22,6 +22,8 @@ Pillow, set `PYTHON` if `python` is not on PATH. When you are done, start Spotif
 | `qa-volume.js`, `qa-play.js`, `qa-pip.js`, `qa-taskbar.js` | Volume+, LoopyLoop, wave bars, lyric miniplayer and its settings, taskbar player |
 | `qa-hearts3.js` (Vantagraph), `qa-hearts-c.js` (Custom) | liked heart in the theme colour, unliked plain |
 | `qa-icontoggle.js`, `qa-bgrestore.js` (Vantagraph) | Custom Icons switch, palette restored after removing a background image |
+| `qa-mac.js` | macOS consistency: the theme's own rules reach the same elements with and without the names Spicetify maps only on Mac (needs `vg-qa-platform` = `mac`, see the file header) |
+| `diag-console.js` | paste into DevTools on a user's machine (`spicetify enable-devtools`); prints versions, platform, panel geometry and which legacy names come from Spicetify or from the theme |
 
 ## Rules of the road
 

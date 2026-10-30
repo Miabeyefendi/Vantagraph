@@ -41,7 +41,7 @@ const INVENTORY = `(() => { const out = []; document.querySelectorAll('svg').for
   const panel = async (name, sel, expect) => { await click(sel, 1800); let l = await panelLabel(); if (expect && (!l || !l.toLowerCase().includes(expect.toLowerCase()))) { await click(sel, 1800); l = await panelLabel(); } const ok = !!l && (!expect || l.toLowerCase().includes(expect.toLowerCase())); await snap(name, "B", ok, ok ? `panel="${l}"` : `panel="${l}" (expected ${expect})`); await closePanel(); };
   await panel("Panel: Queue", '[data-testid="control-button-queue"]', "queue");
   await panel("Panel: Now playing view", '[data-testid="cover-art-button"]', "now playing");
-  await click('[data-testid="cover-art-button"]', 1800); await click('.NowPlayingView button[aria-label^="More options"]', 1200); await snap("NPV: more options menu", "B", !!(await ev(`!!document.querySelector('[role="menu"]')`)), ""); await esc(); await closePanel();
+  await click('[data-testid="cover-art-button"]', 1800); await click('.Root__right-sidebar aside button[aria-label^="More"]', 1200); await snap("NPV: more options menu", "B", !!(await ev(`!!document.querySelector('[role="menu"]')`)), ""); await esc(); await closePanel();
   await panel("Panel: Connect devices", 'button[aria-label*="Connect"]', "");
   await panel("Panel: Listening activity", '.main-actionButtons button[aria-label="Listening activity"], .main-actionButtons button[aria-label="Friend Activity"]', "");
   await panel("Notifications: What's New", '.main-actionButtons button[aria-label*="New"]', "");
