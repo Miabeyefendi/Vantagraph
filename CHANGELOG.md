@@ -17,6 +17,12 @@ Needs Spotify `1.3.3+` (tested on `1.3.9.2055`) and Spicetify `2.45.2+` (tested 
 
 ### Fixed
 
+- The player bar: the progress row overlapped the controls with the default density, sat 18px under an empty band
+  with Comfortable, and the controls hugged it with Compact. The progress row now keeps its own band at the top of
+  the card, the density only sets the height of the controls zone under it (64, 72 or 90px), and the controls sit
+  in the middle of that zone. The bar's layout follows Spotify's `data-testid` marks, so it no longer depends on
+  which box Spicetify gives the legacy `main-nowPlayingBar-*` names to.
+- Classes derived from a legacy name leave together with it, so the result is the same on every launch.
 - The library was squeezed to 232px inside its 420px panel, the search box collapsed to its icon and the home
   filter chips (All, Music, Podcasts) were gone. An alias now gives a legacy name only while Spicetify does not:
   once an element carries the name natively, the alias drops it everywhere. The next css-map update is handled
