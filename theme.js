@@ -75,10 +75,10 @@
     { name: "main-globalNav-searchContainer", selectors: ["#global-nav-bar form[role=\"search\"]"] },
     { name: "x-searchInput-searchInputInput", selectors: ["form[role=\"search\"] input[role=\"combobox\"]"] },
     { name: "main-trackInfo-name", selectors: [":is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]) div.standalone-ellipsis-one-line", ":is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]) [data-encore-id=\"text\"]"] },
-    { name: "main-nowPlayingWidget-coverArt", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"]"] },
-    { name: "main-coverSlotCollapsed-container", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"]"] },
-    { name: "cover-art", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"] > div"] },
-    { name: "cover-art-image", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"] img"] },
+    { name: "main-nowPlayingWidget-coverArt", selectors: [":is([data-testid=\"CoverSlotCollapsed__container\"], [data-testid=\"cover-art-container\"])"] },
+    { name: "main-coverSlotCollapsed-container", selectors: [":is([data-testid=\"CoverSlotCollapsed__container\"], [data-testid=\"cover-art-container\"])"] },
+    { name: "cover-art", selectors: [":is([data-testid=\"CoverSlotCollapsed__container\"], [data-testid=\"cover-art-container\"]) > div"] },
+    { name: "cover-art-image", selectors: [":is([data-testid=\"CoverSlotCollapsed__container\"], [data-testid=\"cover-art-container\"]) img"] },
     { name: "main-shuffleButton-button", selectors: ["[data-testid=\"general-controls\"] .player-controls__left > button:first-child"] },
     { name: "main-repeatButton-button", selectors: ["[data-testid=\"control-button-repeat\"]"] },
     { name: "control-button-heart", selectors: [":is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]) button[aria-checked]:last-of-type"] },
@@ -334,16 +334,17 @@
     { className: "vg-now-playing-view-content", selectors: [".main-nowPlayingView-content", ".main-nowPlayingView-gradient"] },
     { className: "vg-now-playing-view-lyrics", selectors: [".main-nowPlayingView-lyricsContent", ".main-nowPlayingView-lyricsGradient"] },
 
-    // player bar
+    // player bar: layout classes follow data-testid only. Spicetify puts the legacy
+  // main-nowPlayingBar-* names on other boxes than the theme's layout expects.
     { className: "vg-now-playing", selectors: [".Root__now-playing-bar", "[data-testid='now-playing-bar']", "footer[role='contentinfo']"] },
     { className: "vg-now-playing-bar", selectors: [".Root__now-playing-bar"] },
     { className: "vg-now-playing-bar-container", selectors: [".now-playing-bar-container"] },
-    { className: "vg-np-container", selectors: [".main-nowPlayingBar-container", "[data-testid='now-playing-bar'] .main-nowPlayingBar-container"] },
-    { className: "vg-np-bar", selectors: [".main-nowPlayingBar-nowPlayingBar"] },
-    { className: "vg-np-center", selectors: [".main-nowPlayingBar-center"] },
-    { className: "vg-np-left", selectors: [".main-nowPlayingBar-left"] },
-    { className: "vg-np-right", selectors: [".main-nowPlayingBar-right"] },
-    { className: "vg-np-extra-controls", selectors: [".main-nowPlayingBar-extraControls"] },
+    { className: "vg-np-container", selectors: ["[data-testid='now-playing-bar'] > div"] },
+    { className: "vg-np-bar", selectors: ["[data-testid='now-playing-bar'] > div"] },
+    { className: "vg-np-center", selectors: ["[data-testid='now-playing-bar'] > div > div:has(> [data-testid='player-controls'])"] },
+    { className: "vg-np-left", selectors: ["[data-testid='now-playing-bar'] > div > div:has(:is([data-testid='now-playing-widget'], [data-testid='now-playing-widget-v2']))"] },
+    { className: "vg-np-right", selectors: ["[data-testid='now-playing-bar'] > div > div:has([data-testid='volume-bar'])"] },
+    { className: "vg-np-extra-controls", selectors: ["[data-testid='now-playing-bar'] > div > div:has([data-testid='volume-bar']) > div"] },
     { className: "vg-np-cover", selectors: [".main-nowPlayingWidget-coverArt", "[data-testid='cover-art']"] },
     { className: "vg-np-cover-collapsed", selectors: [".main-coverSlotCollapsed-container"] },
     { className: "vg-np-nowplaying", selectors: [".main-nowPlayingWidget-nowPlaying"] },
@@ -360,7 +361,7 @@
     { className: "vg-control-repeat", selectors: [".main-repeatButton-button"] },
     { className: "vg-add-button-active", selectors: [".main-addButton-active"] },
     { className: "vg-control-heart", selectors: [".control-button-heart"] },
-    { className: "vg-playback-bar", selectors: [".playback-bar", "[data-testid='playback-bar']"] },
+    { className: "vg-playback-bar", selectors: ["[data-testid='player-controls'] > div:has([data-testid='playback-progressbar'])"] },
     { className: "vg-playback-progress", selectors: [".playback-progressbar-container", "[data-testid='playback-progressbar']"] },
     { className: "vg-progress-bar", selectors: [".progress-bar"] },
     { className: "vg-progress-bar-bg", selectors: [".progress-bar__bg"] },
@@ -449,6 +450,23 @@
       vgNative.add(name);
       VG_PROTECTED.delete(name);
       if (given) for (const el of [...list]) if (given.has(el)) el.classList.remove(name);
+      vgReclassify(name);
+    }
+  }
+  // class-map classes read from a yielded name leave the elements only the alias gave it to,
+  // so the end state is the same whichever of the two showed up first
+  const vgUnset = new WeakMap();
+  function vgReclassify(name) {
+    const re = new RegExp("\\." + name + "(?![\\w-])");
+    for (const { className, sel } of VG_STRUCT) {
+      if (!re.test(sel)) continue;
+      for (const el of [...document.getElementsByClassName(className)]) {
+        if (el.matches(sel)) continue;
+        let s = vgUnset.get(el);
+        if (!s) vgUnset.set(el, s = new Set());
+        s.add(className);
+        el.classList.remove(className);
+      }
     }
   }
   let vgLayoutDirty = true;
@@ -540,7 +558,7 @@
           if (!old || !old.includes("vg-")) continue;
           const el = m.target;
           for (const token of old.split(" ")) {
-            if (VG_PROTECTED.has(token) && !el.classList.contains(token)) el.classList.add(token);
+            if (VG_PROTECTED.has(token) && !el.classList.contains(token) && !vgUnset.get(el)?.has(token)) el.classList.add(token);
           }
           continue;
         }
@@ -1095,7 +1113,7 @@
             panelGap: "8px",
             panelPad: "2px",
             mainMargin: "8px",
-            playerMinH: "",
+            playerZone: "64px",
             navGap: "4px",
             navInnerPadX: "0px",
             searchPadX: "0px",
@@ -1107,7 +1125,7 @@
             cardPad: "6px",
             gridGap: "8px",
             listRowHGap: "8px",
-            playerTopPad: "15px",
+            playerTopPad: "",
             playerInnerPadX: "",
             playerControlsGap: "",
             playerLeftGap: "",
@@ -1123,7 +1141,7 @@
             panelGap: "10px",
             panelPad: "6px",
             mainMargin: "10px",
-            playerMinH: "120px",
+            playerZone: "90px",
             navGap: "10px",
             navInnerPadX: "0px",
             searchPadX: "4px",
@@ -1135,7 +1153,7 @@
             cardPad: "10px",
             gridGap: "16px",
             listRowHGap: "12px",
-            playerTopPad: "4px",
+            playerTopPad: "",
             playerInnerPadX: "6px",
             playerControlsGap: "10px",
             playerLeftGap: "",
@@ -1143,7 +1161,7 @@
             playerCenterGap: "",
             progressBarPadX: "8px",
             volMarginR: "10px",
-            playerAlignBottom: true,
+            playerAlignBottom: false,
             wavePadL: "20px",
             wavePadR: "0px",
           }
@@ -1239,24 +1257,23 @@
           }
 
           /* player bar */
-          :root [data-testid="now-playing-bar"] {
-            ${d.playerMinH ? `min-height: ${d.playerMinH} !important;` : ""}
+          html:root {
+            ${d.playerZone ? `--vg-np-zone: ${d.playerZone} !important;` : ""}
           }
           ${(d.playerTopPad || d.playerControlsGap || d.playerAlignBottom) ? `
-          :root .main-nowPlayingBar-nowPlayingBar,
-          :root .main-nowPlayingBar-container {
+          :root .vg-np-container {
             ${d.playerAlignBottom ? "margin-top: auto !important;" : ""}
             ${d.playerTopPad ? `padding-top: ${d.playerTopPad} !important;` : ""}
             ${d.playerControlsGap ? `gap: ${d.playerControlsGap} !important;` : ""}
           }` : ""}
           ${(d.playerInnerPadX || d.playerLeftGap) ? `
-          :root .main-nowPlayingBar-left,
+          :root .vg-np-left,
           :root .main-nowPlayingWidget-nowPlaying {
             ${d.playerInnerPadX ? `padding-left: ${d.playerInnerPadX} !important;` : ""}
             ${d.playerLeftGap ? `gap: ${d.playerLeftGap} !important;` : ""}
           }` : ""}
           ${d.playerCenterGap ? `
-          :root .main-nowPlayingBar-center {
+          :root .vg-np-center {
             gap: ${d.playerCenterGap} !important;
           }` : ""}
           ${d.playerControlsGap ? `
@@ -1265,13 +1282,12 @@
             gap: ${d.playerControlsGap} !important;
           }` : ""}
           ${d.progressBarPadX ? `
-          :root .playback-bar,
-          :root [data-testid="playback-bar"] {
+          :root .vg-playback-bar {
             padding: 0 ${d.progressBarPadX} !important;
           }` : ""}
           ${(d.playerInnerPadX || d.playerRightGap) ? `
-          :root .main-nowPlayingBar-right,
-          :root .main-nowPlayingBar-extraControls {
+          :root .vg-np-right,
+          :root .vg-np-extra-controls {
             ${d.playerInnerPadX ? `padding-right: ${d.playerInnerPadX} !important;` : ""}
             ${d.playerRightGap ? `gap: ${d.playerRightGap} !important;` : ""}
           }` : ""}
