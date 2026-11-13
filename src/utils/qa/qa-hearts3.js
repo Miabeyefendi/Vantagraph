@@ -6,7 +6,7 @@ const { connect, sleep } = require("./qa-lib");
   const themes = await D(`return Object.keys(D.THEMES);`);
   const read = `(() => { const q = (sel) => document.querySelector(sel); const col = (b) => { const s = b && b.querySelector('svg'); return s ? getComputedStyle(s).color : null; };
     const liked = [...document.querySelectorAll('#main-view button[aria-checked="true"]')].find(b => b.closest('[role=row]')); const un = [...document.querySelectorAll('#main-view button[aria-checked="false"]')].find(b => b.closest('[role=row]'));
-    const pl = q('[data-testid="now-playing-widget"] button[aria-checked]:last-of-type'); const heart = getComputedStyle(document.documentElement).getPropertyValue('--spice-heart').trim();
+    const pl = q(':is([data-testid="now-playing-widget"], [data-testid="now-playing-widget-v2"]) button[aria-checked]:last-of-type'); const heart = getComputedStyle(document.documentElement).getPropertyValue('--spice-heart').trim();
     return { heart, liked: col(liked), unliked: col(un), player: col(pl), playerState: pl && pl.getAttribute('aria-checked') }; })()`;
   const hex2rgb = (h) => { h = h.replace("#", ""); return `rgb(${parseInt(h.slice(0, 2), 16)}, ${parseInt(h.slice(2, 4), 16)}, ${parseInt(h.slice(4, 6), 16)})`; };
   await go("/album/2IUf8KXyLYP2q9TAhnZ4T4", 4000); // album with a liked track

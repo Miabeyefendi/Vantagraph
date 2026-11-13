@@ -74,14 +74,14 @@
     { name: "main-userWidget-box", selectors: ["[data-testid=\"user-widget-link\"]"] },
     { name: "main-globalNav-searchContainer", selectors: ["#global-nav-bar form[role=\"search\"]"] },
     { name: "x-searchInput-searchInputInput", selectors: ["form[role=\"search\"] input[role=\"combobox\"]"] },
-    { name: "main-trackInfo-name", selectors: ["[data-testid=\"now-playing-widget\"] div.standalone-ellipsis-one-line", "[data-testid=\"now-playing-widget\"] [data-encore-id=\"text\"]"] },
+    { name: "main-trackInfo-name", selectors: [":is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]) div.standalone-ellipsis-one-line", ":is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]) [data-encore-id=\"text\"]"] },
     { name: "main-nowPlayingWidget-coverArt", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"]"] },
     { name: "main-coverSlotCollapsed-container", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"]"] },
     { name: "cover-art", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"] > div"] },
     { name: "cover-art-image", selectors: ["[data-testid=\"CoverSlotCollapsed__container\"] img"] },
     { name: "main-shuffleButton-button", selectors: ["[data-testid=\"general-controls\"] .player-controls__left > button:first-child"] },
     { name: "main-repeatButton-button", selectors: ["[data-testid=\"control-button-repeat\"]"] },
-    { name: "control-button-heart", selectors: ["[data-testid=\"now-playing-widget\"] button[aria-checked]:last-of-type"] },
+    { name: "control-button-heart", selectors: [":is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]) button[aria-checked]:last-of-type"] },
     { name: "playback-progressbar-container", selectors: ["[data-testid=\"playback-progressbar\"]"] },
     { name: "playback-progressbar-isInteractive", selectors: ["[data-testid=\"playback-progressbar\"]"] },
     { name: "progress-bar__bg", selectors: ["[data-testid=\"progress-bar-background\"]"] },
@@ -100,8 +100,8 @@
     { name: "main-rootlist-wrapper", selectors: [".YourLibraryX [role=\"grid\"]"] },
     { name: "main-nowPlayingView-section", selectors: [".NowPlayingView", ".Root__right-sidebar aside:has([data-testid=\"cover-art-slot\"])"] },
     { name: "main-nowPlayingView-content", selectors: [".NowPlayingView > div > div:nth-child(2)"] },
-    { name: "main-nowPlayingWidget-trackInfo", selectors: ["[data-testid=\"now-playing-widget\"] > div:nth-child(2)"] },
-    { name: "main-trackInfo-artists", selectors: ["[data-testid=\"now-playing-widget\"] > div:nth-child(2) > div:nth-child(3)"] },
+    { name: "main-nowPlayingWidget-trackInfo", selectors: [":is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]) > div:nth-child(2)"] },
+    { name: "main-trackInfo-artists", selectors: [":is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]) > div:nth-child(2) > div:nth-child(3)"] },
     { name: "x-toggle-indicatorWrapper", selectors: ["label > input[type=\"checkbox\"] ~ span"] },
     { name: "main-globalNav-searchInputSection", selectors: ["#global-nav-bar form[role=\"search\"]"] },
     { name: "main-yourLibraryX-headerContent", selectors: [".main-yourLibraryX-header"] },
@@ -115,7 +115,7 @@
     { name: "Root__top-container", selectors: ["div:has(> #Desktop_LeftSidebar_Id)"] },
     // player bar (Spotify 1.3.4 renamed all of these; the bar is an <aside data-testid="now-playing-bar"> with one container)
     { name: "main-nowPlayingBar-container", selectors: ["[data-testid=\"now-playing-bar\"] > div"] },
-    { name: "main-nowPlayingBar-left", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has([data-testid=\"now-playing-widget\"])"] },
+    { name: "main-nowPlayingBar-left", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has(:is([data-testid=\"now-playing-widget\"], [data-testid=\"now-playing-widget-v2\"]))"] },
     { name: "main-nowPlayingBar-center", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has(> [data-testid=\"player-controls\"])"] },
     { name: "main-nowPlayingBar-right", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has([data-testid=\"volume-bar\"])"] },
     { name: "main-nowPlayingBar-extraControls", selectors: ["[data-testid=\"now-playing-bar\"] > div > div:has([data-testid=\"volume-bar\"]) > div"] },
@@ -417,7 +417,40 @@
   }).filter(e => e.sel);
   // names put back when React rewrites a className (see the observer below)
   const VG_PROTECTED = new Set([...VG_STRUCT_NAMES, ...VG_ALIAS_COMPILED.map(e => e.className), ...Object.values(VG_AREA_ALIASES)]);
-  const markAlias = (el, name) => { if (el) el.classList.add(name, "vg-aliased"); };
+  // An alias gives a name only while Spicetify does not. Spicetify's css-map catches up with
+  // each Spotify build (2.46.7 maps Root__nav-bar, the search box, the library, the filter
+  // chips...) and a name on a second element doubles every rule written against it: Spotify's
+  // own .Root__nav-bar width rule squeezed the library to 232px inside its 420px panel. Once
+  // an element carries a name the alias layer did not give, the alias drops that name for good.
+  const vgGiven = new Map();
+  const vgNative = new Set();
+  const vgNameLists = new Map();
+  const VG_ALIAS_NAMES = [...new Set([...VG_ALIAS_COMPILED.map(e => e.className), ...Object.values(VG_AREA_ALIASES)])];
+  const markAlias = (el, name) => {
+    if (!el || vgNative.has(name)) return;
+    if (!el.classList.contains(name)) {
+      let given = vgGiven.get(name);
+      if (!given) vgGiven.set(name, given = new WeakSet());
+      given.add(el);
+      el.classList.add(name);
+    }
+    el.classList.add("vg-aliased");
+  };
+  function vgYieldToNative() {
+    for (const name of VG_ALIAS_NAMES) {
+      if (vgNative.has(name)) continue;
+      let list = vgNameLists.get(name);
+      if (!list) vgNameLists.set(name, list = document.getElementsByClassName(name));
+      if (!list.length) continue;
+      const given = vgGiven.get(name);
+      let native = false;
+      for (const el of list) if (!given || !given.has(el)) { native = true; break; }
+      if (!native) continue;
+      vgNative.add(name);
+      VG_PROTECTED.delete(name);
+      if (given) for (const el of [...list]) if (given.has(el)) el.classList.remove(name);
+    }
+  }
   let vgLayoutDirty = true;
 
   function classifyLayoutAreas() {
@@ -465,7 +498,9 @@
 
   // full pass: init, and callers outside theme.js (VantagraphData)
   function applyDynamicClasses() {
+    vgYieldToNative();
     classifySubtree(document.documentElement);
+    vgYieldToNative();
     applyStateClasses();
   }
 
@@ -491,6 +526,7 @@
       }
       if (!covered) classifySubtree(root);
     }
+    vgYieldToNative();
     applyStateClasses();
   }
 
@@ -745,7 +781,7 @@
     const targets = [
       document.querySelector(".Root__now-playing-bar"),
       document.querySelector(".Root__main-view"),
-      document.querySelector("[data-testid='now-playing-widget']"),
+      document.querySelector(":is([data-testid='now-playing-widget'], [data-testid='now-playing-widget-v2'])"),
       document.querySelector(".Root__right-sidebar"),
     ].filter(Boolean);
 
@@ -1532,7 +1568,7 @@ html, body, * { scroll-behavior: auto !important; }`;
           "snippet-hide-repeat": ".Root__now-playing-bar button[data-testid='control-button-repeat'],.Root__now-playing-bar button[aria-label*='repeat'],.Root__now-playing-bar button[aria-label*='Repeat']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-connect": ".Root__now-playing-bar button[aria-label='Connect to a device'],.Root__now-playing-bar button[aria-label*='Connect to']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-volume": ".Root__now-playing-bar [data-testid='volume-bar'],.Root__now-playing-bar button[data-testid='volume-bar-toggle-mute-button']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
-          "snippet-hide-np-widget": ".Root__now-playing-bar [data-testid='now-playing-widget'],.Root__now-playing-bar [data-testid='cover-art-button']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
+          "snippet-hide-np-widget": ".Root__now-playing-bar :is([data-testid='now-playing-widget'], [data-testid='now-playing-widget-v2']),.Root__now-playing-bar [data-testid='cover-art-button']{display:none !important;width:0 !important;height:0 !important;overflow:hidden !important;padding:0 !important;margin:0 !important;border:0 !important}",
           "snippet-hide-next-track": ".vg-next-track-card{display:none !important}",
         };
         const sid = "vantagraph-" + key;

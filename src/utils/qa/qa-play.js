@@ -30,7 +30,7 @@ const targets = async () => (await (await fetch("http://127.0.0.1:9222/json")).j
     const uri = await ev(`Spicetify.Player.data.item.uri`); const dur = await ev(`Spicetify.Player.getDuration()`);
 
     // heart in the player bar for a liked track, in a dark and a light palette
-    const heart = () => ev(`(() => { const b = document.querySelector('[data-testid="now-playing-widget"] button[aria-checked]:last-of-type'); if (!b) return null; const s = b.querySelector('svg'); return { aria: b.getAttribute('aria-checked'), vg: s.dataset.vgIcon || '', color: getComputedStyle(s).color, want: getComputedStyle(document.documentElement).getPropertyValue('--spice-heart').trim() }; })()`);
+    const heart = () => ev(`(() => { const b = document.querySelector(':is([data-testid="now-playing-widget"], [data-testid="now-playing-widget-v2"]) button[aria-checked]:last-of-type'); if (!b) return null; const s = b.querySelector('svg'); return { aria: b.getAttribute('aria-checked'), vg: s.dataset.vgIcon || '', color: getComputedStyle(s).color, want: getComputedStyle(document.documentElement).getPropertyValue('--spice-heart').trim() }; })()`);
     const rgb = (h) => { h = h.replace('#', ''); return `rgb(${parseInt(h.slice(0, 2), 16)}, ${parseInt(h.slice(2, 4), 16)}, ${parseInt(h.slice(4, 6), 16)})`; };
     let h = await heart(); rec("player heart: liked track is red (R34 Purple)", !!h && h.aria === "true" && h.color === rgb(h.want), JSON.stringify(h));
     await ev(`window.VantagraphData && window.VantagraphData.applyTheme('VantaWhite'); 1`); await sleep(800); h = await heart(); rec("player heart: liked track is red (second palette)", !!h && h.aria === "true" && h.color === rgb(h.want), JSON.stringify(h));

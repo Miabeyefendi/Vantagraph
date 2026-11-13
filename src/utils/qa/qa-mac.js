@@ -10,7 +10,7 @@ const emu = {
     "main-topBar-background": "#global-nav-bar > div", "main-topBar-overlay": "#global-nav-bar > div > div",
     "main-trackList-trackList": "[role='grid']", "main-trackList-trackListRow": "[role='row']", "main-trackList-trackListHeaderRow": "[role='row'][aria-rowindex='1']",
     "main-trackList-rowTitle": "[data-testid='internal-track-link'] > div", "main-trackList-rowImage": "[role='row'] img",
-    "main-trackInfo-name": "[data-testid='now-playing-widget'] a", "main-trackInfo-artists": "[data-testid='now-playing-widget'] span",
+    "main-trackInfo-name": ":is([data-testid='now-playing-widget'], [data-testid='now-playing-widget-v2']) a", "main-trackInfo-artists": ":is([data-testid='now-playing-widget'], [data-testid='now-playing-widget-v2']) span",
     "main-entityHeader-container": "[data-testid='entity-header']", "main-entityHeader-title": "[data-testid='entity-header'] h1",
     "main-entityHeader-shadow": "[data-testid='entity-header'] img", "main-entityHeader-imageContainer": "[data-testid='entity-header'] > div:first-child",
     "progress-bar": "[data-testid='progress-bar']", "progress-bar__slider": "[data-testid='progress-bar-handle']",
