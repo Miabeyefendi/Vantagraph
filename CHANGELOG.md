@@ -8,6 +8,27 @@ Every released version of Vantagraph, newest first. The format follows
 
 ---
 
+## [5.1.3](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.1.3) - 2026-11-13
+
+Spotify 1.3.9 and Spicetify 2.46.7. Spicetify 2.46.7 maps many more legacy class names on Windows too (the
+left sidebar, the search box, the library, the home filter chips, the top bar). The compatibility layer of 5.1.0
+gave those same names to its own picks, so a name sat on two elements and every rule written against it ran twice.
+Needs Spotify `1.3.3+` (tested on `1.3.9.2055`) and Spicetify `2.45.2+` (tested on `2.46.7`).
+
+### Fixed
+
+- The library was squeezed to 232px inside its 420px panel, the search box collapsed to its icon and the home
+  filter chips (All, Music, Podcasts) were gone. An alias now gives a legacy name only while Spicetify does not:
+  once an element carries the name natively, the alias drops it everywhere. The next css-map update is handled
+  the same way.
+- The saved-track colour in the player bar: Spotify 1.3.9 renamed the now playing widget to `now-playing-widget-v2`.
+
+### Changed
+
+- The top-right icons are 19px (Spotify draws 16px) with one 8px gap between all four; the left group follows.
+- The top bar has one order: back, forward and Marketplace in the same 32px buttons and 8px gaps as the right
+  group, and Lyric Miniplayer always before Vantagraph Settings (they swapped places between launches).
+
 ## [5.1.2](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.1.2) - 2026-10-30
 
 macOS consistency for Spotify 1.3.6 and Spicetify 2.46. Spicetify 2.46 maps 153 legacy class names only on macOS builds
@@ -214,7 +235,8 @@ First public release.
 
 ---
 
-[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.2...HEAD
+[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.3...HEAD
+[5.1.3]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/Miabeyefendi/Vantagraph/compare/5.0.3...5.1.0
