@@ -1698,3 +1698,10 @@ button[aria-label*="Like"]:active {
 [data-testid="general-controls"] {
   margin-bottom: 0 !important;
 }
+
+/* Spotify 1.3.10 writes the entity header separator as text, and Spicetify's css-map gives that
+   span the legacy main-entityHeader-divider name whose old ::before draws a second bullet.
+   Attribute form so the macOS name rewrite (theme.js "MAC") leaves it alone. */
+[class~="main-entityHeader-divider"]:not(:empty)::before {
+  content: none !important;
+}

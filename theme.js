@@ -483,17 +483,33 @@
   }
 
   function classifySubtree(root) {
-    for (const { className, sel, has } of VG_ALIAS_COMPILED) {
+    for (const { className, sel } of VG_ALIAS_COMPILED) {
       if (root.matches(sel)) markAlias(root, className);
       root.querySelectorAll(sel).forEach(el => markAlias(el, className));
-      if (has && root.parentElement) markAlias(root.parentElement.closest(sel), className);
     }
-    for (const { className, sel, has } of VG_STRUCT) {
+    for (const { className, sel } of VG_STRUCT) {
       if (root.matches(sel)) root.classList.add(className);
       root.querySelectorAll(sel).forEach(el => el.classList.add(className));
-      // :has() entries match an ancestor once its descendants arrive
-      if (has && root.parentElement) root.parentElement.closest(sel)?.classList.add(className);
     }
+    vgQueueHasPass();
+  }
+
+  // :has() entries match an ancestor once its descendants arrive. Walking every added node's
+  // ancestors with closest() cost ~1.8 s of CPU over a scroll of three pages (40 :has selectors
+  // tried at every level); one document pass per idle period finds the same ancestors.
+  const VG_HAS_ALIAS = VG_ALIAS_COMPILED.filter(e => e.has);
+  const VG_HAS_STRUCT = VG_STRUCT.filter(e => e.has);
+  let vgHasQueued = false;
+  function vgHasPass() {
+    vgHasQueued = false;
+    for (const { className, sel } of VG_HAS_ALIAS) document.querySelectorAll(sel).forEach(el => markAlias(el, className));
+    for (const { className, sel } of VG_HAS_STRUCT) document.querySelectorAll(sel).forEach(el => el.classList.add(className));
+  }
+  function vgQueueHasPass() {
+    if (vgHasQueued) return;
+    vgHasQueued = true;
+    if (window.requestIdleCallback) requestIdleCallback(vgHasPass, { timeout: 200 });
+    else setTimeout(vgHasPass, 100);
   }
 
   function applyStateClasses() {
