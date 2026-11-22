@@ -8,6 +8,23 @@ Every released version of Vantagraph, newest first. The format follows
 
 ---
 
+## [5.1.4](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.1.4) - 2026-11-22
+
+Spotify 1.3.10 and a faster class mapper. Checked on Spotify `1.3.10.2586` with Spicetify `2.46.7`: panels, player
+bar, top bar, hearts and 37 pages look the same as on 1.3.9.
+
+### Changed
+
+- Scrolling is lighter. For every node Spotify adds, the theme walked all its ancestors with `closest()` to try
+  some 40 `:has()` selectors; over a scroll through Home, Liked Songs and an album that cost about 1.8 s of CPU and
+  the longest frame on Home was 146 ms. One document pass per idle period now finds the same elements: the theme's
+  own script time over the same scroll is about 50 ms, and the longest frame on Liked Songs went from 133 to 36 ms.
+
+### Fixed
+
+- Album and playlist headers showed every separator twice (`Artist • • 2005 • • 18 songs`). Spotify 1.3.10 writes
+  the separator as text and Spicetify gives that span a legacy name whose old rule draws a second one.
+
 ## [5.1.3](https://github.com/Miabeyefendi/Vantagraph/releases/tag/5.1.3) - 2026-11-13
 
 Spotify 1.3.9 and Spicetify 2.46.7. Spicetify 2.46.7 maps many more legacy class names on Windows too (the
@@ -241,7 +258,8 @@ First public release.
 
 ---
 
-[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.3...HEAD
+[Unreleased]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.4...HEAD
+[5.1.4]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.3...5.1.4
 [5.1.3]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/Miabeyefendi/Vantagraph/compare/5.1.0...5.1.1
